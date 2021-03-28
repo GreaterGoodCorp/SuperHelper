@@ -11,11 +11,10 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 logger.addHandler(logging.NullHandler)
 
-cli_config = load_cli_config()
-
 
 def load_installed_modules() -> List[MethodType]:
     module_entries = []
+    cli_config = load_cli_config()
     for module_name in cli_config["INSTALLED_MODULES"]:
         try:
             module_entries.append(importlib.import_module(module_name).main)

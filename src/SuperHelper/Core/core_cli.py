@@ -23,7 +23,7 @@ def main_entry():
     for core_module in load_core_utils():
         cli.add_command(core_module)
     # Load installed modules
-    from SuperHelper.Core.Loader import load_installed_modules
+    from SuperHelper.Core import load_installed_modules
     for module in load_installed_modules():
         cli.add_command(module)
     try:
