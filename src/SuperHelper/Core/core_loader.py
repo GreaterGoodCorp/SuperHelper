@@ -4,7 +4,7 @@ import logging
 from types import MethodType
 from typing import List
 
-from SuperHelper.Core.Helper import load_cli_config
+from SuperHelper.Core.Helper.Config import load_cli_config
 from SuperHelper.Core.Helper.IO import print_error
 
 logger = logging.getLogger(__name__)
