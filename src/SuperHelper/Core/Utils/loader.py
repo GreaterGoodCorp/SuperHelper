@@ -17,7 +17,10 @@ def load_installed_modules() -> typing.List[types.MethodType]:
     cli_config = load_cli_config()
     for module_name in cli_config["INSTALLED_MODULES"]:
         try:
-            module_entries.append(importlib.import_module(module_name).main)
+            module = importlib.import_module(module_name)
+            module_entries.append(module.main)
         except ImportError:
             logger.exception(f"Cannot import module '{module_name}'!")
+        except AttributeError:
+            logger.exception(f"Module '{module_name}' does not have main()!")
     return module_entries
