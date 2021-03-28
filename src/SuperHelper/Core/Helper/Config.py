@@ -1,6 +1,7 @@
 # This module defines the config loader functions, which can be used by all modules
 import logging
 import os
+import re
 from json import load, dump
 from pathlib import Path
 from typing import Dict
@@ -20,9 +21,7 @@ _APP_CONFIG: Dict
 
 
 def get_subpackage_name(name: str) -> str:
-    part = name.split(".")
-    part = part[:-1]
-    return ".".join(part)
+    return ".".join(name.split(".")[:-1])
 
 
 def initialise_default_app_config() -> Dict:
@@ -74,11 +73,14 @@ def save_cli_config(config: Dict) -> None:
 
 def load_module_config(module_name: str) -> Dict:
     try:
-        module_name = get_subpackage_name(module_name)
+        if re.match(r"^[_a-zA-Z][a-zA-Z_0-9]{0,63}(\.[_a-zA-Z][a-zA-Z_0-9]{0,63})*$", module_name):
+            module_name = get_subpackage_name(module_name)
         return _APP_CONFIG["MODULE_CONFIG"][module_name]
     except KeyError:
         return dict()
 
 
 def save_module_config(module_name: str, config: Dict) -> None:
-    _APP_CONFIG["MODULE_CONFIG"][get_subpackage_name(module_name)] = config
+    if re.match(r"^[_a-zA-Z][a-zA-Z_0-9]{0,63}(\.[_a-zA-Z][a-zA-Z_0-9]{0,63})*$", module_name):
+        module_name = get_subpackage_name(module_name)
+    _APP_CONFIG["MODULE_CONFIG"][module_name] = config
