@@ -31,6 +31,10 @@ git clone https://github.com/GreaterGoodCorp/SuperHelper
 make install
 ```
 
+## Documentation
+
+Please refer to `README.md` files located in each subpackage.
+
 ## Changelog
 
 ### Pre-release
