@@ -29,7 +29,6 @@ def initialise_default_app_config() -> Dict:
         "CORE_CLI": {
             "DEBUG": False,
             "INSTALLED_MODULES": [
-                "SuperHelper.Builtins.FocusEnabler",
             ],
         },
         "MODULE_CONFIG": {
@@ -43,7 +42,7 @@ def load_app_config() -> int:
     try:
         with open(CONFIG_PATH) as fp:
             # De-serialise JSON to Python's dict
-            _APP_CONFIG = load(fp)
+            _APP_CONFIG = initialise_default_app_config().update(load(fp))
     except OSError:
         logger.exception("Config loader failed!")
         print_error("Unable to load config file! Making one...")
