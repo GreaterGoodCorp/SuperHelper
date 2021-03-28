@@ -44,11 +44,11 @@ make install
   
 ## Contributing
 
-Please refer to [the contributing guidelines][CONTRIBUTING.md] for more information.
+Please refer to [the contributing guidelines][CONTRIBUTING] for more information.
 
 ## License
 
 This program is licensed under the
 [MIT License](https://github.com/GreaterGoodCorp/SuperHelper/blob/main/LICENSE).
-
+[CONTRIBUTING](https://github.com/GreaterGoodCorp/SuperHelper/blob/main/CONTRIBUTING.md)
 [GitHub]: https://github.com/GreaterGoodCorp/SuperHelper
