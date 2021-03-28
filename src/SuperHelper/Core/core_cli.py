@@ -36,4 +36,5 @@ def main_entry():
 
 
 if __name__ == '__main__':
+    sys.argv[0] = "SuperHelper"
     main_entry()
