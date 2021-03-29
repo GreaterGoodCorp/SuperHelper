@@ -14,6 +14,7 @@ from SuperHelper.Core.Config import load_module_config, save_module_config
 
 @click.group("steg")
 def main():
+    """Stenographer is a program that deals with pictorial steganography."""
     Config.update(load_module_config("SuperHelper.Builtins.Stenographer"))
     save_module_config("SuperHelper.Builtins.Stenographer", Config)
     pass
