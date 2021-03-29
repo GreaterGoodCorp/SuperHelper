@@ -31,7 +31,7 @@ def load_app_config(config_path: str) -> None:
         logger.exception("Config loader failed due to file being unreadable!")
         raise
     except json.JSONDecodeError:
-        logger.exception("Config loader failed due to non-decodable values!")
+        logger.exception("Config loader failed due to non-decoded values!")
         raise
     return
 
@@ -44,4 +44,3 @@ def save_app_config(config_path: str) -> None:
     except OSError:
         logger.exception("Config saver failed!")
         raise
-        
