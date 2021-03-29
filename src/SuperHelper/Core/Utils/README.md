@@ -1,7 +1,7 @@
 # Subpackage `SuperHelper.Core.Utils`
 
-This package contains utilities implemented exclusively for the `core_cli.py` module. APIs designed in this subpackage are intended for internal use
-only.
+This package contains utilities implemented exclusively for the `core_cli.py` module. APIs designed in this subpackage
+are intended for internal use Sonly.
 
 Core commands are also documented here.
 
@@ -23,9 +23,11 @@ Core commands are also documented here.
     
     * `ImportError` if the module cannot be imported.
     
-    * `AttributeError` if the module does not contain a `main()` function decorated as either `@click.command` or @click.group`
+    * `AttributeError` if the module does not contain a `main()` function decorated as either `@click.command` or
+      `@click.group`
   
-  * **Note**: This function is intended for internal use only. It should only be called once when the application loads modules. (Called by Core CLI)
+  * **Note**: This function is intended for internal use only. It should only be called once when the application loads
+    modules. (Called by Core CLI)
   
 ## Command documentation
 
@@ -40,3 +42,9 @@ Core commands are also documented here.
   * **Usage**: `helper uninstall <MODULES>` where `<MODULES>` are names of modules you wish to uninstall.
   
   * **Notes**: This command is used to uninstall any builtin or external modules that are installed.
+
+3. Command `list`
+
+  * **Usage**: `helper list [-a]`, when `-a` (or `--all`) is enabled, this will also list not installed modules.
+  
+  * **Notes**: This command is used to list available modules (installed or not installed)
