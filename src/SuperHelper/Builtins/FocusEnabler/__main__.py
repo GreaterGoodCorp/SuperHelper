@@ -128,12 +128,12 @@ def activate_app():
             exit(1)
     entries: typing.List[str] = [config["BL_SECTION_START"]]
     for domain in config["BL_DOMAINS"]:
-        logging.warning(f"Adding entry {domain}", "Done")
+        logging.info(f"Adding entry {domain}", "Done")
         entries.append(f"127.0.0.1   {domain}")
         entries.append(f"127.0.0.1   www.{domain}")
     entries.append(config["BL_SECTION_END"])
     try:
-        with open(config["BL_DOMAINS"], "a") as fp:
+        with open(config["PATH_HOST"], "a") as fp:
             fp.write("\n".join(entries))
         click.echo("Written to host file!")
         flush_dns()
