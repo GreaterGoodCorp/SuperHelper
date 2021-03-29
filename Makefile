@@ -1,7 +1,7 @@
 build:
 	python3 setup.py sdist bdist_wheel
 
-publish:
+publish: build
 	twine check dist/* && twine upload dist/*
 
 clean:
