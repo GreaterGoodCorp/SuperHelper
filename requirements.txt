@@ -2,3 +2,5 @@ click
 colorama
 wheel
 twine
+Pillow
+cryptography
