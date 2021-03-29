@@ -28,6 +28,15 @@ Core commands are also documented here.
   
   * **Note**: This function is intended for internal use only. It should only be called once when the application loads
     modules. (Called by Core CLI)
+    
+2. Function `load_core_modules()`
+
+  * **Parameters**: *No parameter*
+      
+  * **Returns**: A list of core command utilities.
+
+  * **Note**: This function is intended for internal use only. It should only be called once when the application loads
+    modules. (Called by Core CLI)
   
 ## Command documentation
 
