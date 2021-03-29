@@ -5,7 +5,6 @@ publish: build
 	twine check dist/* && twine upload dist/*
 
 clean:
-	find src/ -type d -name __pycache__ -exec rm -r {} \+
 	find . -type d -name build -exec rm -r {} \+
 	find . -type d -name dist -exec rm -r {} \+
 	find . -type d -name *.egg-info -exec rm -r {} \+
