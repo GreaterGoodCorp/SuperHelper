@@ -47,7 +47,7 @@ This package contains configuration loaders and savers for the application, the 
   * **Raises**:
 
     * `OSError` if either the path provided by environment variable `SUPER_HELPER_CONFIG_PATH` is a folder, or the existing config file there is
-      unwritable.
+      un-writable.
       
     * This function will not raise `JSONEncodeError` if there are non JSON-serializable values. Instead, it will be default to `None`.
   
@@ -105,7 +105,7 @@ This package contains configuration loaders and savers for the application, the 
       
     * `config`: The configuration of the module.
 
-      This configuration must be a `dict` and contains JSON-serializable items only. Non JSON-serializable items are serialised as `None`, which may
+      This configuration must be a `dict` and contains JSON-serializable items only. Non JSON-serializable items are serialized as `None`, which may
       lead to data loss if not used properly.
       
   * **Returns**: *None*

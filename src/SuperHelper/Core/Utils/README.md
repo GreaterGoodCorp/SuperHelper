@@ -1,7 +1,7 @@
 # Subpackage `SuperHelper.Core.Utils`
 
 This package contains utilities implemented exclusively for the `core_cli.py` module. APIs designed in this subpackage
-are intended for internal use Sonly.
+are intended for internal use only.
 
 Core commands are also documented here.
 

@@ -115,7 +115,7 @@ Core CLI is the cornerstone of this entire program, hence all fixes and improvem
 
 Please note that the Core API can be added but not removed (for backward compatibility)!
 
-## Any contributions you make will be under the MIT Software License
+## Any contributions you make will be under the MIT Software Licence
 In short, when you submit code changes, your submissions are understood to be under the same [MIT License].
 Feel free to contact the maintainers if that's a concern.
 
