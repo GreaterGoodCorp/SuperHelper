@@ -1,8 +1,6 @@
 # This file defines SteganographyConfig class, which is used to
 # configure all operations of the Steganography Library.
 
-from SuperHelper.Core.Config import load_module_config
-
 
 def initialise_default_module_config():
     return {
@@ -18,4 +16,3 @@ def initialise_default_module_config():
 
 
 SteganographyConfig: dict = initialise_default_module_config()
-SteganographyConfig.update(load_module_config("SuperHelper.Builtins.Stenographer"))

@@ -9,10 +9,13 @@ from SuperHelper.Builtins.Stenographer.core import SteganographyConfig as Config
 from SuperHelper.Builtins.Stenographer.core.steg import write_steganography, extract_steganography
 # Internal modules
 from SuperHelper.Builtins.Stenographer.helper import raw_open, open_image
+from SuperHelper.Core.Config import load_module_config, save_module_config
 
 
-@click.group()
+@click.group("steg")
 def main():
+    Config.update(load_module_config("SuperHelper.Builtins.Stenographer"))
+    save_module_config("SuperHelper.Builtins.Stenographer", Config)
     pass
 
 
