@@ -1,6 +1,6 @@
 venv:
 	/usr/local/bin/python3 -m venv .venv
-	./.venv/bin/pip3 install -r requirements.txt
+	./.venv/bin/pip3 install -y -r requirements.txt
 
 build:
 	./.venv/bin/python3 setup.py sdist bdist_wheel
@@ -14,7 +14,7 @@ clean:
 	find . -type d -name __pycache__ -exec rm -r {} \+
 
 dev-uninstall:
-	./.venv/bin/pip3 uninstall SuperHelper && rm -rf src/*.egg-info
+	./.venv/bin/pip3 uninstall -y SuperHelper && rm -rf src/*.egg-info
 
 dev-install:
 	./.venv/bin/pip3 install -e .
