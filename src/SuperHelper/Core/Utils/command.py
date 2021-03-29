@@ -2,16 +2,20 @@
 import importlib.util
 import pkgutil
 import sys
-from types import MethodType
-from typing import List
+import types
+import typing
+import logging
 
 import click
 
-from SuperHelper.Core.Helper.Config import load_cli_config, save_cli_config
-from SuperHelper.Core.Helper.IO import print_error, print_message
+from SuperHelper.Core.Config import load_cli_config, save_cli_config
+
+logger = logging.getLogger("SuperHelper.Core.Utils")
+logger.setLevel(logging.DEBUG)
+logger.addHandler(logging.NullHandler())
 
 
-def load_core_utils() -> List[MethodType]:
+def load_core_commands() -> typing.List[types.MethodType]:
     return [
         install_modules,
         uninstall_modules,
@@ -28,13 +32,9 @@ def install_modules(module: str):
         if module not in config["INSTALLED_MODULES"]:
             config["INSTALLED_MODULES"].append(module)
             save_cli_config(config)
-            print_message(f"Module '{module}' installed successfully!")
-        else:
-            print_message(f"Module '{module}' is already installed!")
         sys.exit(0)
     else:
-        print_error("Module not found!")
-        print_error("Module installed unsuccessfully!")
+        logger.warning(f"Module {module} not found!")
         sys.exit(1)
 
 
@@ -46,11 +46,9 @@ def uninstall_modules(module: str):
     if module in config["INSTALLED_MODULES"]:
         config["INSTALLED_MODULES"].remove(module)
         save_cli_config(config)
-        print_message("Module uninstalled successfully!")
         sys.exit(0)
     else:
-        print_error("Module not found!")
-        print_error("Module uninstalled unsuccessfully!")
+        logger.warning(f"Module {module} not found!")
         sys.exit(1)
 
 
@@ -64,10 +62,10 @@ def list_modules(list_all: bool):
     count = 0
     for _, module_name, _ in pkgutil.iter_modules(Package.__path__, prefix):
         if module_name in config["INSTALLED_MODULES"]:
-            print_message(f"(Installed) {module_name}")
+            click.echo(f"(Installed) {module_name}")
             count += 1
         elif list_all:
-            print_message(module_name)
+            click.echo(module_name)
     if count == 0 and not list_all:
-        print_message("No installed modules found!")
+        click.echo("No installed modules found!")
     sys.exit(0)

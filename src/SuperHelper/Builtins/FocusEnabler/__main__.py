@@ -1,3 +1,4 @@
+import ctypes
 import io
 import itertools
 import os
@@ -5,39 +6,24 @@ import re
 import subprocess
 import sys
 import typing
-import functools
 import logging
 from pathlib import Path
 
 import click
 
-from SuperHelper.Core.Helper.Config import load_module_config, save_module_config
-from SuperHelper.Core.Helper.IO import print_error, print_message as _print_message
-from SuperHelper.Core.Helper.AccessControl import is_root
+from SuperHelper.Core.Config import load_module_config, save_module_config
 
+__name__ = "SuperHelper.Builtins.FocusEnabler"
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 logger.addHandler(logging.NullHandler())
 
 config: typing.Dict
 
-# Make partial
-style = functools.partial(click.style, bold=True, reset=True)
 
-
-# Redefine message printing
-def print_message(title, content, title_colour="bright_white", content_colour="green", fp=sys.stdout):
-    return _print_message(get_input_prompt(title, title_colour) + click.style(content, content_colour), fp=fp)
-
-
-def decorate_domain_name(dm):
-    """Decorate the domain name to stand out."""
-    return f"{click.style(dm, 'yellow', underline=True)}"
-
-
-def get_input_prompt(title, colour="white"):
+def get_input_prompt(title):
     """Get prompt for input() function"""
-    return click.style(f"- {title} \u2192 ", colour)
+    return f"{title} \u2192 "
 
 
 def is_domain_valid(domain):
@@ -67,6 +53,13 @@ def initialise_config_dict() -> None:
     }
 
 
+def is_root():
+    try:
+        return os.getuid() == 0
+    except AttributeError:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+
+
 @click.group("focus")
 def main():
     """FocusEnabler is a program that enables your focus by blocking websites."""
@@ -84,7 +77,7 @@ def main():
 def add_domain(clear, domains):
     """Add DOMAINS to blacklist."""
     if is_root():
-        print_error("Please do not run this command as 'root'")
+        logging.warning("Please do not run this command as 'root'")
         sys.exit(1)
     if clear:
         with io.StringIO() as sio:
@@ -97,14 +90,14 @@ def add_domain(clear, domains):
 def list_domain():
     """List blacklisted domains"""
     if is_root():
-        print_error("Please do not run this command as 'root'")
+        logging.warning("Please do not run this command as 'root'")
         sys.exit(1)
     if len(config["BL_DOMAINS"]) == 0:
-        click.echo("No blacklisted domains found", color="bright_white")
+        click.echo("No blacklisted domains found")
         exit(0)
-    click.echo("All blacklisted domains:", color="blue")
+    click.echo("All blacklisted domains:")
     for domain, count in zip(config["BL_DOMAINS"], itertools.count()):
-        click.echo(f"({count + 1}) {domain}", color="cyan")
+        click.echo(f"({count + 1}) {domain}")
     save_module_config(__name__, config)
 
 
@@ -114,7 +107,7 @@ def list_domain():
 def remove_domain(confirm, domains):
     """Remove DOMAINS from blacklist"""
     if is_root():
-        print_error("Please do not run this command as 'root'")
+        logging.warning("Please do not run this command as 'root'")
         sys.exit(1)
     remove_domain_internal(confirm, domains, sys.stdout)
     save_module_config(__name__, config)
@@ -124,30 +117,30 @@ def remove_domain(confirm, domains):
 def activate_app():
     """Activate FocusEnabler."""
     if not is_root():
-        print_error("Please run this command as 'root'")
+        logging.warning("Please run this command as 'root'")
         sys.exit(1)
     if not os.access(config["PATH_HOST"], os.W_OK):
-        print_error("Hosts file is inaccessible!")
+        logging.warning("Hosts file is inaccessible!")
         sys.exit(1)
     with open(config["PATH_HOST"]) as fp:
         if config["BL_SECTION_START"] in fp.read():
-            print_error("FocusEnabler is already activated! Deactivate first.")
+            logging.warning("FocusEnabler is already activated! Deactivate first.")
             exit(1)
     entries: typing.List[str] = [config["BL_SECTION_START"]]
     for domain in config["BL_DOMAINS"]:
-        print_message(f"Adding entry {decorate_domain_name(domain)}", "Done")
+        logging.info(f"Adding entry {domain}", "Done")
         entries.append(f"127.0.0.1   {domain}")
         entries.append(f"127.0.0.1   www.{domain}")
     entries.append(config["BL_SECTION_END"])
     try:
-        with open(config["BL_DOMAINS"], "a") as fp:
+        with open(config["PATH_HOST"], "a") as fp:
             fp.write("\n".join(entries))
-        print_message("Writing to host file", "Done")
+        click.echo("Written to host file!")
         flush_dns()
-        click.echo("FocusEnabler is enabled!", color="cyan")
+        click.echo("FocusEnabler is enabled!")
         exit(0)
     except OSError:
-        print_message("Writing to host file", "Failed", content_colour="red", fp=sys.stderr)
+        logger.exception("Unable to write to host file")
         exit(1)
     save_module_config(__name__, config)
 
@@ -156,35 +149,31 @@ def activate_app():
 def deactivate_app():
     """Deactivate FocusEnabler"""
     if not is_root():
-        print_error("Please run this command as 'root'")
+        logging.warning("Please run this command as 'root'")
         sys.exit(1)
     if not os.access(config["PATH_HOST"], os.W_OK):
-        print_error("Hosts file is inaccessible!")
+        logging.warning("Hosts file is inaccessible!")
         sys.exit(1)
     content = None
     try:
         with open(config["PATH_HOST"]) as fp:
             content = fp.read()
             original_content_len = len(content)
-        print_message("Reading host file", "Done")
         content = re.sub(rf"{config['BL_SECTION_START']}(.|[\n\r\t])*{config['BL_SECTION_END']}", "", content)
         if len(content) == original_content_len:
-            print_error("FocusEnabler is not activated! Activate first")
+            logging.warning("FocusEnabler is not activated! Activate first")
             save_module_config(__name__, config)
             exit(1)
-        else:
-            print_message("Deactivating FocusEnabler", "Done")
     except OSError:
-        print_message("Reading host file", "Failed", content_colour="red", fp=sys.stderr)
+        logging.exception("Unable to read host file")
         save_module_config(__name__, config)
         exit(1)
     try:
         with open(config["PATH_HOST"], "w") as fp:
             fp.write(content)
-        print_message("Writing to host file", "Done")
-        click.echo("FocusEnabler is disabled!", color="cyan")
+        click.echo("FocusEnabler is disabled!")
     except OSError:
-        print_message("Writing to host file", "Failed", content_colour="red", fp=sys.stderr)
+        logger.exception("Writing to host file", "Failed", content_colour="red", fp=sys.stderr)
     save_module_config(__name__, config)
 
 
@@ -219,29 +208,28 @@ def add_domain_internal(domains):
         if is_domain_valid(dm):
             if dm not in config["BL_DOMAINS"]:
                 config["BL_DOMAINS"].append(dm)
-                print_message(f"Blacklisting {decorate_domain_name(dm)}", "Done")
+                click.echo(f"Blacklisted: {dm}")
             else:
-                print_message(f"Blacklisting {decorate_domain_name(dm)}", "Already blacklisted")
+                click.echo(f"Already blacklisted: {dm}")
         else:
-            print_message(f"Blacklisting {decorate_domain_name(dm)}", "Invalid", content_colour="red")
+            click.echo(f"Invalid domain: {dm}")
 
 
 def remove_domain_internal(confirm, domains, fp):
     """(Internal) Remove domain from config."""
     if domains == (".",):
         if len(config["BL_DOMAINS"]) == 0:
-            click.echo("No blacklisted domains found", color="bright_white")
+            click.echo("No blacklisted domains found", fp)
             exit(0)
         domains = config["BL_DOMAINS"]
     for dm in domains:
         if dm in config["BL_DOMAINS"]:
             option = None
             while confirm and option not in ("y", "n"):
-                option = input(get_input_prompt(f"Un-blacklist '{decorate_domain_name(dm)}'? [Y/N]"))
+                option = input(get_input_prompt(f"Un-blacklist '{dm}'? [Y/N]"))
             if option == "n":
                 continue
             config["BL_DOMAINS"].remove(dm)
-            print_message(f"Un-blacklisting {decorate_domain_name(dm)}", "Done", fp=fp)
+            click.echo(f"Un-blacklisted: {dm}", fp)
         else:
-            print_message(f"Un-blacklisting {decorate_domain_name(dm)}",
-                          "Not found", content_colour="red", fp=fp)
+            click.echo(f"Domain not found: {dm}", fp)

@@ -1,11 +1,20 @@
-build:
-	python3 setup.py sdist bdist_wheel
+venv:
+	/usr/local/bin/python3 -m venv .venv
+	./.venv/bin/pip3 install -y -r requirements.txt
 
-publish:
-	twine check dist/* && twine upload dist/*
+build:
+	./.venv/bin/python3 setup.py sdist bdist_wheel
+
+publish: build
+	./.venv/bin/twine check dist/* && twine upload dist/*
 
 clean:
-	find src/ -type d -name __pycache__ -exec rm -r {} \+
-	find . -type d -name build -exec rm -r {} \+
-	find . -type d -name dist -exec rm -r {} \+
-	find . -type d -name *.egg-info -exec rm -r {} \+
+	rm -rf build
+	rm -rf dist
+	find . -type d -name __pycache__ -exec rm -r {} \+
+
+dev-uninstall:
+	./.venv/bin/pip3 uninstall -y SuperHelper && rm -rf src/*.egg-info
+
+dev-install:
+	./.venv/bin/pip3 install -e .

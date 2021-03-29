@@ -31,6 +31,10 @@ git clone https://github.com/GreaterGoodCorp/SuperHelper
 make install
 ```
 
+## Documentation
+
+Please refer to `README.md` files located in each subpackage.
+
 ## Changelog
 
 ### Pre-release
@@ -41,6 +45,8 @@ make install
 
 * Version `0.1.0`: Added new core utilities functions, including installing, disabling and listing modules,
   and showing versioning.
+  
+* Version `0.2.0`: Added a new module `Builtins.Steganographer` and restructured the code completely.
   
 ## Contributing
 
