@@ -1,3 +1,7 @@
+venv:
+	/usr/local/bin/python3 -m venv .venv
+	./.venv/bin/pip3 install -r requirements.txt
+
 build:
 	./.venv/bin/python3 setup.py sdist bdist_wheel
 
