@@ -56,5 +56,6 @@ Please refer to [the contributing guidelines][CONTRIBUTING] for more information
 
 This program is licensed under the
 [MIT License](https://github.com/GreaterGoodCorp/SuperHelper/blob/main/LICENSE).
-[CONTRIBUTING](https://github.com/GreaterGoodCorp/SuperHelper/blob/main/CONTRIBUTING.md)
+
+[CONTRIBUTING]: https://github.com/GreaterGoodCorp/SuperHelper/blob/main/CONTRIBUTING.md
 [GitHub]: https://github.com/GreaterGoodCorp/SuperHelper
