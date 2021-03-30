@@ -25,14 +25,26 @@ def main_entry():
     # Load application config
     from SuperHelper.Core.Config import load_app_config, save_app_config
     load_app_config(CONFIG_PATH)
+    # Load core logger
+    logger = initialise_core_logger()
     # Load core utilities and functionalities
     from SuperHelper.Core.Utils import load_core_commands
     for core_module in load_core_commands():
-        cli.add_command(core_module)
+        try:
+            cli.add_command(core_module)
+        except Exception or BaseException:
+            logger.exception(f"Unable to load core module {core_module.__qualname__}")
+        else:
+            logger.debug(f"Loaded core module {core_module.__qualname__}")
     # Load installed modules
     from SuperHelper.Core.Utils import load_installed_modules
     for module in load_installed_modules():
-        cli.add_command(module)
+        try:
+            cli.add_command(module)
+        except Exception or BaseException:
+            logger.exception(f"Unable to load module {core_module.__qualname__}")
+        else:
+            logger.debug(f"Loaded module {core_module.__qualname__}")
     try:
         # Execute CLI
         sys.exit(cli())
