@@ -5,13 +5,14 @@ import typing
 from SuperHelper.Core.Config.app_config import ApplicationConfig
 
 logger = logging.getLogger("SuperHelper.Core.Config")
-logger.setLevel(logging.DEBUG)
-logger.addHandler(logging.NullHandler())
 
 
 def load_cli_config() -> typing.Dict:
-    return ApplicationConfig["CORE_CLI"]
-
+    try:
+        return ApplicationConfig["CORE_CLI"]
+    except KeyError:
+        logger.exception("CORE_CLI not found!")
+        logger.debug(ApplicationConfig)
 
 def save_cli_config(config: typing.Dict) -> None:
     ApplicationConfig["CORE_CLI"] = config
