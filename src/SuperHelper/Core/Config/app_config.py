@@ -5,8 +5,6 @@ import json
 import copy
 
 logger = logging.getLogger("SuperHelper.Core.Config")
-logger.setLevel(logging.DEBUG)
-logger.addHandler(logging.NullHandler())
 
 DefaultApplicationConfig: typing.Dict = {
     "CORE_CLI": {
@@ -29,10 +27,8 @@ def load_app_config(config_path: str) -> None:
             ApplicationConfig.update(json.load(fp))
     except OSError:
         logger.exception("Config loader failed due to file being unreadable!")
-        raise
     except json.JSONDecodeError:
         logger.exception("Config loader failed due to non-decoded values!")
-        raise
     return
 
 
@@ -43,4 +39,3 @@ def save_app_config(config_path: str) -> None:
             json.dump(ApplicationConfig, fp, default=lambda o: None)
     except OSError:
         logger.exception("Config saver failed!")
-        raise
