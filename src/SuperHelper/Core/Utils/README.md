@@ -11,6 +11,8 @@ Core commands are also documented here.
 
 2. Module `loader.py`: Contains the module loader function.
 
+3. Module `logger.py`: Contains the core logger initialisation function.
+
 ## API documentation
 
 1. Function `load_installed_modules()`
@@ -37,6 +39,15 @@ Core commands are also documented here.
 
   * **Note**: This function is intended for internal use only. It should only be called once when the application loads
     modules. (Called by Core CLI)
+    
+3. Function `initialise_core_logger()`
+
+  * **Parameters**: *No parameter*
+      
+  * **Returns**: The core logger of type `logging.Logger` (with name `SuperHelper`)
+
+  * **Note**: This function is intended for internal use only. It should only be called once when the application starts.
+    (Called by Core CLI)
   
 ## Command documentation
 
