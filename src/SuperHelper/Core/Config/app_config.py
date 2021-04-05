@@ -2,7 +2,7 @@
 import json
 import logging
 
-from SuperHelper.Core.Config import Config
+from SuperHelper.Core.Config import Config, pass_config, DefaultCoreConfig
 
 logger = logging.getLogger("SuperHelper.Core.Config")
 
@@ -22,10 +22,11 @@ def load_app_config(config_path: str) -> Config:
         raise RuntimeError
 
 
-def save_app_config(config_path: str, config: Config) -> None:
+@pass_config
+def save_app_config(config: Config, config_path: str) -> None:
     try:
         with open(config_path, "w") as fp:
-            json.dump(config, fp)
+            json.dump(config.__dict__(), fp)
     except OSError:
         logger.exception("Config saver failed!")
         raise RuntimeError
