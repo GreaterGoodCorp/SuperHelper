@@ -27,8 +27,8 @@ class Config(metaclass=Singleton):
     _core_lock: bool = False
 
     def __init__(self, core: dict[str, ...] = None, modules: dict[str, dict[str, ...]] = None) -> None:
-        self._Core = core
-        self._Modules = modules
+        self._Core = core if core is not None else DefaultCoreConfig
+        self._Modules = modules if modules is not None else dict()
         return
 
     def get_core_config(self) -> dict[str, ...]:
