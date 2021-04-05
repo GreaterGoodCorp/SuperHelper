@@ -34,4 +34,4 @@ def save_app_config(config_path: str, config: Config) -> None:
             json.dump(config, fp)
     except OSError:
         logger.exception("Config saver failed!")
-        raise
+        raise RuntimeError
