@@ -1,8 +1,8 @@
 # This module defines core utilities and functionalities
 import importlib.util
+import logging
 import pkgutil
 import typing
-import logging
 
 import click
 

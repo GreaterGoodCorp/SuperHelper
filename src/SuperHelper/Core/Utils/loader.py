@@ -1,8 +1,9 @@
 # This module defines the module loader function.
 import importlib
 import logging
-import click
 import typing
+
+import click
 
 from SuperHelper.Core.Config import Config, pass_config
 

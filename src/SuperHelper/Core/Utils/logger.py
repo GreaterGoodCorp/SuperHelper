@@ -4,6 +4,7 @@ import logging
 
 class TracebackInfoFilter(logging.Filter):
     """Clear or restore the exception on log records"""
+
     def __init__(self, clear=True):
         super().__init__()
         self.clear = clear

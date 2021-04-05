@@ -17,54 +17,54 @@ Core commands are also documented here.
 
 1. Function `load_installed_modules()`
 
-  * **Parameters**: *No parameter*
-      
-  * **Returns**: A list of main methods of each installed module.
+* **Parameters**: *No parameter*
 
-  * **Raises**: 
-    
-    * `ImportError` if the module cannot be imported.
-    
-    * `AttributeError` if the module does not contain a `main()` function decorated as either `@click.command` or
-      `@click.group`
-  
-  * **Note**: This function is intended for internal use only. It should only be called once when the application loads
-    modules. (Called by Core CLI)
-    
+* **Returns**: A list of main methods of each installed module.
+
+* **Raises**:
+
+  * `ImportError` if the module cannot be imported.
+
+  * `AttributeError` if the module does not contain a `main()` function decorated as either `@click.command` or
+    `@click.group`
+
+* **Note**: This function is intended for internal use only. It should only be called once when the application loads
+  modules. (Called by Core CLI)
+
 2. Function `load_core_modules()`
 
-  * **Parameters**: *No parameter*
-      
-  * **Returns**: A list of core command utilities.
+* **Parameters**: *No parameter*
 
-  * **Note**: This function is intended for internal use only. It should only be called once when the application loads
-    modules. (Called by Core CLI)
-    
+* **Returns**: A list of core command utilities.
+
+* **Note**: This function is intended for internal use only. It should only be called once when the application loads
+  modules. (Called by Core CLI)
+
 3. Function `initialise_core_logger()`
 
-  * **Parameters**: *No parameter*
-      
-  * **Returns**: The core logger of type `logging.Logger` (with name `SuperHelper`)
+* **Parameters**: *No parameter*
 
-  * **Note**: This function is intended for internal use only. It should only be called once when the application starts.
-    (Called by Core CLI)
-  
+* **Returns**: The core logger of type `logging.Logger` (with name `SuperHelper`)
+
+* **Note**: This function is intended for internal use only. It should only be called once when the application starts.
+  (Called by Core CLI)
+
 ## Command documentation
 
 1. Command `install`
 
-  * **Usage**: `helper install <MODULES>` where `<MODULES>` are names of modules you wish to install.
-  
-  * **Notes**: This command is used to install any builtin or external modules that are not installed yet.
-  
+* **Usage**: `helper install <MODULES>` where `<MODULES>` are names of modules you wish to install.
+
+* **Notes**: This command is used to install any builtin or external modules that are not installed yet.
+
 2. Command `uninstall`
 
-  * **Usage**: `helper uninstall <MODULES>` where `<MODULES>` are names of modules you wish to uninstall.
-  
-  * **Notes**: This command is used to uninstall any builtin or external modules that are installed.
+* **Usage**: `helper uninstall <MODULES>` where `<MODULES>` are names of modules you wish to uninstall.
+
+* **Notes**: This command is used to uninstall any builtin or external modules that are installed.
 
 3. Command `list`
 
-  * **Usage**: `helper list [-a]`, when `-a` (or `--all`) is enabled, this will also list not installed modules.
-  
-  * **Notes**: This command is used to list available modules (installed or not installed)
+* **Usage**: `helper list [-a]`, when `-a` (or `--all`) is enabled, this will also list not installed modules.
+
+* **Notes**: This command is used to list available modules (installed or not installed)

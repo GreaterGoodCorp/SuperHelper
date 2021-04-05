@@ -7,8 +7,8 @@ import sys
 import click
 
 from SuperHelper import Version
-from SuperHelper.Core.Utils import initialise_core_logger
 from SuperHelper.Core.Config import Config, make_config_global
+from SuperHelper.Core.Utils import initialise_core_logger
 
 app_dir = click.get_app_dir("SuperHelper")
 pathlib.Path(app_dir).mkdir(parents=True, exist_ok=True)

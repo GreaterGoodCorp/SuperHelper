@@ -116,7 +116,9 @@ def make_config_global(cfg: Config):
 
 def pass_config(f: Callable):
     """Automatically passes the global config as first parameters to all decorated function."""
+
     @wraps(f)
     def wrapper(*args, **kwargs):
         return f(global_config, *args, **kwargs)
+
     return wrapper
