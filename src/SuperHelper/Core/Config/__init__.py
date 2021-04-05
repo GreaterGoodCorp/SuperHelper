@@ -6,4 +6,5 @@ __all__ = [
     "pass_config",
     "load_app_config",
     "save_app_config",
+    "DefaultCoreConfig",
 ]
