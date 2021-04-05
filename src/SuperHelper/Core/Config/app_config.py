@@ -15,8 +15,8 @@ def load_app_config(config_path: str) -> Config:
             config.apply_core_patch(DefaultCoreConfig)
             return config
     except FileNotFoundError:
-        logger.exception("Config file not found! Please run 'helper configure' first!")
-        raise RuntimeError
+        logger.exception("Config file not found! Auto-configuring...")
+        return Config()
     except OSError:
         logger.exception("Config loader failed due to file being unreadable!")
         raise RuntimeError
