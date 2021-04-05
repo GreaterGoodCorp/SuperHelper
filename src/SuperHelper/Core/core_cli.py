@@ -38,7 +38,6 @@ def cli():
 
 # Console entry call
 def main_entry():
-    global config
     check_platform()
     # Load core logger
     logger = initialise_core_logger(LOGGING_PATH)
