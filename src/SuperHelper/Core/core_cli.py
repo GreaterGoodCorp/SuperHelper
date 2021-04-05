@@ -44,8 +44,7 @@ def main_entry():
     try:
         # Load application config
         from SuperHelper.Core.Config import load_app_config, save_app_config
-        config = load_app_config(CONFIG_PATH)
-        make_config_global(config)
+        make_config_global(load_app_config(CONFIG_PATH))
     except RuntimeError:
         sys.exit(1)
     # Load core utilities and functionalities
@@ -71,7 +70,7 @@ def main_entry():
         sys.exit(cli())
     except SystemExit:
         # Save application config
-        save_app_config(CONFIG_PATH, config)
+        save_app_config(CONFIG_PATH)
         raise
 
 
