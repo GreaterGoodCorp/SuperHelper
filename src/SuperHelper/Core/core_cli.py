@@ -27,6 +27,7 @@ def cli():
 
 # Console entry call
 def main_entry():
+    assert sys.platform != "win32", "This application is not configured to run on Windows."
     # Load application config
     from SuperHelper.Core.Config import load_app_config, save_app_config
     load_app_config(CONFIG_PATH)
@@ -36,20 +37,20 @@ def main_entry():
     from SuperHelper.Core.Utils import load_core_commands
     for core_module in load_core_commands():
         try:
-            cli.add_command(core_module)
+            cli.add_command(core_module[0])
         except Exception or BaseException:
-            logger.exception(f"Unable to load core module {core_module.__qualname__}")
+            logger.exception(f"Unable to load core module {core_module[1]}")
         else:
-            logger.debug(f"Loaded core module {core_module.__qualname__}")
+            logger.debug(f"Loaded core module {core_module[1]}")
     # Load installed modules
     from SuperHelper.Core.Utils import load_installed_modules
     for module in load_installed_modules():
         try:
-            cli.add_command(module)
+            cli.add_command(module[0])
         except Exception or BaseException:
-            logger.exception(f"Unable to load module {core_module.__qualname__}")
+            logger.exception(f"Unable to load module {module[1]}")
         else:
-            logger.debug(f"Loaded module {core_module.__qualname__}")
+            logger.debug(f"Loaded module {module[1]}")
     try:
         # Execute CLI
         sys.exit(cli())

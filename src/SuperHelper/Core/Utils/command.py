@@ -2,7 +2,6 @@
 import importlib.util
 import pkgutil
 import sys
-import types
 import typing
 import logging
 
@@ -15,11 +14,11 @@ logger.setLevel(logging.DEBUG)
 logger.addHandler(logging.NullHandler())
 
 
-def load_core_commands() -> typing.List[types.MethodType]:
+def load_core_commands() -> typing.List[typing.Tuple[click.Command, str]]:
     return [
-        install_modules,
-        uninstall_modules,
-        list_modules,
+        (install_modules, "core_install"),
+        (uninstall_modules, "core_uninstall"),
+        (list_modules, "core_list"),
     ]
 
 
