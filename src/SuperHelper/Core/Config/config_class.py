@@ -5,6 +5,12 @@ from typing import Callable
 
 logger = logging.getLogger("SuperHelper.Core.Config")
 
+DefaultCoreConfig: dict[str, ...] = {
+    "DEBUG": "False",
+    "INSTALLED_MODULES": [
+    ],
+}
+
 
 class Singleton(type):
     _instances = {}

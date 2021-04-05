@@ -6,12 +6,6 @@ from SuperHelper.Core.Config import Config
 
 logger = logging.getLogger("SuperHelper.Core.Config")
 
-DefaultCoreConfig: dict[str, ...] = {
-    "DEBUG": "False",
-    "INSTALLED_MODULES": [
-    ],
-}
-
 
 def load_app_config(config_path: str) -> Config:
     try:
