@@ -32,9 +32,8 @@ def check_platform():
 # Program entry point
 @click.group()
 @click.version_option(Version)
-@click.pass_context
-def cli(ctx):
-    ctx.obj = config
+def cli():
+    pass
 
 
 # Console entry call
