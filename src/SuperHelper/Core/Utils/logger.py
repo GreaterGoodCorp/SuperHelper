@@ -1,10 +1,11 @@
 # This module provides a function to initialise the top-level logger
 import logging
 
-def initialise_core_logger():
+
+def initialise_core_logger(logging_path: str):
     logger = logging.getLogger("SuperHelper")
     logger.setLevel(logging.DEBUG)
-    fh = logging.FileHandler(LOGGING_PATH)
+    fh = logging.FileHandler(logging_path, mode="w")
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(logging.Formatter("[%(asctime)s](%(name)s) %(levelname)s: %(message)s"))
     ch = logging.StreamHandler()

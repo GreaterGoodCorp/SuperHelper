@@ -7,10 +7,15 @@ import sys
 import click
 
 from SuperHelper import Version
+from SuperHelper.Core.Utils import initialise_core_logger
 
 CONFIG_FILENAME = ".super_helper"
 DEFAULT_CONFIG_PATH = pathlib.Path.home() / CONFIG_FILENAME
 CONFIG_PATH = os.getenv("SUPER_HELPER_CONFIG_PATH", DEFAULT_CONFIG_PATH)
+
+LOGGING_FILENAME = "super_helper.log"
+DEFAULT_LOGGING_PATH = pathlib.Path.home() / LOGGING_FILENAME
+LOGGING_PATH = os.getenv("SUPER_HELPER_LOGGING_PATH", DEFAULT_LOGGING_PATH)
 
 
 # Program entry point
@@ -26,7 +31,7 @@ def main_entry():
     from SuperHelper.Core.Config import load_app_config, save_app_config
     load_app_config(CONFIG_PATH)
     # Load core logger
-    logger = initialise_core_logger()
+    logger = initialise_core_logger(LOGGING_PATH)
     # Load core utilities and functionalities
     from SuperHelper.Core.Utils import load_core_commands
     for core_module in load_core_commands():
