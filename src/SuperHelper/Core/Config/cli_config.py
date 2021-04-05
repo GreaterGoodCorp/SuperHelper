@@ -14,5 +14,6 @@ def load_cli_config() -> typing.Dict:
         logger.exception("CORE_CLI not found!")
         logger.debug(ApplicationConfig)
 
+
 def save_cli_config(config: typing.Dict) -> None:
     ApplicationConfig["CORE_CLI"] = config
