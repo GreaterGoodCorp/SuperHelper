@@ -3,7 +3,7 @@ import logging
 from functools import wraps
 from typing import Callable
 
-logger = logging.getLogger("SuperHelper.Core.Config")
+logger: logging.Logger = logging.getLogger("SuperHelper.Core.Config")
 
 DefaultCoreConfig: dict[str, ...] = {
     "DEBUG": "False",
@@ -27,8 +27,8 @@ class Config(metaclass=Singleton):
     _core_lock: bool = False
 
     def __init__(self, core: dict[str, ...] = None, modules: dict[str, dict[str, ...]] = None) -> None:
-        self._Core = core if core is not None else DefaultCoreConfig
-        self._Modules = modules if modules is not None else dict()
+        self._Core: dict[str, ...] = core if core is not None else DefaultCoreConfig
+        self._Modules: dict[str, ...] = modules if modules is not None else dict()
         return
 
     def get_core_config(self) -> dict[str, ...]:
@@ -114,11 +114,11 @@ def make_config_global(cfg: Config):
     global_config = cfg
 
 
-def pass_config(f: Callable):
+def pass_config(f: Callable) -> Callable:
     """Automatically passes the global config as first parameters to all decorated function."""
 
     @wraps(f)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args, **kwargs) -> ...:
         return f(global_config, *args, **kwargs)
 
     return wrapper
