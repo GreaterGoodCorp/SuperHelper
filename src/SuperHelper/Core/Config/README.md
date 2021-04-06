@@ -1,18 +1,80 @@
 # Subpackage `SuperHelper.Core.Config`
 
-This package contains configuration loaders and savers for the application, the CLI core and other modules.
+This package contains the configuration parser and the configuration manager
 
 ## Package content
 
-1. Module `app_config.py`: Contains the configuration loader and saver for the application.
+1. Module `config_class.py`: Contains the definition of the configuration manager, the `Config` class.
 
-2. Module `cli_config.py`: Contains the configuration loader and saver for the CLI core.
-
-3. Module `module_config.py`: Contains the configuration loader and saver for all modules.
+2. Module `app_config.py`: Contains the I/O parser for `Config` class.
 
 ## API documentation
 
-1. Function `load_app_config()`
+### `Config` class
+
+The configuration manager for this entire application is defined in `Config` class. It makes using config easier
+and more intuitive.
+
+Design considerations:
+
+* *`Singleton`-based*: Only one instance of `Config` class is available to access. It will automatically instantiated
+  when the application starts.
+  
+* *`Lock`-based*: Caller can request the configuration be locked if it needs to modify the config. Others cannot request
+  copies of the locked configuration.
+  
+* *`Deepcopy`-based*: All configuration dictionaries passing through or returned by the class is a deep-copied dictionary.
+
+### Method documentation
+
+1. Method `get_core_config(self) -> dict[str, ...]`
+
+    This method returns the configuration of core CLI. Please note that it will be locked the entire time to prevent
+    unauthorised access. `RuntimeError` is raised for any attempt to call this method.
+  
+    * *Parameters*: *No parameter required*
+
+2. Method `set_core_config(self, config: dict[str, ...]) -> None`
+
+    This method receives the configuration of core CLI and writes it to `Config` class. This method should only be called
+    by the core CLI, as any modification to the core CLI will be overwritten when the application finalises.
+  
+    * *Parameters*: *`config` - The configuration of core CLI*
+
+3. Method `apply_core_patch(self, config: dict[str, ...]) -> None`
+
+    Unlike `Config.set_core_config`, this method does not overwrite the entire core configuration. Instead, it will apply
+    any new keys in the `config` provided to the existing configuration. This method is used when a new key is introduced
+    to the configuration, and to maintain backward compatibility with previous config.
+  
+    * *Parameters*: *`config` - The patch of core configuration*
+
+4. Method `get_module_config(self, module_name: str) -> dict[str, ...]`
+
+    This method returns the configuration of the module `module_name`. Please note that it will be locked the entire
+    time to prevent unauthorised access. `RuntimeError` is raised for any attempt to call this method before
+    `Config.set_module_config` is called with the same `module_name` provided.
+  
+    * *Parameters*: *`module_name` - The name of the module*
+
+2. Method `set_module_config(self, module_name: str, config: dict[str, ...]) -> None`
+
+  This method receives the configuration of the module `module_name` and writes it to `Config` class. This method should 
+  be called by the caller of `Config.get_module_config` before returning.
+  
+  * *Parameters*: * *`config` - The configuration of core CLI*
+
+                  * *``*
+
+3. Method `apply_core_patch(self, config: dict[str, ...]) -> None`
+
+  Unlike `Config.set_core_config`, this method does not overwrite the entire core configuration. Instead, it will apply
+  any new keys in the `config` provided to the existing configuration. This method is used when a new key is introduced
+  to the configuration, and to maintain backward compatibility with previous config.
+  
+  * *Parameters*: *`config` - The patch of core configuration*
+
+5. Function `load_app_config()`
 
 * **Parameters**:
 
