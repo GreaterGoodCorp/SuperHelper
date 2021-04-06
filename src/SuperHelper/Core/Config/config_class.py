@@ -8,7 +8,7 @@ from typing import Callable
 logger: logging.Logger = logging.getLogger("SuperHelper.Core.Config")
 
 DefaultCoreConfig: dict[str, ...] = {
-    "DEBUG": "False",
+    "DEBUG": False,
     "INSTALLED_MODULES": [
     ],
 }
