@@ -25,21 +25,21 @@ Design considerations:
   
 * *`Deepcopy`-based*: All configuration dictionaries passing through or returned by the class is a deep-copied dictionary.
 
-### Method documentation
+#### Method documentation
 
 1. Method `get_core_config(self) -> dict[str, ...]`
 
     This method returns the configuration of core CLI. Please note that it will be locked the entire time to prevent
     unauthorised access. `RuntimeError` is raised for any attempt to call this method.
   
-    * *Parameters*: *No parameter required*
+    *Parameters*: *No parameter required*
 
 2. Method `set_core_config(self, config: dict[str, ...]) -> None`
 
     This method receives the configuration of core CLI and writes it to `Config` class. This method should only be called
     by the core CLI, as any modification to the core CLI will be overwritten when the application finalises.
   
-    * *Parameters*: *`config` - The configuration of core CLI*
+    *Parameters*: *`config` - The configuration of core CLI*
 
 3. Method `apply_core_patch(self, config: dict[str, ...]) -> None`
 
@@ -47,7 +47,7 @@ Design considerations:
     any new keys in the `config` provided to the existing configuration. This method is used when a new key is introduced
     to the configuration, and to maintain backward compatibility with previous config.
   
-    * *Parameters*: *`config` - The patch of core configuration*
+    *Parameters*: *`config` - The patch of core configuration*
 
 4. Method `get_module_config(self, module_name: str) -> dict[str, ...]`
 
@@ -55,24 +55,45 @@ Design considerations:
     time to prevent unauthorised access. `RuntimeError` is raised for any attempt to call this method before
     `Config.set_module_config` is called with the same `module_name` provided.
   
-    * *Parameters*: *`module_name` - The name of the module*
+    *Parameters*: *`module_name` - The name of the module*
 
-2. Method `set_module_config(self, module_name: str, config: dict[str, ...]) -> None`
+5. Method `set_module_config(self, module_name: str, config: dict[str, ...]) -> None`
 
-  This method receives the configuration of the module `module_name` and writes it to `Config` class. This method should 
-  be called by the caller of `Config.get_module_config` before returning.
+    This method receives the configuration of the module `module_name` and writes it to `Config` class. This method should 
+    be called by the caller of `Config.get_module_config` before returning.
   
-  * *Parameters*: * *`config` - The configuration of core CLI*
+    *Parameters*:
 
-                  * *``*
+    * *`module_name` - The name of the module*
 
-3. Method `apply_core_patch(self, config: dict[str, ...]) -> None`
+    * *`config` - The configuration of core CLI*
 
-  Unlike `Config.set_core_config`, this method does not overwrite the entire core configuration. Instead, it will apply
-  any new keys in the `config` provided to the existing configuration. This method is used when a new key is introduced
-  to the configuration, and to maintain backward compatibility with previous config.
+6. Method `apply_module_patch(self, config: dict[str, ...]) -> None`
+
+    Unlike `Config.set_module_config`, this method does not overwrite the entire module configuration. Instead, it will
+    apply any new keys in the `config` provided to the existing configuration. This method is used when a new key is
+    introduced to the configuration, and to maintain backward compatibility with previous config.
   
-  * *Parameters*: *`config` - The patch of core configuration*
+    *Parameters*:
+  
+    * *`module_name` - The name of the module*
+  
+    * *`config` - The patch of module configuration*
+
+#### Other methods
+
+1. Overriding method `__dict__(self) -> dict[str, ...]`
+
+    This overriding method returns a dictionary of the `Core` and `Modules` configuration (`dict[str, dict[str, ...]]`).
+    It is usually only used for JSON serialisation.
+    
+    *Parameters*: *No parameter required*
+    
+2. Static method `json_decode_hook(json_obj: ...) -> Config`
+
+    This method is intended for internal use only. This method is used by JSON decoder to return the `Config` object.
+    
+    *Parameters*: *`json_obj` - The JSON object passed in by JSON decoder*
 
 5. Function `load_app_config()`
 
