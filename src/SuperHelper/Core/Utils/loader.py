@@ -5,7 +5,7 @@ import typing
 
 import click
 
-from SuperHelper.Core.Config import Config, pass_config
+from SuperHelper.Core.Config import pass_config
 
 logger = logging.getLogger("SuperHelper.Core.Utils")
 logger.setLevel(logging.DEBUG)

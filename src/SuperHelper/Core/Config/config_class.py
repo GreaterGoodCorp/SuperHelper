@@ -124,6 +124,7 @@ def make_config_global(cfg: Config):
 
 def pass_config(core: bool = None, module_name: str = None) -> Callable:
     """Automatically passes the config (as required) as the first positional argument."""
+
     def decorator(f: Callable) -> Callable:
         @wraps(f)
         def wrapper(*args, **kwargs) -> ...:
@@ -135,5 +136,7 @@ def pass_config(core: bool = None, module_name: str = None) -> Callable:
                 return f(global_config.get_module_config(module_name, lock=False), *args, **kwargs)
             else:
                 raise ValueError("Core and module name cannot be enabled at the same time!")
+
         return wrapper
+
     return decorator

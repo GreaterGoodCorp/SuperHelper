@@ -41,10 +41,10 @@ Design considerations:
    by the core CLI, as it will overwrite any modified configurations.
 
    *Parameters*:
-   
-   * *`config` - The configuration of core CLI*
-     
-   * *`lock` - Whether to set the lock for the module config*
+
+    * *`config` - The configuration of core CLI*
+
+    * *`lock` - Whether to set the lock for the module config*
 
 3. Method `apply_core_patch(self, config: dict[str, ...]) -> None`
 
@@ -61,10 +61,10 @@ Design considerations:
    attempt to call this method before `Config.set_module_config` is called with the same `module_name` provided.
 
    *Parameters*:
-   
-   * *`module_name` - The name of the module*
-     
-   * *`lock` - Whether to set the lock for the module config*
+
+    * *`module_name` - The name of the module*
+
+    * *`lock` - Whether to set the lock for the module config*
 
 5. Method `set_module_config(self, module_name: str, config: dict[str, ...]) -> None`
 
@@ -73,9 +73,9 @@ Design considerations:
 
    *Parameters*:
 
-  * *`module_name` - The name of the module*
+* *`module_name` - The name of the module*
 
-  * *`config` - The configuration of core CLI*
+* *`config` - The configuration of core CLI*
 
 6. Method `apply_module_patch(self, config: dict[str, ...]) -> None`
 
@@ -85,9 +85,9 @@ Design considerations:
 
    *Parameters*:
 
-  * *`module_name` - The name of the module*
+* *`module_name` - The name of the module*
 
-  * *`config` - The patch of module configuration*
+* *`config` - The patch of module configuration*
 
 #### Other methods
 
@@ -110,7 +110,7 @@ Design considerations:
 
    This function takes in a `Config` instance and makes it global (in the scope of the module `config_class.py`). This
    allows for a more intuitive way to access the config.
-   
+
    This function should only be called once by the core CLI.
 
    *Parameters*: *`cfg`: The `Config` instance*
@@ -119,17 +119,17 @@ Design considerations:
 
    This decorator will pass the `Config` instance as the first positional parameter of the decorated function call.
    (if both `core` and `module_name` are left default).
-   
+
    If `core is not None`, this decorator will pass the configuration of core CLI instead. If `module_name is not None`,
    this decorator will pass the configuration of module `module_name`.
-   
+
    This default decorator should be used if the config will be modified. The quicker ways (by setting either `core` or
    `module_name`) can only be used if the config will not be modified, as the config returned is not locked.
 
    If both are not `None`, this decorator raises `ValueError`.
 
    *Parameters*:
-     
-   * *`core` - Whether to return only the configuration of core CLI*
 
-   * *`module_name` - The name of the module to get configuration*
+    * *`core` - Whether to return only the configuration of core CLI*
+
+    * *`module_name` - The name of the module to get configuration*

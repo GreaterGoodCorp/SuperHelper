@@ -2,7 +2,7 @@
 import json
 import logging
 
-from SuperHelper.Core.Config import Config, DefaultCoreConfig, pass_config, make_config_global
+from SuperHelper.Core.Config import Config, DefaultCoreConfig, make_config_global, pass_config
 
 logger = logging.getLogger("SuperHelper.Core.Config")
 
