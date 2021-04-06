@@ -22,7 +22,7 @@ def load_app_config(config_path: str) -> None:
         raise RuntimeError
 
 
-@pass_config
+@pass_config()
 def save_app_config(config: Config, config_path: str) -> None:
     try:
         with open(config_path, "w") as fp:
