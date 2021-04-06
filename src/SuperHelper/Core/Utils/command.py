@@ -23,7 +23,7 @@ def load_core_commands() -> typing.List[typing.Tuple[click.Command, str]]:
 
 @click.command("install")
 @click.argument("module")
-@pass_config
+@pass_config()
 def install_modules(config: Config, module: str) -> int:
     """Install new modules into SuperHelper."""
     if importlib.util.find_spec(module) is not None:
@@ -39,7 +39,7 @@ def install_modules(config: Config, module: str) -> int:
 
 @click.command("uninstall")
 @click.argument("module")
-@pass_config
+@pass_config()
 def uninstall_modules(config: Config, module: str):
     """Uninstall existing modules from SuperHelper."""
     core_cfg = config.get_core_config(lock=True)
@@ -54,15 +54,14 @@ def uninstall_modules(config: Config, module: str):
 
 @click.command("list")
 @click.option("-a", "--all", "list_all", help="Include uninstalled modules", is_flag=True)
-@pass_config
-def list_modules(config: Config, list_all: bool):
+@pass_config(core=True)
+def list_modules(cli_config, list_all: bool):
     """List installed modules"""
-    core_cfg = config.get_core_config()
     import SuperHelper.Builtins as Package
     prefix = Package.__name__ + "."
     count = 0
     for _, module_name, _ in pkgutil.iter_modules(Package.__path__, prefix):
-        if module_name in core_cfg["INSTALLED_MODULES"]:
+        if module_name in cli_config["INSTALLED_MODULES"]:
             click.echo(f"(Installed) {module_name}")
             count += 1
         elif list_all:
