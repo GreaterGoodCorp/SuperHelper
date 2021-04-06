@@ -122,11 +122,18 @@ def make_config_global(cfg: Config):
     global_config = cfg
 
 
-def pass_config(f: Callable) -> Callable:
-    """Automatically passes the global config as first parameters to all decorated function."""
-
-    @wraps(f)
-    def wrapper(*args, **kwargs) -> ...:
-        return f(global_config, *args, **kwargs)
-
-    return wrapper
+def pass_config(core: bool = None, module_name: str = None) -> Callable:
+    """Automatically passes the config (as required) as the first positional argument."""
+    def decorator(f: Callable) -> Callable:
+        @wraps(f)
+        def wrapper(*args, **kwargs) -> ...:
+            if core is None and module_name is None:
+                return f(global_config, *args, **kwargs)
+            elif core is not None and module_name is None:
+                return f(global_config.get_core_config(lock=False), *args, **kwargs)
+            elif core is None and module_name is not None:
+                return f(global_config.get_module_config(module_name, lock=False), *args, **kwargs)
+            else:
+                raise ValueError("Core and module name cannot be enabled at the same time!")
+        return wrapper
+    return decorator
