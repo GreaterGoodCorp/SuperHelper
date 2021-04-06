@@ -27,7 +27,7 @@ def load_core_commands() -> typing.List[typing.Tuple[click.Command, str]]:
 def install_modules(config: Config, module: str) -> int:
     """Install new modules into SuperHelper."""
     if importlib.util.find_spec(module) is not None:
-        core_cfg = config.get_core_config()
+        core_cfg = config.get_core_config(lock=True)
         if module not in core_cfg["INSTALLED_MODULES"]:
             core_cfg["INSTALLED_MODULES"].append(module)
         config.set_core_config(core_cfg)
@@ -42,7 +42,7 @@ def install_modules(config: Config, module: str) -> int:
 @pass_config
 def uninstall_modules(config: Config, module: str):
     """Uninstall existing modules from SuperHelper."""
-    core_cfg = config.get_core_config()
+    core_cfg = config.get_core_config(lock=True)
     if module in core_cfg["INSTALLED_MODULES"]:
         core_cfg["INSTALLED_MODULES"].remove(module)
         config.set_core_config(core_cfg)
@@ -69,5 +69,4 @@ def list_modules(config: Config, list_all: bool):
             click.echo(module_name)
     if count == 0 and not list_all:
         click.echo("No installed modules found!")
-    config.set_core_config(core_cfg)
     return 0
