@@ -7,7 +7,7 @@ import sys
 import click
 
 from SuperHelper import Version
-from SuperHelper.Core.Config import Config, make_config_global
+from SuperHelper.Core.Config import Config
 from SuperHelper.Core.Utils import initialise_core_logger
 
 app_dir = click.get_app_dir("SuperHelper")
@@ -44,7 +44,7 @@ def main_entry():
     try:
         # Load application config
         from SuperHelper.Core.Config import load_app_config, save_app_config
-        make_config_global(load_app_config(CONFIG_PATH))
+        load_app_config(CONFIG_PATH)
     except RuntimeError:
         sys.exit(1)
     # Load core utilities and functionalities
