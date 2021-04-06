@@ -13,7 +13,7 @@ from SuperHelper.Core.Utils import initialise_core_logger
 app_dir = click.get_app_dir("SuperHelper")
 pathlib.Path(app_dir).mkdir(parents=True, exist_ok=True)
 
-CONFIG_FILENAME = ".super_helper"
+CONFIG_FILENAME = "super_helper.cfg"
 DEFAULT_CONFIG_PATH = pathlib.Path(click.get_app_dir("SuperHelper")) / CONFIG_FILENAME
 CONFIG_PATH = os.getenv("SUPER_HELPER_CONFIG_PATH", DEFAULT_CONFIG_PATH)
 
