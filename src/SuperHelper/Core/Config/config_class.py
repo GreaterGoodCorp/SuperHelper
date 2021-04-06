@@ -33,17 +33,20 @@ class Config(metaclass=Singleton):
         self._Modules: dict[str, ...] = modules if modules is not None else dict()
         return
 
-    def get_core_config(self) -> dict[str, ...]:
+    def get_core_config(self, lock: bool = True) -> dict[str, ...]:
         """Get the core configuration. Can only get once!"""
         if Config._core_lock:
             raise RuntimeError("Core config is already retrieved!")
-        # Lock core config
-        Config._core_lock = True
+        if lock:
+            # Lock core config
+            Config._core_lock = True
         return copy.deepcopy(self._Core)
 
     def set_core_config(self, config: dict[str, ...]) -> None:
         """Set the core configuration."""
         # Release lock core config
+        if not Config._core_lock:
+            raise RuntimeError("No lock was acquired! Write access is disabled!")
         Config._core_lock = False
         self._Core = copy.deepcopy(config)
         return
@@ -62,12 +65,13 @@ class Config(metaclass=Singleton):
             logger.exception("Cannot secure core config")
             raise
 
-    def get_module_config(self, module_name: str) -> dict[str, ...]:
+    def get_module_config(self, module_name: str, lock: bool = True) -> dict[str, ...]:
         """Get the module configuration. Can only get once!"""
         lock_name = f"{module_name}_lock"
         assert not getattr(self, lock_name, False), f"{module_name} config is already retrieved!"
-        # Lock module config
-        setattr(self, lock_name, True)
+        if lock:
+            # Lock module config
+            setattr(self, lock_name, True)
         if module_name not in self._Modules.keys():
             # Make placeholder
             self._Modules[module_name] = dict()
@@ -77,6 +81,8 @@ class Config(metaclass=Singleton):
         """Set the module configuration."""
         # Release lock module config
         lock_name = f"{module_name}_lock"
+        if not getattr(self, lock_name, False):
+            raise RuntimeError("No lock was acquired! Write access is disabled!")
         setattr(self, lock_name, False)
         self._Modules[module_name] = copy.deepcopy(config)
         return
