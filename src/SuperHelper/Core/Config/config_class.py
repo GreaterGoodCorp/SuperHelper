@@ -92,14 +92,14 @@ class Config(metaclass=Singleton):
             logger.exception(f"Cannot secure module '{module_name}' config")
             raise
 
-    def __dict__(self):
+    def __dict__(self) -> dict[str, dict[str, ...]]:
         return {
             "Core": self._Core,
             "Modules": self._Modules,
         }
 
     @staticmethod
-    def json_decode_hook(json_obj):
+    def json_decode_hook(json_obj) -> Config:
         """(Internal) Object hook for JSONDecoder."""
         if "Core" in json_obj and "Modules" in json_obj:
             return Config(core=json_obj["Core"], modules=json_obj["Modules"])
