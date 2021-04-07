@@ -52,7 +52,7 @@ def remove_modules(config: dict[str, ...], module: str):
 @pass_config(core=True, lock=False)
 def list_modules(config: dict[str, ...], list_all: bool):
     """List installed modules"""
-    import SuperHelper.Builtins as Package
+    import SuperHelper.Modules as Package
     prefix = Package.__name__ + "."
     count = 0
     for _, module_name, _ in pkgutil.iter_modules(Package.__path__, prefix):

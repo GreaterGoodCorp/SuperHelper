@@ -5,18 +5,18 @@ from sys import stdout as std
 # Non-builtin modules
 import click
 
-from SuperHelper.Builtins.Stenographer.core import SteganographyConfig as Config
-from SuperHelper.Builtins.Stenographer.core.steg import write_steganography, extract_steganography
+from SuperHelper.Modules.Stenographer.core import SteganographyConfig as Config
+from SuperHelper.Modules.Stenographer.core.steg import write_steganography, extract_steganography
 # Internal modules
-from SuperHelper.Builtins.Stenographer.helper import raw_open, open_image
+from SuperHelper.Modules.Stenographer.helper import raw_open, open_image
 from SuperHelper.Core.Config import load_module_config, save_module_config
 
 
 @click.group("steg")
 def main():
     """Stenographer is a program that deals with pictorial steganography."""
-    Config.update(load_module_config("SuperHelper.Builtins.Stenographer"))
-    save_module_config("SuperHelper.Builtins.Stenographer", Config)
+    Config.update(load_module_config("SuperHelper.Modules.Stenographer"))
+    save_module_config("SuperHelper.Modules.Stenographer", Config)
     pass
 
 

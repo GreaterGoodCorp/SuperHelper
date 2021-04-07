@@ -8,26 +8,26 @@ from bz2 import compress, decompress
 from typing import List, Union
 
 # Internal modules
-from SuperHelper.Builtins.Stenographer.core import SteganographyConfig as Config
-from SuperHelper.Builtins.Stenographer.core.errors import (
+from SuperHelper.Modules.Stenographer.core import SteganographyConfig as Config
+from SuperHelper.Modules.Stenographer.core.errors import (
     InputFileError,
     InsufficientStorageError,
     UnrecognisedHeaderError,
     AuthenticationError,
     OutputFileError,
 )
-from SuperHelper.Builtins.Stenographer.core.header import (
+from SuperHelper.Modules.Stenographer.core.header import (
     Header,
     build_header,
     parse_header
 )
-from SuperHelper.Builtins.Stenographer.helper import (
+from SuperHelper.Modules.Stenographer.helper import (
     is_bit_set,
     set_bit,
     show_image,
     unset_bit
 )
-from SuperHelper.Builtins.Stenographer.crypto import (
+from SuperHelper.Modules.Stenographer.crypto import (
     make_salt,
     extract_raw_salt,
     create_kdf,

@@ -5,8 +5,8 @@
 from re import compile, Pattern
 
 # Internal modules
-from SuperHelper.Builtins.Stenographer.core import SteganographyConfig as Config
-from SuperHelper.Builtins.Stenographer.core.errors import UnrecognisedHeaderError
+from SuperHelper.Modules.Stenographer.core import SteganographyConfig as Config
+from SuperHelper.Modules.Stenographer.core.errors import UnrecognisedHeaderError
 
 
 class Header:

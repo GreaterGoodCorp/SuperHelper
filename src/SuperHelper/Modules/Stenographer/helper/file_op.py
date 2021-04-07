@@ -4,7 +4,7 @@ from typing import Union
 from os import path
 
 # Internal modules
-from SuperHelper.Builtins.Stenographer.core import SteganographyConfig as Config
+from SuperHelper.Modules.Stenographer.core import SteganographyConfig as Config
 
 
 def raw_open(
