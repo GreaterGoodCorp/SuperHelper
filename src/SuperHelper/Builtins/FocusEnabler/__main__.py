@@ -175,6 +175,7 @@ def deactivate_app(config: dict[str, ...]) -> int:
 
 def flush_dns():
     """Flush DNS cache on machine."""
+
     def flush_dns_win32():
         """Flush DNS on Windows."""
         subprocess.Popen(["ipconfig", "/flushdns"])
