@@ -7,18 +7,19 @@ import subprocess
 import sys
 import typing
 import logging
+import functools
 from pathlib import Path
 
 import click
 
-from SuperHelper.Core.Config import load_module_config, save_module_config
+from SuperHelper.Core import Config
+from SuperHelper.Core.Config import pass_config
 
-__name__ = "SuperHelper.Builtins.FocusEnabler"
+MODULE_NAME: str = "FocusEnabler"
+pass_config_no_lock = functools.partial(pass_config, module=MODULE_NAME, lock=False)
+pass_config_with_lock = functools.partial(pass_config, module=MODULE_NAME, lock=True)
+__name__ = f"SuperHelper.Builtins.{MODULE_NAME}"
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-logger.addHandler(logging.NullHandler())
-
-config: typing.Dict
 
 
 def get_input_prompt(title):
@@ -37,20 +38,21 @@ def is_domain_valid(domain):
 
 def get_host_path() -> str:
     if sys.platform == "win32":
-        return Path(os.getenv("WINDIR")) / "System32" / "Driver" / "etc" / "hosts"
+        return str(Path(os.getenv("WINDIR")) / "System32" / "Driver" / "etc" / "hosts")
     else:
-        return Path("/etc") / "hosts"
+        return str(Path("/etc") / "hosts")
 
 
-def initialise_config_dict() -> None:
-    """Initialise a new config dictionary and write to file."""
-    global config
-    config = {
+@pass_config()
+def patch_config(config: Config) -> None:
+    """Initialise a new config dictionary."""
+    cfg = {
         "BL_SECTION_START": "# Added by FocusEnabler, do not modify!",
         "BL_SECTION_END": "# End of section FocusEnabler",
         "BL_DOMAINS": [],
-        "PATH_HOST": str(get_host_path()),
+        "PATH_HOST": get_host_path(),
     }
+    config.apply_module_patch(MODULE_NAME, cfg)
 
 
 def is_root():
@@ -61,71 +63,67 @@ def is_root():
 
 
 @click.group("focus")
-def main():
+def main() -> None:
     """FocusEnabler is a program that enables your focus by blocking websites."""
-    # Load config for this module
-    global config
-    config = load_module_config(__name__)
-    if len(config.keys()) == 0:
-        initialise_config_dict()
-        save_module_config(__name__, config)
+    # Apply patch to module config (or initialise)
+    patch_config()
 
 
 @main.command("add")
 @click.option("-c", "--clear", is_flag=True, help="(Optionally) Remove all blacklisted domains (same as 'remove')")
 @click.argument("domains", nargs=-1, required=True)
-def add_domain(clear, domains):
+def add_domain(clear, domains) -> int:
     """Add DOMAINS to blacklist."""
     if is_root():
         logging.warning("Please do not run this command as 'root'")
-        sys.exit(1)
+        return 1
     if clear:
         with io.StringIO() as sio:
             remove_domain_internal(False, ".", sio)
-    add_domain_internal(domains)
-    save_module_config(__name__, config)
+    return add_domain_internal(domains)
 
 
 @main.command("list")
-def list_domain():
+@pass_config_no_lock()
+def list_domain(config: dict[str, ...]) -> int:
     """List blacklisted domains"""
     if is_root():
         logging.warning("Please do not run this command as 'root'")
-        sys.exit(1)
+        return 1
     if len(config["BL_DOMAINS"]) == 0:
         click.echo("No blacklisted domains found")
-        exit(0)
+        return 0
     click.echo("All blacklisted domains:")
     for domain, count in zip(config["BL_DOMAINS"], itertools.count()):
         click.echo(f"({count + 1}) {domain}")
-    save_module_config(__name__, config)
+    return 0
 
 
 @main.command("remove")
 @click.option("-c", "--confirm", is_flag=True, help="Ask before removing each domain")
 @click.argument("domains", nargs=-1, required=True)
-def remove_domain(confirm, domains):
+def remove_domain(confirm, domains) -> int:
     """Remove DOMAINS from blacklist"""
     if is_root():
         logging.warning("Please do not run this command as 'root'")
-        sys.exit(1)
-    remove_domain_internal(confirm, domains, sys.stdout)
-    save_module_config(__name__, config)
+        return 1
+    return remove_domain_internal(confirm, domains, sys.stdout)
 
 
 @main.command("activate")
-def activate_app():
+@pass_config_no_lock()
+def activate_app(config: dict[str, ...]) -> int:
     """Activate FocusEnabler."""
     if not is_root():
         logging.warning("Please run this command as 'root'")
-        sys.exit(1)
+        return 1
     if not os.access(config["PATH_HOST"], os.W_OK):
         logging.warning("Hosts file is inaccessible!")
-        sys.exit(1)
+        return 1
     with open(config["PATH_HOST"]) as fp:
         if config["BL_SECTION_START"] in fp.read():
             logging.warning("FocusEnabler is already activated! Deactivate first.")
-            exit(1)
+            return 1
     entries: typing.List[str] = [config["BL_SECTION_START"]]
     for domain in config["BL_DOMAINS"]:
         logging.info(f"Adding entry {domain}", "Done")
@@ -138,23 +136,22 @@ def activate_app():
         click.echo("Written to host file!")
         flush_dns()
         click.echo("FocusEnabler is enabled!")
-        exit(0)
+        return 0
     except OSError:
         logger.exception("Unable to write to host file")
-        exit(1)
-    save_module_config(__name__, config)
+        return 0
 
 
 @main.command("deactivate")
-def deactivate_app():
+@pass_config_no_lock()
+def deactivate_app(config: dict[str, ...]) -> int:
     """Deactivate FocusEnabler"""
     if not is_root():
         logging.warning("Please run this command as 'root'")
-        sys.exit(1)
+        return 1
     if not os.access(config["PATH_HOST"], os.W_OK):
         logging.warning("Hosts file is inaccessible!")
-        sys.exit(1)
-    content = None
+        return 1
     try:
         with open(config["PATH_HOST"]) as fp:
             content = fp.read()
@@ -162,19 +159,18 @@ def deactivate_app():
         content = re.sub(rf"{config['BL_SECTION_START']}(.|[\n\r\t])*{config['BL_SECTION_END']}", "", content)
         if len(content) == original_content_len:
             logging.warning("FocusEnabler is not activated! Activate first")
-            save_module_config(__name__, config)
-            exit(1)
+            return 1
     except OSError:
         logging.exception("Unable to read host file")
-        save_module_config(__name__, config)
-        exit(1)
+        return 1
     try:
         with open(config["PATH_HOST"], "w") as fp:
             fp.write(content)
         click.echo("FocusEnabler is disabled!")
     except OSError:
         logger.exception("Writing to host file", "Failed", content_colour="red", fp=sys.stderr)
-    save_module_config(__name__, config)
+        return 1
+    return 0
 
 
 def flush_dns():
@@ -202,7 +198,8 @@ def flush_dns():
         flush_dns_linux()
 
 
-def add_domain_internal(domains):
+@pass_config_with_lock()
+def add_domain_internal(config: dict[str, ...], domains: list[str]) -> int:
     """(Internal) Add domain to config."""
     for dm in domains:
         if is_domain_valid(dm):
@@ -213,9 +210,11 @@ def add_domain_internal(domains):
                 click.echo(f"Already blacklisted: {dm}")
         else:
             click.echo(f"Invalid domain: {dm}")
+    return 0
 
 
-def remove_domain_internal(confirm, domains, fp):
+@pass_config_with_lock()
+def remove_domain_internal(config: dict[str, ...], confirm: bool, domains: list[str], fp) -> int:
     """(Internal) Remove domain from config."""
     if domains == (".",):
         if len(config["BL_DOMAINS"]) == 0:
@@ -233,3 +232,4 @@ def remove_domain_internal(confirm, domains, fp):
             click.echo(f"Un-blacklisted: {dm}", fp)
         else:
             click.echo(f"Domain not found: {dm}", fp)
+    return 0
