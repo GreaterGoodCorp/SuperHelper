@@ -29,8 +29,8 @@ Documentation for subpackages are available in the `README.md` file in their res
 
 2. Function `main_entry() -> NoReturn`
 
-   This function is intended for internal use only. It serves as the main entry point of the program, which is called
-   by a script created by `setup.py` is run.
+   This function is intended for internal use only. It serves as the main entry point of the program, which is called by
+   a script created by `setup.py` is run.
 
    *Parameters*: *No parameter required*
 
@@ -40,5 +40,5 @@ Documentation for subpackages are available in the `README.md` file in their res
 
    This function is intended for internal use only. It serves as the group command of other subcommands (either core
    commands or modules' `main()` function).
-   
+
    *Parameters*: *No parameter required*
