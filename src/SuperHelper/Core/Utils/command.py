@@ -15,16 +15,16 @@ logger.addHandler(logging.NullHandler())
 
 def load_core_commands() -> typing.List[typing.Tuple[click.Command, str]]:
     return [
-        (install_modules, "core_install"),
-        (uninstall_modules, "core_uninstall"),
+        (add_modules, "core_add"),
+        (remove_modules, "core_remove"),
         (list_modules, "core_list"),
     ]
 
 
-@click.command("install")
+@click.command("add")
 @click.argument("module")
 @pass_config(core=True, lock=True)
-def install_modules(config: dict[str, ...], module: str) -> int:
+def add_modules(config: dict[str, ...], module: str) -> int:
     """Install new modules into SuperHelper."""
     if importlib.util.find_spec(module) is not None:
         if module not in config["INSTALLED_MODULES"]:
@@ -35,10 +35,10 @@ def install_modules(config: dict[str, ...], module: str) -> int:
         return 1
 
 
-@click.command("uninstall")
+@click.command("remove")
 @click.argument("module")
 @pass_config(core=True, lock=True)
-def uninstall_modules(config: dict[str, ...], module: str):
+def remove_modules(config: dict[str, ...], module: str):
     """Uninstall existing modules from SuperHelper."""
     if module in config["INSTALLED_MODULES"]:
         config["INSTALLED_MODULES"].remove(module)
