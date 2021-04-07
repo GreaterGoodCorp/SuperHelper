@@ -133,3 +133,28 @@ Design considerations:
     * *`core` - Whether to return only the configuration of core CLI*
 
     * *`module_name` - The name of the module to get configuration*
+
+3. Function `is_debug() -> bool`
+
+    This function returns the value of entry `Debug` in the core CLI (when it is first loaded). This allows any
+    function to get the value without directly accessing the configuration of core CLI.
+
+    *Parameters*: *No parameter required*\
+    
+4. Function `load_app_config(config_path: str) -> None`
+
+    This function is intended for internal use only. It takes in the path of the config file, parses the\
+    information to a `Config` instance, and makes it global.
+
+    This function should only be called once by the core CLI.
+
+    *Parameters*: *`config_path`: Path to config file*
+    
+5. Function `save_app_config(config_path: str) -> None`
+
+    This function is intended for internal use only. It takes in the path of the config file, dumps the global
+    `Config` object into JSON text, and writes the text to the config file.
+
+    This function should only be called once by the core CLI.
+
+    *Parameters*: *`config_path`: Path to config file*
