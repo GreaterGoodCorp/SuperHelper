@@ -7,7 +7,6 @@ import sys
 import click
 
 from SuperHelper import Version
-from SuperHelper.Core.Config import Config
 from SuperHelper.Core.Utils import initialise_core_logger
 
 app_dir = click.get_app_dir("SuperHelper")
@@ -20,8 +19,6 @@ CONFIG_PATH = os.getenv("SUPER_HELPER_CONFIG_PATH", DEFAULT_CONFIG_PATH)
 LOGGING_FILENAME = "super_helper.log"
 DEFAULT_LOGGING_PATH = pathlib.Path(click.get_app_dir("SuperHelper")) / LOGGING_FILENAME
 LOGGING_PATH = os.getenv("SUPER_HELPER_LOGGING_PATH", DEFAULT_LOGGING_PATH)
-
-config: Config
 
 
 def check_platform():
