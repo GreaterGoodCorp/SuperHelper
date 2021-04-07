@@ -23,14 +23,12 @@ def load_core_commands() -> typing.List[typing.Tuple[click.Command, str]]:
 
 @click.command("install")
 @click.argument("module")
-@pass_config()
-def install_modules(config: Config, module: str) -> int:
+@pass_config(core=True, lock=True)
+def install_modules(config: dict[str, ...], module: str) -> int:
     """Install new modules into SuperHelper."""
     if importlib.util.find_spec(module) is not None:
-        core_cfg = config.get_core_config(lock=True)
-        if module not in core_cfg["INSTALLED_MODULES"]:
-            core_cfg["INSTALLED_MODULES"].append(module)
-        config.set_core_config(core_cfg)
+        if module not in config["INSTALLED_MODULES"]:
+            config["INSTALLED_MODULES"].append(module)
         return 0
     else:
         logger.warning(f"Module {module} not found!")
@@ -39,13 +37,11 @@ def install_modules(config: Config, module: str) -> int:
 
 @click.command("uninstall")
 @click.argument("module")
-@pass_config()
-def uninstall_modules(config: Config, module: str):
+@pass_config(core=True, lock=True)
+def uninstall_modules(config: dict[str, ...], module: str):
     """Uninstall existing modules from SuperHelper."""
-    core_cfg = config.get_core_config(lock=True)
-    if module in core_cfg["INSTALLED_MODULES"]:
-        core_cfg["INSTALLED_MODULES"].remove(module)
-        config.set_core_config(core_cfg)
+    if module in config["INSTALLED_MODULES"]:
+        config["INSTALLED_MODULES"].remove(module)
         return 0
     else:
         logger.warning(f"Module {module} not found!")
@@ -54,14 +50,14 @@ def uninstall_modules(config: Config, module: str):
 
 @click.command("list")
 @click.option("-a", "--all", "list_all", help="Include uninstalled modules", is_flag=True)
-@pass_config(core=True)
-def list_modules(cli_config, list_all: bool):
+@pass_config(core=True, lock=False)
+def list_modules(config: dict[str, ...], list_all: bool):
     """List installed modules"""
     import SuperHelper.Builtins as Package
     prefix = Package.__name__ + "."
     count = 0
     for _, module_name, _ in pkgutil.iter_modules(Package.__path__, prefix):
-        if module_name in cli_config["INSTALLED_MODULES"]:
+        if module_name in config["INSTALLED_MODULES"]:
             click.echo(f"(Installed) {module_name}")
             count += 1
         elif list_all:
