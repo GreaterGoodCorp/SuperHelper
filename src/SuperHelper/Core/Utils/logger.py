@@ -20,7 +20,7 @@ class TracebackInfoFilter(logging.Filter):
         return True
 
 
-def initialise_core_logger(logging_path: str):
+def initialise_core_logger(logging_path: str) -> logging.Logger:
     logger = logging.getLogger("SuperHelper")
     logger.setLevel(logging.DEBUG)
     fh = logging.FileHandler(logging_path, mode="a+")
