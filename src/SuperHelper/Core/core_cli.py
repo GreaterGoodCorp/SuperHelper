@@ -9,14 +9,15 @@ import click
 from SuperHelper import Version
 from SuperHelper.Core.Utils import initialise_core_logger
 
-app_dir = click.get_app_dir("SuperHelper")
-pathlib.Path(app_dir).mkdir(parents=True, exist_ok=True)
+APP_NAME = "SuperHelper"
+APP_DIR = click.get_app_dir(APP_NAME)
+pathlib.Path(APP_DIR).mkdir(parents=True, exist_ok=True)
 
-CONFIG_FILENAME = "super_helper.cfg"
+CONFIG_FILENAME = f"{APP_NAME}.cfg"
 DEFAULT_CONFIG_PATH = pathlib.Path(click.get_app_dir("SuperHelper")) / CONFIG_FILENAME
 CONFIG_PATH = os.getenv("SUPER_HELPER_CONFIG_PATH", DEFAULT_CONFIG_PATH)
 
-LOGGING_FILENAME = "super_helper.log"
+LOGGING_FILENAME = f"{APP_NAME}.log"
 DEFAULT_LOGGING_PATH = pathlib.Path(click.get_app_dir("SuperHelper")) / LOGGING_FILENAME
 LOGGING_PATH = os.getenv("SUPER_HELPER_LOGGING_PATH", DEFAULT_LOGGING_PATH)
 
