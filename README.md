@@ -28,7 +28,7 @@ The latest source code for this program can be found on [GitHub]. The program ca
 
 ```bash
 git clone https://github.com/GreaterGoodCorp/SuperHelper
-make install
+make dev-install
 ```
 
 ## Documentation
