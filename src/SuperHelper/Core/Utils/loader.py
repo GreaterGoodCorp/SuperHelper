@@ -12,11 +12,11 @@ logger.setLevel(logging.DEBUG)
 logger.addHandler(logging.NullHandler())
 
 
-@pass_config(core=True)
-def load_installed_modules(cli_config: dict[str, ...]) -> typing.List[typing.Tuple[click.Command, str]]:
+@pass_config(core=True, lock=False)
+def load_installed_modules(config: dict[str, ...]) -> typing.List[typing.Tuple[click.Command, str]]:
     """Loads the main() method of all installed modules."""
     module_entries = []
-    for module_name in cli_config["INSTALLED_MODULES"]:
+    for module_name in config["INSTALLED_MODULES"]:
         try:
             module = importlib.import_module(module_name)
             module_entries.append((module.main, module_name))
