@@ -89,7 +89,7 @@ class Config(metaclass=Singleton):
         self._Modules[module_name] = copy.deepcopy(config)
         return
 
-    def apply_module_config(self, module_name: str, config: dict[str, ...]) -> None:
+    def apply_module_patch(self, module_name: str, config: dict[str, ...]) -> None:
         try:
             # Secure module config
             module_config = self.get_module_config(module_name)
