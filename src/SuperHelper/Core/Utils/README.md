@@ -23,10 +23,10 @@ Core commands are also documented here.
 
 * **Raises**:
 
-    * `ImportError` if the module cannot be imported.
+   * `ImportError` if the module cannot be imported.
 
-    * `AttributeError` if the module does not contain a `main()` function decorated as either `@click.command` or
-      `@click.group`
+   * `AttributeError` if the module does not contain a `main()` function decorated as either `@click.command` or
+     `@click.group`
 
 * **Note**: This function is intended for internal use only. It should only be called once when the application loads
   modules. (Called by Core CLI)

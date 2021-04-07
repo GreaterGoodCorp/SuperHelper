@@ -42,9 +42,9 @@ Design considerations:
 
    *Parameters*:
 
-    * *`config` - The configuration of core CLI*
+   * *`config` - The configuration of core CLI*
 
-    * *`lock` - Whether to set the lock for the module config*
+   * *`lock` - Whether to set the lock for the module config*
 
 3. Method `apply_core_patch(self, config: dict[str, ...]) -> None`
 
@@ -62,9 +62,9 @@ Design considerations:
 
    *Parameters*:
 
-    * *`module_name` - The name of the module*
+   * *`module_name` - The name of the module*
 
-    * *`lock` - Whether to set the lock for the module config*
+   * *`lock` - Whether to set the lock for the module config*
 
 5. Method `set_module_config(self, module_name: str, config: dict[str, ...]) -> None`
 
@@ -73,9 +73,9 @@ Design considerations:
 
    *Parameters*:
 
-* *`module_name` - The name of the module*
+   * *`module_name` - The name of the module*
 
-* *`config` - The configuration of core CLI*
+   * *`config` - The configuration of core CLI*
 
 6. Method `apply_module_patch(self, config: dict[str, ...]) -> None`
 
@@ -85,9 +85,9 @@ Design considerations:
 
    *Parameters*:
 
-* *`module_name` - The name of the module*
+   * *`module_name` - The name of the module*
 
-* *`config` - The patch of module configuration*
+   * *`config` - The patch of module configuration*
 
 #### Other methods
 
@@ -128,11 +128,16 @@ Design considerations:
 
    If both are not `None`, this decorator raises `ValueError`.
 
+   *New*: A parameter (`lock`) is added to optionally lock the config. This change will make most `Config`'s instance
+   method largely redundant for end-developers.
+
    *Parameters*:
 
-    * *`core` - Whether to return only the configuration of core CLI*
+   * *`core` - Whether to return only the configuration of core CLI*
 
-    * *`module_name` - The name of the module to get configuration*
+   * *`module_name` - The name of the module to get configuration*
+
+   * *`lock` - Whether to lock the config*
 
 3. Function `is_debug() -> bool`
 
@@ -143,8 +148,8 @@ Design considerations:
 
 4. Function `load_app_config(config_path: str) -> None`
 
-   This function is intended for internal use only. It takes in the path of the config file, parses the\
-   information to a `Config` instance, and makes it global.
+   This function is intended for internal use only. It takes in the path of the config file, parses the information to a
+   `Config` instance, and makes it global.
 
    This function should only be called once by the core CLI.
 
@@ -152,8 +157,8 @@ Design considerations:
 
 5. Function `save_app_config(config_path: str) -> None`
 
-   This function is intended for internal use only. It takes in the path of the config file, dumps the global
-   `Config` object into JSON text, and writes the text to the config file.
+   This function is intended for internal use only. It takes in the path of the config file, dumps the global `Config`
+   object into JSON text, and writes the text to the config file.
 
    This function should only be called once by the core CLI.
 
