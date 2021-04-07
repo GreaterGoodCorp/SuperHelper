@@ -64,9 +64,9 @@ def main_entry():
         else:
             logger.debug(f"Loaded module {module[1]}")
     try:
-        # # Print all messages before executing CLI
-        # sys.stdout.flush()
-        # sys.stderr.flush()
+        # Print all messages before executing CLI
+        sys.stdout.flush()
+        sys.stderr.flush()
         # Execute CLI
         sys.exit(cli())
     except SystemExit:
