@@ -81,7 +81,9 @@ class Config(metaclass=Singleton):
         """Set the module configuration."""
         # Release lock module config
         lock_name = f"{module_name}_lock"
-        if not getattr(self, lock_name, False):
+        is_locked = not getattr(self, lock_name, False)
+        is_set = module_name in config.keys()
+        if is_locked and not is_set:
             raise RuntimeError("No lock was acquired! Write access is disabled!")
         setattr(self, lock_name, False)
         self._Modules[module_name] = copy.deepcopy(config)
