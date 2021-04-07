@@ -2,7 +2,6 @@
 import importlib.util
 import logging
 import pkgutil
-import typing
 
 import click
 
@@ -13,7 +12,7 @@ logger.setLevel(logging.DEBUG)
 logger.addHandler(logging.NullHandler())
 
 
-def load_core_commands() -> typing.List[typing.Tuple[click.Command, str]]:
+def load_core_commands() -> list[tuple[click.Command, str]]:
     return [
         (add_modules, "core_add"),
         (remove_modules, "core_remove"),

@@ -1,7 +1,6 @@
 # This module defines the module loader function.
 import importlib
 import logging
-import typing
 
 import click
 
@@ -13,7 +12,7 @@ logger.addHandler(logging.NullHandler())
 
 
 @pass_config(core=True, lock=False)
-def load_installed_modules(config: dict[str, ...]) -> typing.List[typing.Tuple[click.Command, str]]:
+def load_installed_modules(config: dict[str, ...]) -> list[tuple[click.Command, str]]:
     """Loads the main() method of all installed modules."""
     module_entries = []
     for module_name in config["INSTALLED_MODULES"]:
