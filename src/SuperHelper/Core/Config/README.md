@@ -1,6 +1,6 @@
 # Subpackage `SuperHelper.Core.Config`
 
-This package contains the configuration parser and the configuration manager
+This subpackage contains the configuration parser and the configuration manager.
 
 ## Package content
 
