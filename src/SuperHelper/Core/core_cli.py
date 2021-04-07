@@ -3,6 +3,7 @@
 import os
 import pathlib
 import sys
+from typing import NoReturn
 
 import click
 
@@ -22,7 +23,7 @@ DEFAULT_LOGGING_PATH = pathlib.Path(click.get_app_dir("SuperHelper")) / LOGGING_
 LOGGING_PATH = os.getenv("SUPER_HELPER_LOGGING_PATH", DEFAULT_LOGGING_PATH)
 
 
-def check_platform():
+def validate_no_win32() -> None:
     """This function asserts that the platform is not 'win32'."""
     assert sys.platform != "win32", "This application is not configured to run on Windows."
 
@@ -30,13 +31,13 @@ def check_platform():
 # Program entry point
 @click.group()
 @click.version_option(Version)
-def cli():
+def cli() -> int:
     pass
 
 
 # Console entry call
-def main_entry():
-    check_platform()
+def main_entry() -> NoReturn:
+    validate_no_win32()
     # Load core logger
     logger = initialise_core_logger(LOGGING_PATH)
     try:
