@@ -29,11 +29,9 @@ Here is a quick overview:
 
 3. If you've changed APIs, update the documentation.
 
-4. Ensure the test suite passes.
+4. Make sure your code lints.
 
-5. Make sure your code lints.
-
-6. Issue that pull request!
+5. Issue that pull request!
 
 ## Technical details
 
@@ -78,29 +76,7 @@ All core functionalities are defined in `SuperHelper.Core`. When the user execut
 
 ### Adding new modules to SuperHelper
 
-When I started this project, extensibility has always been one of my top priorities, and it is still so.
-Any design decisions I made make it more modular for everyone to add modules, so in order to continue this
-*power*, please follow strictly to this section. Should there be any non-compliance in your code, rest assure
-it will not be accepted!
-
-#### Module design
-
-* All modules will exist as a subpackage under `SuperHelper.Builtins`. The subpackage `SuperHelper.External` is
-  not in used at the moment.
-
-* Module name should be short and memorable!
-
-* This project use `Click` to design CLI, so you should also be using `Click` to design your module.
-
-* All sub-commands of the modules must use `sys.exit()` with its exit code to finish its execution.
-
-* The subpackage shall expose a single `main` function in its `__init__.py`. This `main` function is either
-  decorated with `@click.group` (for grouping multiple commands in one module) or `@click.command`.
-
-* Helper methods, including configuration, I/O, etc., are available under `SuperHelper.Core.Helper`. All but
-  `SuperHelper.Core.Helper.Config` are optional; however, they will make your life easier!
-
-For reference purposes, you can refer to any of the existing builtin modules or clarify with me at anytime.
+External modules are now moved to a different repositories! Please follow the contribution guidelines as stated there.
 
 ### Improving / Fixing existing modules in SuperHelper
 
