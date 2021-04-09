@@ -8,7 +8,6 @@ from SuperHelper.Core.Config import pass_config
 
 logger = logging.getLogger("SuperHelper.Core.Utils")
 logger.setLevel(logging.DEBUG)
-logger.addHandler(logging.NullHandler())
 
 
 @pass_config(core=True, lock=False)

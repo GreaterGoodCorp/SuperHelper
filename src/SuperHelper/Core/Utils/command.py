@@ -9,7 +9,6 @@ from SuperHelper.Core.Config import pass_config
 
 logger = logging.getLogger("SuperHelper.Core.Utils")
 logger.setLevel(logging.DEBUG)
-logger.addHandler(logging.NullHandler())
 
 
 def load_core_commands() -> list[tuple[click.Command, str]]:
