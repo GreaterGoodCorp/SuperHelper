@@ -22,3 +22,6 @@ class ImageOps:
     @staticmethod
     def show_image(image: Image.Image, title: str = "Demo") -> None:
         image.show(title)
+
+
+__all__ = ["ImageOps"]
