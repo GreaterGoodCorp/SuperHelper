@@ -19,8 +19,6 @@ pip3 install SuperHelper
 > Notes:
 > 
 > * Make sure `pip3` is up-to-date by running `python3 -m pip --install pip`.
-> 
-> * For Windows, use `python` instead of `python3`, and `pip` instead of `pip3`.
 
 ### Via source
 
