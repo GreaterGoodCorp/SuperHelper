@@ -13,6 +13,7 @@ clean:
 	rm -rf dist
 	rm -rf ~/Library/Application\ Support/SuperHelper/
 	rm -rf ~/.config/SuperHelper
+	rm -rf .pytest_cache
 	find . -type d -name __pycache__ -exec rm -r {} \+
 
 dev-uninstall:
