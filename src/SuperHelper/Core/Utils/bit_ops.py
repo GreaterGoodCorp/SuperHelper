@@ -16,3 +16,6 @@ class BitOps:
             return i
         else:
             return i - (1 << pos)
+
+
+__all__ = ["BitOps"]
