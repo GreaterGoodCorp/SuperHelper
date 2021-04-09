@@ -12,7 +12,7 @@ class ImageOps:
     def open_image(file: io.IOBase):
         try:
             return Image.open(file)
-        except UnidentifiedImageError as e:
+        except UnidentifiedImageError:
             logger.exception("Not an image file!")
             raise
         except OSError:
