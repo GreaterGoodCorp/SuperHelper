@@ -16,19 +16,9 @@ structure of the report should be strictly followed, otherwise I will close it i
 
 Unexpected error when...
 
-### System information
-<!-- Edit and fill in information about your machine.-->
-<!-- Include OS version if possible -->
-
-__Operating System:__
-
-<!-- For Linux/MacOS, please do not use the pre-installed Python of the OS. Install a new one! -->
-
-__Python version:__
-
-<!-- Can be found when run: python3 -m StegLibrary --version -->
-
-__StegLibrary version:__
+### Version
+<!-- Run this command and copy its output: helper --version-->
+SuperHelper's version: `SuperHelper-x.y.z macOS-x.y Python-x.y.z`
 
 ### Description
 <!-- In this section, try to be as detailed as possible, so that I can reproduce and get back to you! -->
@@ -61,8 +51,9 @@ However, the actual output I got is:
 ```
 
 #### Logs / screenshots
-<!-- As of now, I have not implemented logging functionality for the library. However, it would be nice
-if you can give the traceback (or its screenshots) -->
+<!-- Logs for this program can be at the following location
+On MacOS: ~/Library/Application\ Support/SuperHelper/SuperHelper.log
+On Linux: ~/.config/SuperHelper/SuperHelper.log -->
 
 #### Other comments
 <!-- Have anything else to note but not asked above? Put them in this sub-section -->
