@@ -65,7 +65,7 @@ def is_root():
 
 @click.group("focus")
 def main() -> None:
-    """FocusEnabler is a program that enables your focus by blocking websites."""
+    """Enables your focus by blocking websites."""
     # Apply patch to module config (or initialise)
     patch_config()
 
