@@ -2,6 +2,7 @@
 import importlib.util
 import logging
 import pkgutil
+from typing import Callable
 
 import click
 
@@ -11,7 +12,7 @@ logger = logging.getLogger("SuperHelper.Core.Utils")
 logger.setLevel(logging.DEBUG)
 
 
-def load_core_commands() -> list[tuple[click.Command, str]]:
+def load_core_commands() -> list[tuple[Callable, str]]:
     return [
         (add_modules, "core_add"),
         (remove_modules, "core_remove"),
