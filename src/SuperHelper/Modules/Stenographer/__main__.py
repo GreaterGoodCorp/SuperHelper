@@ -9,7 +9,7 @@ import cryptography.fernet
 from PIL import Image
 
 from SuperHelper.Core.Config import Config, pass_config
-from SuperHelper.Core.Utils import BitOps, Cryptographer, ImageOps
+from SuperHelper.Core.Utils import BitOps, Cryptographer
 
 MODULE_NAME: str = "Stenographer"
 pass_config_no_lock = functools.partial(pass_config, module_name=MODULE_NAME, lock=False)
@@ -246,7 +246,7 @@ def write_steganography(input_file: io.IOBase, image_file: Image.Image, output_f
         return 1
 
     if show_image_on_completion:
-        ImageOps.show_image(image_file)
+        image_file.show("Demo")
 
     input_file.close()
     image_file.close()
