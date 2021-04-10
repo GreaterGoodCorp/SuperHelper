@@ -302,7 +302,6 @@ def extract_header(image: Image.Image, config: dict[str, ...] = None) -> Header:
             x, y, count = 0, 0, 0
 
 
-@pass_config_no_lock()
 def extract_steganography(input_file: io.IOBase, output_file: io.IOBase, auth_key: str) -> int:
     try:
         image = Image.open(input_file)
