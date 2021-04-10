@@ -389,16 +389,18 @@ def main() -> None:
 @click.option("-c", "--compress", help="Compression level of the steganography", type=int, default=-1)
 @click.option("-d", "--density", help="Density of the steganography (from 1 to 3)", type=int, default=-1)
 @click.option("-o", "--output_file", help="Path to output file", type=click.File("wb"), required=True)
-@click.option("--show-image_file", help="Whether to show image_file on creation", type=bool, default=False)
+@click.option("--show-image", help="Whether to show image_file on creation", type=bool, default=False)
 @click.argument("input_file", type=click.File("rb"), required=True)
 @pass_config_no_lock()
 def create(image_file: io.IOBase, key: str, compress: int, density: int, output_file: io.IOBase, show_image: bool,
            input_file: io.IOBase, config: dict[str, ...]):
+    density = config["default_density"] if density == -1 else density
     if density not in config["available_density"]:
         raise click.exceptions.BadOptionUsage(
             "density", "Density must be from 1 to 3!")
 
-    if compress not in config["available_compress"]:
+    compress = config["default_compression"] if compress == -1 else compress
+    if compress not in config["available_compression"]:
         raise click.exceptions.BadOptionUsage(
             "density", "Density must be from 0 (no compress) to 9!")
     key = config["default_auth_key"] if key is None else key
