@@ -33,16 +33,16 @@ This class defines many static methods to work with bits.
 #### Method documentation
 
 1. Static method `is_bit_set(i: int, pos: int) -> bool`
-   
+
    This method returns `True` if the bit at position `pos`-th (from the least significant bit, zero-indexed) of the
    integer `i` is set. Otherwise, returns `False`.
-   
+
    *Parameters*:
 
    * *`i` - The integer to check*
-   
+
    * *`pos` - Position of the bit*
-   
+
 2. Static method `set_bit(i: int, pos: int) -> int`
 
    This method sets the bit at position `pos`-th (from the least significant bit, zero-indexed) of the integer `i`.
@@ -50,19 +50,19 @@ This class defines many static methods to work with bits.
    *Parameters*:
 
    * *`i` - The integer to check*
-   
+
    * *`pos` - Position of the bit*
-   
+
 3. Static method `unset_bit(i: int, pos: int) -> int`
 
    This method unsets the bit at position `pos`-th (from the least significant bit, zero-indexed) of the integer `i`.
-   
+
    *Parameters*:
 
    * *`i` - The integer to check*
-   
+
    * *`pos` - Position of the bit*
-   
+
 ### Class `Cryptographer`
 
 This class provides many ready-to-use cryptographic functions.
@@ -96,27 +96,27 @@ This class provides many ready-to-use cryptographic functions.
 
    This method is rarely called directly, as all instances should be initialized with `Cryptographer.make_encrypter` and
    `Cryptographer.make_decrypter`.
-   
+
    *Parameters*:
 
    * *`salt` - Salt for the key derivation function*
-   
+
    * *`auth_key` - Authentication key*
-   
+
    * *`encrypt` - Whether this instance encrypts (`True`) or decrypts (`False`)*
-   
+
 2. Static method `make_encrypter(key: str) -> Cryptographer`
 
    This method is used to make an encrypting `Cryptographer` with `key` as the authentication key.
 
    * *`key` - Authentication key*
-   
+
 3. Static method `make_decrypter(key: str) -> Cryptographer`
 
    This method is used to make a decrypting `Cryptographer` with `key` as the authentication key.
 
    * *`key` - Authentication key*
-   
+
 4. Static method `make_salt() -> bytes`
 
    This method returns a 16-byte-long string to be used as salt for the key derivation function.

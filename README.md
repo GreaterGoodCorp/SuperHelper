@@ -17,7 +17,7 @@ pip3 install SuperHelper
 ```
 
 > Notes:
-> 
+>
 > * Make sure `pip3` is up-to-date by running `python3 -m pip --install pip`.
 
 ### Via source
@@ -38,12 +38,12 @@ Please refer to `README.md` files located in each subpackage.
 ### Pre-release
 
 * Version `0.0.1`: Project initialisation.
-  
+
 * Version `0.0.2`: Disabled `DEBUG` mode.
 
-* Version `0.1.0`: Added new core utilities functions, including installing, disabling and listing modules,
-  and showing versioning.
-  
+* Version `0.1.0`: Added new core utilities functions, including installing, disabling and listing modules, and showing
+  versioning.
+
 * Version `0.2.0`: Added a new module `Builtins.Stenographer` and restructured the code completely.
 
 * Version `0.3.0`: Improved configuration manager, implemented new core utilities and fixed loads of bugs.
@@ -51,7 +51,7 @@ Please refer to `README.md` files located in each subpackage.
 * Version `0.3.1`: Fixed an urgent an undisclosed bug.
 
 * Version `0.4.0`: Improved flexibility for core commands and prepared for full release.
-  
+
 ## Contributing
 
 Please refer to [the contributing guidelines][CONTRIBUTING] for more information.
@@ -62,4 +62,5 @@ This program is licensed under the
 [MIT License](https://github.com/GreaterGoodCorp/SuperHelper/blob/main/LICENSE).
 
 [CONTRIBUTING]: https://github.com/GreaterGoodCorp/SuperHelper/blob/main/CONTRIBUTING.md
+
 [GitHub]: https://github.com/GreaterGoodCorp/SuperHelper
