@@ -15,7 +15,7 @@ logger.setLevel(logging.DEBUG)
 
 
 class Cryptographer:
-    def __init__(self, salt: bytes, auth_key: bytes, encrypt: bool = True):
+    def __init__(self, salt: bytes, auth_key: bytes, encrypt: bool = True) -> None:
         self.salt = salt
         self.kdf = self.make_kdf(self.salt)
         self.auth_hash = hashlib.sha256(auth_key).digest()
@@ -37,7 +37,7 @@ class Cryptographer:
         except InvalidToken:
             raise
 
-    def get_salt_string(self):
+    def get_salt_string(self) -> str:
         return Cryptographer.encode_salt(self.salt)
 
     @staticmethod
