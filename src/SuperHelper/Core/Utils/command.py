@@ -25,12 +25,15 @@ def load_core_commands() -> list[tuple[Callable, str]]:
 @pass_config(core=True, lock=True)
 def add_modules(config: dict[str, ...], module: str) -> int:
     """Adds new modules into SuperHelper."""
-    if importlib.util.find_spec(module) is not None:
-        if module not in config["INSTALLED_MODULES"]:
-            config["INSTALLED_MODULES"].append(module)
-        return 0
-    else:
-        logger.warning(f"Module {module} not found!")
+    try:
+        if importlib.util.find_spec(module) is not None:
+            if module not in config["INSTALLED_MODULES"]:
+                config["INSTALLED_MODULES"].append(module)
+            return 0
+        else:
+            raise ModuleNotFoundError
+    except ModuleNotFoundError:
+        logger.exception(f"Module {module} not found!")
         return 1
 
 
