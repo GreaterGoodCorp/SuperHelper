@@ -76,7 +76,7 @@ def main() -> None:
 def add_domain(clear, domains) -> int:
     """Add DOMAINS to blacklist."""
     if is_root():
-        logging.warning("Please do not run this command as 'root'")
+        logger.warning("Please do not run this command as 'root'")
         return 1
     if clear:
         with io.StringIO() as sio:
@@ -89,7 +89,7 @@ def add_domain(clear, domains) -> int:
 def list_domain(config: dict[str, ...]) -> int:
     """List blacklisted domains"""
     if is_root():
-        logging.warning("Please do not run this command as 'root'")
+        logger.warning("Please do not run this command as 'root'")
         return 1
     if len(config["BL_DOMAINS"]) == 0:
         click.echo("No blacklisted domains found")
@@ -106,7 +106,7 @@ def list_domain(config: dict[str, ...]) -> int:
 def remove_domain(confirm, domains) -> int:
     """Remove DOMAINS from blacklist"""
     if is_root():
-        logging.warning("Please do not run this command as 'root'")
+        logger.warning("Please do not run this command as 'root'")
         return 1
     return remove_domain_internal(confirm, domains, sys.stdout)
 
@@ -116,18 +116,18 @@ def remove_domain(confirm, domains) -> int:
 def activate_app(config: dict[str, ...]) -> int:
     """Activate FocusEnabler."""
     if not is_root():
-        logging.warning("Please run this command as 'root'")
+        logger.warning("Please run this command as 'root'")
         return 1
     if not os.access(config["PATH_HOST"], os.W_OK):
-        logging.warning("Hosts file is inaccessible!")
+        logger.warning("Hosts file is inaccessible!")
         return 1
     with open(config["PATH_HOST"]) as fp:
         if config["BL_SECTION_START"] in fp.read():
-            logging.warning("FocusEnabler is already activated! Deactivate first.")
+            logger.warning("FocusEnabler is already activated! Deactivate first.")
             return 1
     entries: typing.List[str] = [config["BL_SECTION_START"]]
     for domain in config["BL_DOMAINS"]:
-        logging.info(f"Adding entry {domain}", "Done")
+        logger.info(f"Adding entry {domain}", "Done")
         entries.append(f"127.0.0.1   {domain}")
         entries.append(f"127.0.0.1   www.{domain}")
     entries.append(config["BL_SECTION_END"])
@@ -148,10 +148,10 @@ def activate_app(config: dict[str, ...]) -> int:
 def deactivate_app(config: dict[str, ...]) -> int:
     """Deactivate FocusEnabler"""
     if not is_root():
-        logging.warning("Please run this command as 'root'")
+        logger.warning("Please run this command as 'root'")
         return 1
     if not os.access(config["PATH_HOST"], os.W_OK):
-        logging.warning("Hosts file is inaccessible!")
+        logger.warning("Hosts file is inaccessible!")
         return 1
     try:
         with open(config["PATH_HOST"]) as fp:
@@ -159,10 +159,10 @@ def deactivate_app(config: dict[str, ...]) -> int:
             original_content_len = len(content)
         content = re.sub(rf"{config['BL_SECTION_START']}(.|[\n\r\t])*{config['BL_SECTION_END']}", "", content)
         if len(content) == original_content_len:
-            logging.warning("FocusEnabler is not activated! Activate first")
+            logger.warning("FocusEnabler is not activated! Activate first")
             return 1
     except OSError:
-        logging.exception("Unable to read host file")
+        logger.exception("Unable to read host file")
         return 1
     try:
         with open(config["PATH_HOST"], "w") as fp:
