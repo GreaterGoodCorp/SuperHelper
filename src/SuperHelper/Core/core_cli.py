@@ -2,6 +2,7 @@
 # All modules of SuperHelper should define its own group, which can imported by this module.
 import os
 import pathlib
+import platform
 import sys
 from typing import NoReturn
 
@@ -22,6 +23,8 @@ LOGGING_FILENAME = f"{APP_NAME}.log"
 DEFAULT_LOGGING_PATH = pathlib.Path(click.get_app_dir("SuperHelper")) / LOGGING_FILENAME
 LOGGING_PATH = os.getenv("SUPER_HELPER_LOGGING_PATH", DEFAULT_LOGGING_PATH)
 
+version_message = f"%(prog)s-%(version)s {platform.platform(terse=True)} Python-{platform.python_version()}"
+
 
 def validate_no_win32() -> None:
     """This function asserts that the platform is not 'win32'."""
@@ -30,7 +33,7 @@ def validate_no_win32() -> None:
 
 # Program entry point
 @click.group()
-@click.version_option(Version)
+@click.version_option(Version, prog_name=APP_NAME, message=version_message)
 def cli() -> int:
     pass
 
