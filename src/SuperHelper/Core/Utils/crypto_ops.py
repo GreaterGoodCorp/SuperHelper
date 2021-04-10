@@ -20,16 +20,16 @@ class Cryptographer:
         self.kdf = self.make_kdf(self.salt)
         self.auth_hash = str(hashlib.sha256(auth_key))
         self.key = self.kdf.derive(self.auth_hash.encode())
-        self.encrypt = encrypt
+        self.is_encrypt = encrypt
 
     def encrypt(self, raw_data: bytes) -> bytes:
-        if not self.encrypt:
+        if not self.is_encrypt:
             raise ValueError("Not an encrypter!")
         fernet = Cryptographer.make_fernet(self.key)
         return fernet.encrypt(raw_data)
 
     def decrypt(self, encrypted_data: bytes) -> bytes:
-        if self.encrypt:
+        if self.is_encrypt:
             raise ValueError("Not a decrypter!")
         fernet = Cryptographer.make_fernet(self.key)
         try:
