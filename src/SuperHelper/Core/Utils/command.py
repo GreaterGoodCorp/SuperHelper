@@ -24,7 +24,7 @@ def load_core_commands() -> list[tuple[Callable, str]]:
 @click.argument("module")
 @pass_config(core=True, lock=True)
 def add_modules(config: dict[str, ...], module: str) -> int:
-    """Install new modules into SuperHelper."""
+    """Adds new modules into SuperHelper."""
     if importlib.util.find_spec(module) is not None:
         if module not in config["INSTALLED_MODULES"]:
             config["INSTALLED_MODULES"].append(module)
@@ -38,7 +38,7 @@ def add_modules(config: dict[str, ...], module: str) -> int:
 @click.argument("module")
 @pass_config(core=True, lock=True)
 def remove_modules(config: dict[str, ...], module: str):
-    """Uninstall existing modules from SuperHelper."""
+    """Removes existing modules from SuperHelper."""
     if module in config["INSTALLED_MODULES"]:
         config["INSTALLED_MODULES"].remove(module)
         return 0
@@ -51,7 +51,7 @@ def remove_modules(config: dict[str, ...], module: str):
 @click.option("-a", "--all", "list_all", help="Include uninstalled modules", is_flag=True)
 @pass_config(core=True, lock=False)
 def list_modules(config: dict[str, ...], list_all: bool):
-    """List installed modules"""
+    """Lists installed modules"""
     import SuperHelper.Modules as Package
     prefix = Package.__name__ + "."
     count = 0
