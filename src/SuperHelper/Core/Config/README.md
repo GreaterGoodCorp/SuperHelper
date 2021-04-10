@@ -1,113 +1,165 @@
 # Subpackage `SuperHelper.Core.Config`
 
-This package contains configuration loaders and savers for the application, the CLI core and other modules.
+This subpackage contains the configuration parser and the configuration manager.
 
 ## Package content
 
-1. Module `app_config.py`: Contains the configuration loader and saver for the application.
+1. Module `config_class.py`: Contains the definition of the configuration manager, the `Config` class.
 
-2. Module `cli_config.py`: Contains the configuration loader and saver for the CLI core.
-
-3. Module `module_config.py`: Contains the configuration loader and saver for all modules.
+2. Module `app_config.py`: Contains the I/O parser for `Config` class.
 
 ## API documentation
 
-1. Function `load_app_config()`
+### `Config` class
 
-  * **Parameters**:
-    
-    * `config_path`: The path to config file
-    
-      The path will be retrieved from the environment variable `SUPER_HELPER_CONFIG_PATH` if it is set. Otherwise, the default path is
-      `Pathlib.Path.home() / ".super_helper"`
-      
-  * **Returns**: *None*
+The configuration manager for this entire application is defined in `Config` class. It makes using config easier and
+more intuitive.
 
-  * **Raises**: 
-    
-    * `OSError` if either the path provided by environment variable `SUPER_HELPER_CONFIG_PATH` is a folder, or the config file does
-      not exist at all, or is unreadable.
-      
-    * `JSONDecodeError` if the JSON document is invalid, or likely corrupted.
-  
-  * **Note**: This function is intended for internal use only. It should only be called once when the application starts. (Called by Core CLI)
-  
-  
-2. Function `save_app_config()`
+Design considerations:
 
-  * **Parameters**:
-    
-    * `config_path`: The path to config file
-    
-      The path will be retrieved from the environment variable `SUPER_HELPER_CONFIG_PATH` if it is set. Otherwise, the default path is
-      `Pathlib.Path.home() / ".super_helper"`
-      
-  * **Returns**: *None*
+* *`Singleton`-based*: Only one instance of `Config` class is available to access. It will automatically be instantiated
+  when the application starts.
 
-  * **Raises**:
+* *`Lock`-based*: Caller can request the configuration be locked if it needs to modify the config. Others cannot request
+  copies of the locked configuration.
 
-    * `OSError` if either the path provided by environment variable `SUPER_HELPER_CONFIG_PATH` is a folder, or the existing config file there is
-      un-writable.
-      
-    * This function will not raise `JSONEncodeError` if there are non JSON-serializable values. Instead, it will be default to `None`.
-  
-  * **Note**: This function is intended for internal use only. It should only be called once when the application ends. (Called by Core CLI)
-  
-  
-3. Function `load_cli_config()`
+* *`Deepcopy`-based*: All configuration dictionaries passing through or returned by the class is a deep-copied
+  dictionary.
 
-  * **Parameters**: *No parameter*
-      
-  * **Returns**: The `CORE_CLI` section of the application configuration.
-  
-  * **Note**: This function is intended for internal use only. It should only be called once when the application starts loading modules.
-    (Called by the Core module loader)
-   
+#### Method documentation
 
-4. Function `save_cli_config()`
+1. Method `get_core_config(self) -> dict[str, ...]`
 
-  * **Parameters**:
+   This method returns the configuration of core CLI. Please note that it will be locked the entire time to prevent
+   unauthorized access. `RuntimeError` is raised for any attempt to call this method.
 
-    * `config`: The configuration of CLI core
+   *Parameters*: *No parameter required*
 
-      This configuration is likely the CLI configuration returned by `load_cli_config()` after modifying its items.
-      
-  * **Returns**: *None*
-  
-  * **Note**: This function is intended for internal use only. It should only be called once when the application starts loading modules.
-    (Called by the Core module loader)
-   
+2. Method `set_core_config(self, config: dict[str, ...]) -> None`
 
-5. Function `load_module_config()`
+   This method receives the configuration of core CLI and writes it to `Config` class. This method should only be called
+   by the core CLI, as it will overwrite any modified configurations.
 
-  * **Parameters**:
+   *Parameters*:
 
-    * `module_name`: The name of the module.
+   * *`config` - The configuration of core CLI*
 
-      It is highly recommended that the module will use its qualified name of the ***subpackage*** to maintain consistency.
-      
-  * **Returns**: The configuration section of the module.
+   * *`lock` - Whether to set the lock for the module config*
 
-    If the module is run for the first time, this function will return an empty dict `dict()`. It might be saved into the application config when
-    passed to `save_module_config()` with the same `module_name` provided.
-  
-  * **Note**: All modules are not allowed to implement its own configuration handler. Modules must retrieve the configuration for themselves using
-    this function, and save it using `save_module_config()` with the same `module_name`.
-    
- 
-6. Function `save_module_config()`
+3. Method `apply_core_patch(self, config: dict[str, ...]) -> None`
 
-  * **Parameters**:
+   Unlike `Config.set_core_config`, this method does not overwrite the entire core configuration. Instead, it will apply
+   any new keys in the `config` provided to the existing configuration. This method is used when a new key is introduced
+   to the configuration, and to maintain backward compatibility with previous configs.
 
-    * `module_name`: The name of the module.
+   *Parameters*: *`config` - The patch of core configuration*
 
-      It is highly recommended that the module will use its qualified name of the ***subpackage*** to maintain consistency.
-      
-    * `config`: The configuration of the module.
+4. Method `get_module_config(self, module_name: str, lock: bool = True) -> dict[str, ...]`
 
-      This configuration must be a `dict` and contains JSON-serializable items only. Non JSON-serializable items are serialized as `None`, which may
-      lead to data loss if not used properly.
-      
-  * **Returns**: *None*
-  
-  * **Note**: All modules are not allowed to implement its own configuration handler. Modules must save its configuration using this function.
+   This method returns the configuration of the module `module_name`. If `lock` is left default or set to True, the
+   module configuration will be locked the entire time to prevent unauthorized access. `RuntimeError` is raised for any
+   attempt to call this method before `Config.set_module_config` is called with the same `module_name` provided.
+
+   *Parameters*:
+
+   * *`module_name` - The name of the module*
+
+   * *`lock` - Whether to set the lock for the module config*
+
+5. Method `set_module_config(self, module_name: str, config: dict[str, ...]) -> None`
+
+   This method receives the configuration of the module `module_name` and writes it to `Config` class. This method
+   should be called by the caller of `Config.get_module_config` before returning.
+
+   *Parameters*:
+
+   * *`module_name` - The name of the module*
+
+   * *`config` - The configuration of core CLI*
+
+6. Method `apply_module_patch(self, config: dict[str, ...]) -> None`
+
+   Unlike `Config.set_module_config`, this method does not overwrite the entire module configuration. Instead, it will
+   apply any new keys in the `config` provided to the existing configuration. This method is used when a new key is
+   introduced to the configuration, and to maintain backward compatibility with previous configs.
+
+   *Parameters*:
+
+   * *`module_name` - The name of the module*
+
+   * *`config` - The patch of module configuration*
+
+#### Other methods
+
+1. Overriding method `__dict__(self) -> dict[str, ...]`
+
+   This overriding method returns a dictionary of the `Core` and `Modules` configuration (`dict[str, dict[str, ...]]`).
+   It is usually only used for JSON serialization.
+
+   *Parameters*: *No parameter required*
+
+2. Static method `json_decode_hook(json_obj: ...) -> Config`
+
+   This method is intended for internal use only. This method is used by JSON decoder to return the `Config` object.
+
+   *Parameters*: *`json_obj` - The JSON object passed in by JSON decoder*
+
+### Other API functions
+
+1. Function `make_config_global(cfg: Config) -> None`
+
+   This function takes in a `Config` instance and makes it global (in the scope of the module `config_class.py`). This
+   allows for a more intuitive way to access the config.
+
+   This function should only be called once by the core CLI.
+
+   *Parameters*: *`cfg`: The `Config` instance*
+
+2. Decorator `pass_config(core: bool = None, module_name: str = None) -> Callable`
+
+   This decorator will pass the `Config` instance as the first positional parameter of the decorated function call.
+   (if both `core` and `module_name` are left default).
+
+   If `core is not None`, this decorator will pass the configuration of core CLI instead. If `module_name is not None`,
+   this decorator will pass the configuration of module `module_name`.
+
+   This default decorator should be used if the config will be modified. The quicker ways (by setting either `core` or
+   `module_name`) can only be used if the config will not be modified, as the config returned is not locked.
+
+   If both are not `None`, this decorator raises `ValueError`.
+
+   *New*: A parameter (`lock`) is added to optionally lock the config. This change will make most `Config`'s instance
+   method largely redundant for end-developers.
+
+   *Parameters*:
+
+   * *`core` - Whether to return only the configuration of core CLI*
+
+   * *`module_name` - The name of the module to get configuration*
+
+   * *`lock` - Whether to lock the config*
+
+3. Function `is_debug() -> bool`
+
+   This function returns the value of entry `Debug` in the core CLI (when it is first loaded). This allows any function
+   to get the value without directly accessing the configuration of core CLI.
+
+   *Parameters*: *No parameter required*\
+
+4. Function `load_app_config(config_path: str) -> None`
+
+   This function is intended for internal use only. It takes in the path of the config file, parses the information to a
+   `Config` instance, and makes it global.
+
+   This function should only be called once by the core CLI.
+
+   *Parameters*: *`config_path`: Path to config file*
+
+5. Function `save_app_config(config_path: str) -> None`
+
+   This function is intended for internal use only. It takes in the path of the config file, dumps the global `Config`
+   object into JSON text, and writes the text to the config file.
+
+   This function should only be called once by the core CLI.
+
+   *Parameters*: *`config_path`: Path to config file*

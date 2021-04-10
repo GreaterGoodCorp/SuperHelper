@@ -19,8 +19,6 @@ pip3 install SuperHelper
 > Notes:
 > 
 > * Make sure `pip3` is up-to-date by running `python3 -m pip --install pip`.
-> 
-> * For Windows, use `python` instead of `python3`, and `pip` instead of `pip3`.
 
 ### Via source
 
@@ -28,7 +26,7 @@ The latest source code for this program can be found on [GitHub]. The program ca
 
 ```bash
 git clone https://github.com/GreaterGoodCorp/SuperHelper
-make install
+make dev-install
 ```
 
 ## Documentation
@@ -47,6 +45,8 @@ Please refer to `README.md` files located in each subpackage.
   and showing versioning.
   
 * Version `0.2.0`: Added a new module `Builtins.Stenographer` and restructured the code completely.
+
+* Version `0.3.0`: Improved configuration manager
   
 ## Contributing
 

@@ -1,63 +1,58 @@
 # This module defines core utilities and functionalities
 import importlib.util
-import pkgutil
-import sys
-import types
-import typing
 import logging
+import pkgutil
+from typing import Callable
 
 import click
 
-from SuperHelper.Core.Config import load_cli_config, save_cli_config
+from SuperHelper.Core.Config import pass_config
 
 logger = logging.getLogger("SuperHelper.Core.Utils")
 logger.setLevel(logging.DEBUG)
-logger.addHandler(logging.NullHandler())
 
 
-def load_core_commands() -> typing.List[types.MethodType]:
+def load_core_commands() -> list[tuple[Callable, str]]:
     return [
-        install_modules,
-        uninstall_modules,
-        list_modules,
+        (add_modules, "core_add"),
+        (remove_modules, "core_remove"),
+        (list_modules, "core_list"),
     ]
 
 
-@click.command("install")
+@click.command("add")
 @click.argument("module")
-def install_modules(module: str):
-    """Install new modules into SuperHelper."""
+@pass_config(core=True, lock=True)
+def add_modules(config: dict[str, ...], module: str) -> int:
+    """Adds new modules into SuperHelper."""
     if importlib.util.find_spec(module) is not None:
-        config = load_cli_config()
         if module not in config["INSTALLED_MODULES"]:
             config["INSTALLED_MODULES"].append(module)
-            save_cli_config(config)
-        sys.exit(0)
+        return 0
     else:
         logger.warning(f"Module {module} not found!")
-        sys.exit(1)
+        return 1
 
 
-@click.command("uninstall")
+@click.command("remove")
 @click.argument("module")
-def uninstall_modules(module: str):
-    """Uninstall existing modules from SuperHelper."""
-    config = load_cli_config()
+@pass_config(core=True, lock=True)
+def remove_modules(config: dict[str, ...], module: str):
+    """Removes existing modules from SuperHelper."""
     if module in config["INSTALLED_MODULES"]:
         config["INSTALLED_MODULES"].remove(module)
-        save_cli_config(config)
-        sys.exit(0)
+        return 0
     else:
         logger.warning(f"Module {module} not found!")
-        sys.exit(1)
+        return 1
 
 
 @click.command("list")
 @click.option("-a", "--all", "list_all", help="Include uninstalled modules", is_flag=True)
-def list_modules(list_all: bool):
-    """List installed modules"""
-    config = load_cli_config()
-    import SuperHelper.Builtins as Package
+@pass_config(core=True, lock=False)
+def list_modules(config: dict[str, ...], list_all: bool):
+    """Lists installed modules"""
+    import SuperHelper.Modules as Package
     prefix = Package.__name__ + "."
     count = 0
     for _, module_name, _ in pkgutil.iter_modules(Package.__path__, prefix):
@@ -68,4 +63,4 @@ def list_modules(list_all: bool):
             click.echo(module_name)
     if count == 0 and not list_all:
         click.echo("No installed modules found!")
-    sys.exit(0)
+    return 0
