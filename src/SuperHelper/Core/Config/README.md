@@ -115,25 +115,25 @@ Design considerations:
 
    *Parameters*: *`cfg`: The `Config` instance*
 
-2.
-Decorator `pass_config(core: bool = None, module_name: str = None, lock: bool = False, param_name: str = "config") -> Callable`
+2. Decorator `pass_config(core: bool = None, module_name: str = None, lock: bool = False,
+   param_name: str = "config") -> Callable`
 
-This decorator will pass the `Config` instance as the first positional parameter of the decorated function call.
-(if both `core` and `module_name` are left default).
+   This decorator will pass the `Config` instance as the first positional parameter of the decorated function call.
+   (if both `core` and `module_name` are left default).
 
-If `core is not None`, this decorator will pass the configuration of core CLI instead. If `module_name is not None`,
-this decorator will pass the configuration of module `module_name`.
+   If `core is not None`, this decorator will pass the configuration of core CLI instead. If `module_name is not None`,
+   this decorator will pass the configuration of module `module_name`.
 
-This default decorator should be used if the config will be modified. The quicker ways (by setting either `core` or
-`module_name`) can only be used if the config will not be modified, as the config returned is not locked.
+   This default decorator should be used if the config will be modified. The quicker ways (by setting either `core` or
+   `module_name`) can only be used if the config will not be modified, as the config returned is not locked.
 
-If both are not `None`, this decorator raises `ValueError`.
+   If both are not `None`, this decorator raises `ValueError`.
 
-`lock` can be set to `True` to lock the config (if required to modify it). Otherwise, leave default.
+   `lock` can be set to `True` to lock the config (if required to modify it). Otherwise, leave default.
 
-`param_name` is the name that the config should be passed as.
+   `param_name` is the name that the config should be passed as.
 
-*Parameters*:
+   *Parameters*:
 
    * *`core` - Whether to return only the configuration of core CLI*
 
