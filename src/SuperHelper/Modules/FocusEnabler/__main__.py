@@ -16,9 +16,9 @@ from SuperHelper.Core import Config
 from SuperHelper.Core.Config import pass_config
 
 MODULE_NAME: str = "FocusEnabler"
-pass_config_no_lock = functools.partial(pass_config, module=MODULE_NAME, lock=False)
-pass_config_with_lock = functools.partial(pass_config, module=MODULE_NAME, lock=True)
-__name__ = f"SuperHelper.Builtins.{MODULE_NAME}"
+pass_config_no_lock = functools.partial(pass_config, module_name=MODULE_NAME, lock=False)
+pass_config_with_lock = functools.partial(pass_config, module_name=MODULE_NAME, lock=True)
+__name__ = f"SuperHelper.Modules.{MODULE_NAME}"
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
