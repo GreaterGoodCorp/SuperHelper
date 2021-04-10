@@ -4,3 +4,5 @@ wheel
 twine
 Pillow
 cryptography
+pytest
+setuptools
