@@ -18,8 +18,8 @@ class Cryptographer:
     def __init__(self, salt: bytes, auth_key: bytes, encrypt: bool = True):
         self.salt = salt
         self.kdf = self.make_kdf(self.salt)
-        self.auth_hash = str(hashlib.sha256(auth_key))
-        self.key = self.kdf.derive(self.auth_hash.encode())
+        self.auth_hash = hashlib.sha256(auth_key).digest()
+        self.key = self.kdf.derive(self.auth_hash)
         self.is_encrypt = encrypt
 
     def encrypt(self, raw_data: bytes) -> bytes:
@@ -35,7 +35,6 @@ class Cryptographer:
         try:
             return fernet.decrypt(encrypted_data)
         except InvalidToken:
-            logger.exception("Invalid key")
             raise
 
     def get_salt_string(self):
