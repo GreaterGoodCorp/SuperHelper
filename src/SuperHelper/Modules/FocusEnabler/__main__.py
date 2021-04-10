@@ -201,7 +201,7 @@ def flush_dns():
 
 
 @pass_config_with_lock()
-def add_domain_internal(config: dict[str, ...], domains: list[str]) -> int:
+def add_domain_internal(domains: list[str], config: dict[str, ...]) -> int:
     """(Internal) Add domain to config."""
     for dm in domains:
         if is_domain_valid(dm):
@@ -216,7 +216,7 @@ def add_domain_internal(config: dict[str, ...], domains: list[str]) -> int:
 
 
 @pass_config_with_lock()
-def remove_domain_internal(config: dict[str, ...], confirm: bool, domains: list[str], fp) -> int:
+def remove_domain_internal(confirm: bool, domains: list[str], fp: io.IOBase, config: dict[str, ...]) -> int:
     """(Internal) Remove domain from config."""
     if domains == (".",):
         if len(config["BL_DOMAINS"]) == 0:
