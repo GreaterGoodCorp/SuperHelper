@@ -411,7 +411,7 @@ def create(image_file: io.IOBase, key: str, compress: int, density: int, output_
     return write_steganography(input_file, image, output_file, key, compress, density, show_image)
 
 
-@main.command("extract", help="Extract steganography_modified")
+@main.command("extract", help="Extracts steganography")
 @click.option("-k", "--key", help="The authentication key", type=str)
 @click.option("-o", "--output_file", help="Path to output file", type=click.File("wb"), required=True)
 @click.argument("steganography", required=True, type=click.File("wb"))
