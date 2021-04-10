@@ -124,7 +124,7 @@ def make_config_global(cfg: Config):
     global_config = cfg
 
 
-def pass_config(core: bool = None, module_name: str = None, lock: bool = False) -> Callable:
+def pass_config(core: bool = None, module_name: str = None, lock: bool = False, param_name: str = "config") -> Callable:
     """Automatically passes the config (as required) as the first positional argument."""
 
     def decorator(f: Callable) -> Callable:
@@ -135,18 +135,22 @@ def pass_config(core: bool = None, module_name: str = None, lock: bool = False) 
             elif core is not None and module_name is None:
                 if lock:
                     config = global_config.get_core_config(lock=True)
-                    ret_val = f(config, *args, **kwargs)
+                    kwargs[param_name] = config
+                    ret_val = f(*args, **kwargs)
                     global_config.set_core_config(config)
                 else:
-                    ret_val = f(global_config.get_core_config(lock=False), *args, **kwargs)
+                    kwargs[param_name] = global_config.get_core_config(lock=False)
+                    ret_val = f(*args, **kwargs)
                 return ret_val
             elif core is None and module_name is not None:
                 if lock:
                     config = global_config.get_module_config(module_name, lock=True)
-                    ret_val = f(config, *args, **kwargs)
+                    kwargs[param_name] = config
+                    ret_val = f(*args, **kwargs)
                     global_config.set_module_config(module_name, config)
                 else:
-                    ret_val = f(global_config.get_module_config(module_name, lock=lock), *args, **kwargs)
+                    kwargs[param_name] = global_config.get_module_config(module_name, lock=lock)
+                    ret_val = f(*args, **kwargs)
                 return ret_val
             else:
                 raise ValueError("Core and module name cannot be enabled at the same time!")
