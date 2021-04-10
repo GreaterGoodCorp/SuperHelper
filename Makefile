@@ -8,7 +8,7 @@ build:
 publish: build
 	./.venv/bin/twine check dist/* && twine upload dist/*
 
-clean:
+clean: dev-uninstall
 	rm -rf build
 	rm -rf dist
 	rm -rf ~/Library/Application\ Support/SuperHelper/
