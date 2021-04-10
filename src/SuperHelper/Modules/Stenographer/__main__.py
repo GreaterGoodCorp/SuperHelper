@@ -307,7 +307,7 @@ def extract_steganography(input_file: io.IOBase, output_file: io.IOBase, auth_ke
     try:
         image = Image.open(input_file)
     except Image.UnidentifiedImageError:
-        logger.exception(f"Not an image_file!")
+        logger.exception(f"Not an image file!")
         return 1
 
     header = extract_header(image)
