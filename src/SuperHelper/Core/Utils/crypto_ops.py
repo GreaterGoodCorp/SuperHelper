@@ -38,6 +38,9 @@ class Cryptographer:
             logger.exception("Invalid key")
             raise
 
+    def get_salt_string(self):
+        return Cryptographer.encode_salt(self.salt)
+
     @staticmethod
     def make_encrypter(key: str) -> Cryptographer:
         return Cryptographer(Cryptographer.make_salt(), key.encode(), True)
