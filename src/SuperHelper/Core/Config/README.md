@@ -115,7 +115,7 @@ Design considerations:
 
    *Parameters*: *`cfg`: The `Config` instance*
 
-2. Decorator `pass_config(core: bool = None, module_name: str = None) -> Callable`
+2. Decorator `pass_config(core: bool = None, module_name: str = None, lock: bool = False, param_name: str = "config") -> Callable`
 
    This decorator will pass the `Config` instance as the first positional parameter of the decorated function call.
    (if both `core` and `module_name` are left default).
@@ -128,8 +128,9 @@ Design considerations:
 
    If both are not `None`, this decorator raises `ValueError`.
 
-   *New*: A parameter (`lock`) is added to optionally lock the config. This change will make most `Config`'s instance
-   method largely redundant for end-developers.
+   `lock` can be set to `True` to lock the config (if required to modify it). Otherwise, leave default.
+
+   `param_name` is the name that the config should be passed as.
 
    *Parameters*:
 
