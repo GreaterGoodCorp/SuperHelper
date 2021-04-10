@@ -418,6 +418,8 @@ def create(image_file: io.IOBase, key: str, compress: int, density: int, output_
 @main.command("extract", help="Extracts steganography")
 @click.option("-k", "--key", help="The authentication key", type=str)
 @click.option("-o", "--output_file", help="Path to output file", type=click.File("wb"), required=True)
-@click.argument("steganography", required=True, type=click.File("wb"))
-def extract(key: str, output_file: io.IOBase, steganography: io.IOBase):
+@click.argument("steganography", required=True, type=click.File("rb"))
+@pass_config_no_lock()
+def extract(key: str, output_file: io.IOBase, steganography: io.IOBase, config: dict[str, ...]):
+    key = config["default_auth_key"] if key is None else key
     return extract_steganography(steganography, output_file, key)
