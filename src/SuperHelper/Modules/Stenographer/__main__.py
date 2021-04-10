@@ -189,7 +189,7 @@ def write_steganography(input_file: io.IOBase, image_file: Image.Image, output_f
         logger.error("Data is too big to be stored!")
         return 1
 
-    x, y, count, bit_loc = 0, 0, 0, density
+    x, y, count, bit_loc = 0, 0, 0, density - 1
     current_pix = list(pix[0, 0])
 
     # Firstly, iterate through all the bytes to be written
@@ -216,7 +216,7 @@ def write_steganography(input_file: io.IOBase, image_file: Image.Image, output_f
                 # by incrementing the count
                 count += 1
                 # Reset density
-                bit_loc = density
+                bit_loc = density - 1
                 # If reached the last RGB
                 if count == 3:
                     # Save pixel
@@ -259,7 +259,7 @@ def extract_header(config: dict[str, ...], image: Image.Image) -> Header:
     # Firstly, the header is retrieved by reading for its known length.
     # Since the density is unknown, check all density one by one.
     while density in config["available_density"]:
-        bit_loc = density
+        bit_loc = density - 1
         while len(result_data) < Header.header_length:
             byte = 0
             # Read every single bit
@@ -274,7 +274,7 @@ def extract_header(config: dict[str, ...], image: Image.Image) -> Header:
                 if bit_loc == -1:
                     # Move to the next RGB and reset the bit index
                     count += 1
-                    bit_loc = density
+                    bit_loc = density - 1
                     # If the entire pixel is read
                     if count == 3:
                         # Move to the next pixel in the row and reset the count
@@ -316,7 +316,7 @@ def extract_steganography(input_file: io.IOBase, output_file: io.IOBase, auth_ke
     data_length = Header.header_length + header.data_length
     x, y, count = 0, 0, 0
     result_data = b""
-    bit_loc = header.density
+    bit_loc = header.density - 1
 
     # Attempt to read input_file
     while len(result_data) < data_length:
@@ -333,7 +333,7 @@ def extract_steganography(input_file: io.IOBase, output_file: io.IOBase, auth_ke
             if bit_loc == -1:
                 # Move to the next RGB and reset the bit index
                 count += 1
-                bit_loc = header.density
+                bit_loc = header.density - 1
                 # If the entire pixel is read
                 if count == 3:
                     # Move to the next pixel in the row and reset the count
