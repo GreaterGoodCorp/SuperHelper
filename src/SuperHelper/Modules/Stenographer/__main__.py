@@ -12,8 +12,8 @@ from SuperHelper.Core.Config import Config, pass_config
 from SuperHelper.Core.Utils import BitOps, Cryptographer, ImageOps
 
 MODULE_NAME: str = "Stenographer"
-pass_config_no_lock = functools.partial(pass_config, module=MODULE_NAME, lock=False)
-pass_config_with_lock = functools.partial(pass_config, module=MODULE_NAME, lock=True)
+pass_config_no_lock = functools.partial(pass_config, module_name=MODULE_NAME, lock=False)
+pass_config_with_lock = functools.partial(pass_config, module_name=MODULE_NAME, lock=True)
 __name__ = f"SuperHelper.Builtins.{MODULE_NAME}"
 logger = logging.getLogger(__name__)
 
