@@ -46,7 +46,7 @@ Please refer to `README.md` files located in each subpackage.
   
 * Version `0.2.0`: Added a new module `Builtins.Stenographer` and restructured the code completely.
 
-* Version `0.3.0`: Improved configuration manager
+* Version `0.3.0`: Improved configuration manager, implemented new core utilities and fixed loads of bugs.
   
 ## Contributing
 
