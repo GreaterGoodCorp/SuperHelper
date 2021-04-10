@@ -21,30 +21,39 @@ def load_core_commands() -> list[tuple[Callable, str]]:
 
 
 @click.command("add")
-@click.argument("module")
+@click.argument("modules", nargs=-1)
 @pass_config(core=True, lock=True)
-def add_modules(config: dict[str, ...], module: str) -> int:
+def add_modules(config: dict[str, ...], modules: list[str]) -> int:
     """Adds new modules into SuperHelper."""
-    if importlib.util.find_spec(module) is not None:
-        if module not in config["INSTALLED_MODULES"]:
-            config["INSTALLED_MODULES"].append(module)
-        return 0
-    else:
-        logger.warning(f"Module {module} not found!")
-        return 1
+    module_prefix = "SuperHelper.Modules.{}"
+    for module in modules:
+        module_fullname = module_prefix.format(module)
+        try:
+            if importlib.util.find_spec(module_fullname) is not None:
+                if module_fullname not in config["INSTALLED_MODULES"]:
+                    config["INSTALLED_MODULES"].append(module_fullname)
+                return 0
+            else:
+                raise ModuleNotFoundError
+        except ModuleNotFoundError:
+            logger.exception(f"Module {module} not found!")
+            return 1
 
 
 @click.command("remove")
-@click.argument("module")
+@click.argument("modules", nargs=-1)
 @pass_config(core=True, lock=True)
-def remove_modules(config: dict[str, ...], module: str):
+def remove_modules(config: dict[str, ...], modules: list[str]):
     """Removes existing modules from SuperHelper."""
-    if module in config["INSTALLED_MODULES"]:
-        config["INSTALLED_MODULES"].remove(module)
-        return 0
-    else:
-        logger.warning(f"Module {module} not found!")
-        return 1
+    module_prefix = "SuperHelper.Modules.{}"
+    for module in modules:
+        module_fullname = module_prefix.format(module)
+        if module_fullname in config["INSTALLED_MODULES"]:
+            config["INSTALLED_MODULES"].remove(module_fullname)
+            return 0
+        else:
+            logger.warning(f"Module {module} not found!")
+            return 1
 
 
 @click.command("list")
