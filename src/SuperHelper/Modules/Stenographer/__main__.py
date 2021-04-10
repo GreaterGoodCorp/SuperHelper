@@ -40,7 +40,8 @@ class Header:
     pattern: str = r"(\d{1,8})\?(\d{1,3})\?"
     hash_pattern: str = r"((?:[A-Za-z0-9+/]{4})+(?:[A-Za-z0-9+/]{2}==" + \
                         r"|[A-Za-z0-9+/]{3}=)?)"
-    pattern: re.Pattern = re.compile(f"^{pattern + hash_pattern}$")
+    padding_pattern: str = r"-*"
+    pattern: re.Pattern = re.compile(f"^{pattern + hash_pattern + padding_pattern}$")
 
     def __str__(self) -> str:
         """Returns the header."""
