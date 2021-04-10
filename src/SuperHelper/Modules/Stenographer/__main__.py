@@ -367,7 +367,6 @@ def extract_steganography(input_file: io.IOBase, output_file: io.IOBase, auth_ke
 
     # Write input_file to output_file file objects
     # Iterate through all file objects
-    output_file.write(result_data)
     try:
         output_file.write(result_data)
         output_file.close()
