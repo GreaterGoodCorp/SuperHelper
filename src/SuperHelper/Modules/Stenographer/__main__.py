@@ -266,8 +266,8 @@ def extract_header(image: Image.Image, config: dict[str, ...] = None) -> Header:
             # Iterate through every single bit of the byte
             for i in range(8):
                 # If bit is set, set the corresponding bit of 'byte'
-                if pix[x, y][count] & (1 << bit_loc):
-                    byte += (1 << (7 - i))
+                if BitOps.is_bit_set(pix[x, y][count], bit_loc):
+                    byte = BitOps.set_bit(byte, i)
                 # Move to the next bit by decrement bit index
                 bit_loc -= 1
                 # If all readable bits of the colour integer are consumed
@@ -325,8 +325,8 @@ def extract_steganography(input_file: io.IOBase, output_file: io.IOBase, auth_ke
         # Iterate through every single bit of the byte
         for i in range(8):
             # If bit is set, set the corresponding bit of 'byte'
-            if pix[x, y][count] & (1 << bit_loc):
-                byte += (1 << (7 - i))
+            if BitOps.is_bit_set(pix[x, y][count], bit_loc):
+                byte = BitOps.set_bit(byte, i)
             # Move to the next bit by decrement bit index
             bit_loc -= 1
             # If all readable bits of the colour integer are consumed
