@@ -93,6 +93,13 @@ def validate_header(b: bytes) -> bool:
         return False
 
 
+def fix(data: bytes, is_encrypt: bool = True) -> bytes:
+    if is_encrypt:
+        return data + b"++"
+    else:
+        return data[:-2]
+
+
 @pass_config_no_lock()
 def build_header(config: dict[str, ...], data_length: int, salt: str, compression: int, density: int) -> Header:
     compression = config["default_compression"] if compression not in config["available_compression"] else compression
@@ -160,7 +167,7 @@ def write_steganography(input_file: io.IOBase, image_file: Image.Image, output_f
 
     crypto = Cryptographer.make_encrypter(auth_key)
     data = crypto.encrypt(data)
-
+    data = fix(data)
     # Craft the finished input_file
     header = build_header(
         data_length=len(data),
@@ -350,7 +357,7 @@ def extract_steganography(input_file: io.IOBase, output_file: io.IOBase, auth_ke
 
     # Strip header by slicing its known length
     result_data = result_data[Header.header_length:]
-
+    result_data = fix(result_data, False)
     # Decrypt input_file
     crypto = Cryptographer.make_decrypter(header.salt, auth_key)
     try:
