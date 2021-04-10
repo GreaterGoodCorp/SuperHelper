@@ -77,6 +77,8 @@ class Header:
         result_header = Header.separator.join(
             (str(self.data_length), str(flag), self.salt))
 
+        result_header += Header.padding_character * (Header.header_length - len(result_header))
+
         assert Header.pattern.match(result_header)
 
         # Assign as a class attribute
