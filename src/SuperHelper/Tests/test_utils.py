@@ -1,5 +1,6 @@
-from SuperHelper.Core.Utils import BitOps, Cryptographer
 import pytest
+
+from SuperHelper.Core.Utils import BitOps, Cryptographer
 
 
 def test_bit_ops():
