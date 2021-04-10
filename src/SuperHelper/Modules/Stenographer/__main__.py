@@ -249,7 +249,7 @@ def write_steganography(input_file: io.IOBase, image_file: Image.Image, output_f
 
 
 @pass_config_no_lock()
-def extract_header(config: dict[str, ...], image: Image.Image) -> Header:
+def extract_header(image: Image.Image, config: dict[str, ...] = None) -> Header:
     pix = image.load()
     y_dim = image.size[1]
     x, y, count = 0, 0, 0
