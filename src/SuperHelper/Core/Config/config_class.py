@@ -109,10 +109,9 @@ class Config(metaclass=Singleton):
         }
 
     @staticmethod
-    def json_decode_hook(json_obj) -> Config:
-        """(Internal) Object hook for JSONDecoder."""
-        if "Core" in json_obj and "Modules" in json_obj:
-            return Config(core=json_obj["Core"], modules=json_obj["Modules"])
+    def from_dict(config: dict[str]) -> Config:
+        if "Core" in config.keys() and "Modules" in config.keys():
+            return Config(core=config["Core"], modules=config["Modules"])
 
 
 global_config: Config

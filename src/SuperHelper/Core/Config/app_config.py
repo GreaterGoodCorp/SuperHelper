@@ -11,7 +11,7 @@ def load_app_config(config_path: str) -> None:
     try:
         with open(config_path) as fp:
             # De-serialise JSON to Python's dict and update
-            config: Config = json.load(fp, object_hook=Config.json_decode_hook)
+            config = Config.from_dict(json.load(fp))
             config.apply_core_patch(DefaultCoreConfig)
             make_config_global(config)
     except FileNotFoundError:
