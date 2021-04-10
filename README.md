@@ -49,6 +49,8 @@ Please refer to `README.md` files located in each subpackage.
 * Version `0.3.0`: Improved configuration manager, implemented new core utilities and fixed loads of bugs.
 
 * Version `0.3.1`: Fixed an urgent an undisclosed bug.
+
+* Version `0.4.0`: Improved flexibility for core commands and prepared for full release.
   
 ## Contributing
 
