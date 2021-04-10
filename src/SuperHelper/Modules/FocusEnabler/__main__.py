@@ -20,6 +20,7 @@ pass_config_no_lock = functools.partial(pass_config, module=MODULE_NAME, lock=Fa
 pass_config_with_lock = functools.partial(pass_config, module=MODULE_NAME, lock=True)
 __name__ = f"SuperHelper.Builtins.{MODULE_NAME}"
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 
 def get_input_prompt(title):
