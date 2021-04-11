@@ -28,7 +28,7 @@ version_message = f"%(prog)s-%(version)s {platform.platform(terse=True)} Python-
 
 def validate_no_win32() -> None:
     """This function asserts that the platform is not 'win32'."""
-    assert sys.platform != "win32", "This application is not configured to run on Windows."
+    assert sys.platform != "win32"
 
 
 # Program entry point
@@ -40,9 +40,13 @@ def cli() -> int:
 
 # Console entry call
 def main_entry() -> NoReturn:
-    validate_no_win32()
     # Load core logger
     logger = initialise_core_logger(LOGGING_PATH)
+    try:
+        validate_no_win32()
+    except AssertionError:
+        logger.exception("This application cannot run on Windows!")
+        sys.exit(1)
     try:
         # Load application config
         from SuperHelper.Core.Config import load_app_config, save_app_config
