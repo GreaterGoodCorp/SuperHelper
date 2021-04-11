@@ -1,1 +1,18 @@
-site_name: My Docs
+site_name: SuperHelper Documentation
+repo_url: https://github.com/GreaterGoodCorp/SuperHelper
+site_description: Documentation for SuperHelper CLI application
+site_author: Nguyen Thai Binh
+nav:
+  - Home: '../README.md'
+  - Core CLI documentation:
+      - 'How it works': 'core/how_it_works.md'
+      - 'Configuration': 'core/config.md'
+      - 'Core utilities': 'core/core_utilities.md'
+  - Modules documentation:
+      - 'FocusEnabler': 'modules/focus_enabler.md'
+      - 'Stenographer': 'modules/stenographer.md'
+  - 'Issue tracker': 'https://github.com/GreaterGoodCorp/SuperHelper/issues'
+  - About:
+    - Changelog: '../CHANGELOG.md'
+    - License: '../LICENSE'
+    - Contributing: '../CONTRIBUTING.md'
