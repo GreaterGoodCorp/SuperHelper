@@ -1,14 +1,15 @@
 venv:
 	/usr/local/bin/python3 -m venv .venv
-	./.venv/bin/pip3 install -y -r requirements.txt
+	./.venv/bin/pip3 install -r requirements.txt
 
-build:
+build: venv
 	./.venv/bin/python3 setup.py sdist bdist_wheel
 
-publish: build
+publish: venv build
 	./.venv/bin/twine check dist/* && twine upload dist/*
 
-clean: dev-uninstall
+clean: venv
+	./.venv/bin/pip3 uninstall -y SuperHelper && rm -rf src/*.egg-info
 	rm -rf build
 	rm -rf dist
 	rm -rf ~/Library/Application\ Support/SuperHelper/
@@ -16,8 +17,8 @@ clean: dev-uninstall
 	rm -rf .pytest_cache
 	find . -type d -name __pycache__ -exec rm -r {} \+
 
-dev-uninstall:
-	./.venv/bin/pip3 uninstall -y SuperHelper && rm -rf src/*.egg-info
-
-dev-install:
+dev-install: venv
 	./.venv/bin/pip3 install -e .
+
+test: venv
+	pytest --cov=src/SuperHelper
