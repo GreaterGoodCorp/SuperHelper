@@ -21,80 +21,63 @@ def _ensure_obj_of_type(t: type, obj: ..., name: str = None) -> None:
     return _raise_on_failure(_is_obj_of_type(t, obj), t, obj, name)
 
 
-def ensure_custom(t: type, obj: ..., name: str = None) -> None:
-    return _ensure_obj_of_type(t, obj, name)
+class TypeCheck:
+    @staticmethod
+    def ensure_custom(t: type, obj: ..., name: str = None) -> None:
+        return _ensure_obj_of_type(t, obj, name)
 
+    @staticmethod
+    def ensure_int(obj: ..., name: str = None) -> None:
+        return _ensure_obj_of_type(int, obj, name)
 
-def ensure_int(obj: ..., name: str = None) -> None:
-    return _ensure_obj_of_type(int, obj, name)
+    @staticmethod
+    def ensure_float(obj: ..., name: str = None) -> None:
+        return _ensure_obj_of_type(float, obj, name)
 
+    @staticmethod
+    def ensure_complex(obj: ..., name: str = None) -> None:
+        return _ensure_obj_of_type(complex, obj, name)
 
-def ensure_float(obj: ..., name: str = None) -> None:
-    return _ensure_obj_of_type(float, obj, name)
+    @staticmethod
+    def ensure_str(obj: ..., name: str = None) -> None:
+        return _ensure_obj_of_type(str, obj, name)
 
+    @staticmethod
+    def ensure_bytes(obj: ..., name: str = None) -> None:
+        return _ensure_obj_of_type(bytes, obj, name)
 
-def ensure_complex(obj: ..., name: str = None) -> None:
-    return _ensure_obj_of_type(complex, obj, name)
+    @staticmethod
+    def ensure_bytearray(obj: ..., name: str = None) -> None:
+        return _ensure_obj_of_type(bytearray, obj, name)
 
+    @staticmethod
+    def ensure_list(obj: ..., name: str = None) -> None:
+        return _ensure_obj_of_type(list, obj, name)
 
-def ensure_str(obj: ..., name: str = None) -> None:
-    return _ensure_obj_of_type(str, obj, name)
+    @staticmethod
+    def ensure_tuple(obj: ..., name: str = None) -> None:
+        return _ensure_obj_of_type(tuple, obj, name)
 
+    @staticmethod
+    def ensure_dict(obj: ..., name: str = None) -> None:
+        return _ensure_obj_of_type(dict, obj, name)
 
-def ensure_bytes(obj: ..., name: str = None) -> None:
-    return _ensure_obj_of_type(bytes, obj, name)
+    @staticmethod
+    def ensure_set(obj: ..., name: str = None) -> None:
+        return _ensure_obj_of_type(set, obj, name)
 
+    @staticmethod
+    def ensure_frozenset(obj: ..., name: str = None) -> None:
+        return _ensure_obj_of_type(frozenset, obj, name)
 
-def ensure_bytearray(obj: ..., name: str = None) -> None:
-    return _ensure_obj_of_type(bytearray, obj, name)
+    @staticmethod
+    def ensure_generator(obj: ..., name: str = None) -> None:
+        return _ensure_obj_of_type(GeneratorType, obj, name)
 
+    @staticmethod
+    def ensure_memoryview(obj: ..., name: str = None) -> None:
+        return _ensure_obj_of_type(memoryview, obj, name)
 
-def ensure_list(obj: ..., name: str = None) -> None:
-    return _ensure_obj_of_type(list, obj, name)
-
-
-def ensure_tuple(obj: ..., name: str = None) -> None:
-    return _ensure_obj_of_type(tuple, obj, name)
-
-
-def ensure_dict(obj: ..., name: str = None) -> None:
-    return _ensure_obj_of_type(dict, obj, name)
-
-
-def ensure_set(obj: ..., name: str = None) -> None:
-    return _ensure_obj_of_type(set, obj, name)
-
-
-def ensure_frozenset(obj: ..., name: str = None) -> None:
-    return _ensure_obj_of_type(frozenset, obj, name)
-
-
-def ensure_generator(obj: ..., name: str = None) -> None:
-    return _ensure_obj_of_type(GeneratorType, obj, name)
-
-
-def ensure_memoryview(obj: ..., name: str = None) -> None:
-    return _ensure_obj_of_type(memoryview, obj, name)
-
-
-def ensure_function(obj: ..., name: str = None) -> None:
-    return _ensure_obj_of_type(FunctionType, obj, name)
-
-
-__all__ = [
-    "ensure_function",
-    "ensure_memoryview",
-    "ensure_generator",
-    "ensure_frozenset",
-    "ensure_set",
-    "ensure_dict",
-    "ensure_list",
-    "ensure_tuple",
-    "ensure_str",
-    "ensure_int",
-    "ensure_bytearray",
-    "ensure_float",
-    "ensure_custom",
-    "ensure_complex",
-    "ensure_bytes",
-]
+    @staticmethod
+    def ensure_function(obj: ..., name: str = None) -> None:
+        return _ensure_obj_of_type(FunctionType, obj, name)
