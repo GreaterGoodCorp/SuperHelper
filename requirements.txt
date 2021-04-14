@@ -6,3 +6,5 @@ Pillow
 cryptography
 pytest
 setuptools
+pytest-cov
+codecov
