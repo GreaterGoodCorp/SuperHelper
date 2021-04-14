@@ -1,5 +1,11 @@
 language: python
-python: "3.9"
+jobs:
+  include:
+    - name: "Python 3.9 on Linux"
+      python: 3.9
+    - name: "Python 3.9 on MacOS"
+      osx_image: xcode12.2
+      language: shell
 install:
   - pip3 install -r requirements.txt
 script:
