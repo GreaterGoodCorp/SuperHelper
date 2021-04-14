@@ -27,13 +27,13 @@ def load_core_commands() -> list[tuple[Callable, str]]:
 def add_modules(config: dict[str, ...], modules: list[str]) -> None:
     """Adds new modules into SuperHelper."""
     module_prefix = "SuperHelper.Modules.{}"
+    all_modules = config["INSTALLED_MODULES"]
     for module in modules:
         module_fullname = module_prefix.format(module)
         try:
             if importlib.util.find_spec(module_fullname) is not None:
                 if module_fullname not in config["INSTALLED_MODULES"]:
-                    config["INSTALLED_MODULES"].append(module_fullname)
-                return 0
+                    all_modules.append(module_fullname)
             else:
                 raise ModuleNotFoundError
         except ModuleNotFoundError:
@@ -51,11 +51,13 @@ def add_modules(config: dict[str, ...], modules: list[str]) -> None:
 def remove_modules(config: dict[str, ...], modules: list[str]) -> None:
     """Removes existing modules from SuperHelper."""
     module_prefix = "SuperHelper.Modules.{}"
+    all_modules = config["INSTALLED_MODULES"]
     for module in modules:
         module_fullname = module_prefix.format(module)
-        if module_fullname in config["INSTALLED_MODULES"]:
-            config["INSTALLED_MODULES"].remove(module_fullname)
-            return 0
+        if module_fullname in all_modules:
+            all_modules.remove(module_fullname)
+        elif module_fullname in config["INSTALLED_MODULES"]:
+            continue
         else:
             logger.warning(f"Module {module} not found!")
             break
