@@ -4,7 +4,9 @@ python: 3.9
 language: python
 jobs:
   include:
-    - name: "Python 3.8.0 on macOS 10.14"
+    - name: "Python 3.9.0 on Linux"
+      python: 3.9
+    - name: "Python 3.9.0 on MacOS"
       os: osx
       osx_image: xcode12.2
       language: shell
