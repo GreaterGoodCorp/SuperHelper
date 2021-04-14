@@ -135,22 +135,26 @@ def pass_config(core: bool = None, module_name: str = None, lock: bool = False, 
                 if lock:
                     config = global_config.get_core_config(lock=True)
                     kwargs[param_name] = config
-                    ret_val = f(*args, **kwargs)
-                    global_config.set_core_config(config)
+                    try:
+                        return f(*args, **kwargs)
+                    except SystemExit:
+                        global_config.set_core_config(config)
+                        raise
                 else:
                     kwargs[param_name] = global_config.get_core_config(lock=False)
-                    ret_val = f(*args, **kwargs)
-                return ret_val
+                    return f(*args, **kwargs)
             elif core is None and module_name is not None:
                 if lock:
                     config = global_config.get_module_config(module_name, lock=True)
                     kwargs[param_name] = config
-                    ret_val = f(*args, **kwargs)
-                    global_config.set_module_config(module_name, config)
+                    try:
+                        return f(*args, **kwargs)
+                    except SystemExit:
+                        global_config.set_module_config(module_name, config)
+                        raise
                 else:
                     kwargs[param_name] = global_config.get_module_config(module_name, lock=lock)
-                    ret_val = f(*args, **kwargs)
-                return ret_val
+                    return f(*args, **kwargs)
             else:
                 raise ValueError("Core and module name cannot be enabled at the same time!")
 
