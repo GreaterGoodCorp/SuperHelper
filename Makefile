@@ -15,6 +15,8 @@ clean: venv
 	rm -rf ~/Library/Application\ Support/SuperHelper/
 	rm -rf ~/.config/SuperHelper
 	rm -rf .pytest_cache
+	rm -rf .coverage
+	rm -rf .coverage.*
 	find . -type d -name __pycache__ -exec rm -r {} \+
 
 dev-install: venv
