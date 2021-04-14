@@ -1,12 +1,22 @@
+os: linux
+dist: xenial
+python: 3.9
 language: python
 jobs:
   include:
-    - name: "Python 3.9 on Linux"
-      python: 3.9
-    - name: "Python 3.9 on MacOS"
+    - name: "Python 3.8.0 on macOS 10.14"
+      os: osx
       osx_image: xcode12.2
       language: shell
+      before_install:
+        - python3 --version
+        - python3 -m pip install --upgrade pip
+      script: python3 -m pytest --cov=src/SuperHelper
+      after_success: python3 -m codecov
+before_install:
+  - python3 --version
+  - python3 -m pip install --upgrade pip
 install:
   - pip3 install -r requirements.txt
-script:
-  - pytest
+script: pytest --cov=src/SuperHelper
+after_success: codecov
