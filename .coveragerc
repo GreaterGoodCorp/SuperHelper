@@ -9,6 +9,11 @@ exclude_lines =
     raise NotImplementedError
     if __name__ == .__main__.:
     ^pass$
+    OSError
+    RuntimeError
+    AssertionError
+    BaseException
+    InvalidToken
 ignore_errors = True
 omit =
    src/SuperHelper/Tests/*
