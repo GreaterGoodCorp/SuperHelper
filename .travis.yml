@@ -10,15 +10,10 @@ jobs:
       os: osx
       osx_image: xcode12.2
       language: shell
-      before_install:
-        - python3 --version
-        - python3 -m pip install --upgrade pip
-      script: make test
-      after_success: python3 -m codecov
 before_install:
   - python3 --version
   - python3 -m pip install --upgrade pip
 install:
   - pip3 install -r requirements.txt
 script: make test
-after_success: codecov
+after_success: bash <(curl -s https://codecov.io/bash)
