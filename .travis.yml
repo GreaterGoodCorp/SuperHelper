@@ -10,6 +10,7 @@ jobs:
       os: osx
       osx_image: xcode12.2
       language: shell
+      after_success: skip
 before_install:
   - python3 --version
   - python3 -m pip install --upgrade pip
