@@ -1,5 +1,5 @@
 from typing import NoReturn
-from types import GeneratorType, FunctionType
+from types import FunctionType, GeneratorType
 
 
 def _is_obj_of_type(t: type, obj: ...) -> bool:
