@@ -4,7 +4,6 @@ from subprocess import Popen
 import pytest
 
 from SuperHelper.Core import main_entry
-from SuperHelper.Core.Config.config_class import Singleton
 
 
 @pytest.fixture(autouse=True)
