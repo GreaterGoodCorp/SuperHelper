@@ -1,13 +1,14 @@
 # This module defines two config functions, load_app_config() and save_app_config()
 import json
 import logging
+import os
 
 from SuperHelper.Core.Config import Config, DefaultCoreConfig, make_config_global, pass_config
 
 logger = logging.getLogger("SuperHelper.Core.Config")
 
 
-def load_app_config(config_path: str) -> None:
+def load_app_config(config_path: os.PathLike[str]) -> None:
     try:
         with open(config_path) as fp:
             # De-serialise JSON to Python's dict and update
@@ -23,7 +24,7 @@ def load_app_config(config_path: str) -> None:
 
 
 @pass_config()
-def save_app_config(config: Config, config_path: str) -> None:
+def save_app_config(config: Config, config_path: os.PathLike[str]) -> None:
     try:
         with open(config_path, "w") as fp:
             json.dump(config.__dict__(), fp)
