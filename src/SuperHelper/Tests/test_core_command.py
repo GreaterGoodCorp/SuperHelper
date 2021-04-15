@@ -5,7 +5,7 @@ import pytest
 from SuperHelper.Core import main_entry
 
 
-def test_add_valid():
+def test_add_single():
     sys.argv = ["helper", "add", "FocusEnabler"]
     with pytest.raises(SystemExit, match=r"0"):
         main_entry()
@@ -17,8 +17,8 @@ def test_add_invalid():
         main_entry()
 
 
-def test_remove_valid():
-    sys.argv = ["helper", "remove", "Stenographer"]
+def test_remove_single():
+    sys.argv = ["helper", "remove", "FocusEnabler"]
     with pytest.raises(SystemExit, match=r"0"):
         main_entry()
 
