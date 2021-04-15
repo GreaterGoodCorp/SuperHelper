@@ -13,7 +13,7 @@ dev-install:
 
 test:
 	rm -rf .test_dir && mkdir .test_dir
-	export SUPER_HELPER_APP_DIR=./.test_dir && pytest --cov=src/SuperHelper --forked
+	export SUPER_HELPER_APP_DIR=./.test_dir && pytest --cov=src --forked
 	rm -rf .test_dir
 	rm -rf .pytest_cache
 	rm -rf .coverage.*
