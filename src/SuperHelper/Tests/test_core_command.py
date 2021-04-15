@@ -46,8 +46,3 @@ def test_list():
     sys.argv = ["helper", "list"]
     with pytest.raises(SystemExit, match=r"0"):
         main_entry()
-
-
-def test_flush_dns():
-    from SuperHelper.Modules.FocusEnabler.__main__ import flush_dns
-    assert flush_dns() is None
