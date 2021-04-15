@@ -15,7 +15,7 @@ test:
 	rm -rf .test_dir && mkdir .test_dir
 	export SUPER_HELPER_APP_DIR=./.test_dir && pytest --cov=src --forked
 
-clean-all: clean clean-cfg
+clean-all: clean clean-cfg clean-test
 
 clean:
 	pip3 uninstall -y SuperHelper && rm -rf src/*.egg-info
