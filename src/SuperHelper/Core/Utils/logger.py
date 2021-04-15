@@ -1,6 +1,7 @@
 # This module provides a function to initialise the top-level logger
 import logging
-import os
+
+from SuperHelper.Core.Utils import PathLike
 
 
 class TracebackInfoFilter(logging.Filter):
@@ -21,7 +22,7 @@ class TracebackInfoFilter(logging.Filter):
         return True
 
 
-def initialise_core_logger(logging_path: os.PathLike[str]) -> logging.Logger:
+def initialise_core_logger(logging_path: PathLike) -> logging.Logger:
     logger = logging.getLogger("SuperHelper")
     logger.setLevel(logging.DEBUG)
     fh = logging.FileHandler(logging_path, mode="a+")
