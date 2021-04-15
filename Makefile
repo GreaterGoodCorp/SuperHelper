@@ -22,7 +22,9 @@ dev-install:
 	pip3 install -e .
 
 test:
-	pytest --cov=src/SuperHelper
+	mkdir .test_dir
+	export SUPER_HELPER_APP_DIR=./.test_dir; pytest --cov=src/SuperHelper
+	rm -rf .test_dir
 
 clean-cfg:
 	rm -rf ~/Library/Application\ Support/SuperHelper/
