@@ -57,6 +57,7 @@ def test_ensure_int():
 def test_ensure_custom():
     class Test:
         pass
+
     test = Test()
     assert TypeCheck.ensure_custom(Test, test) is None
     with pytest.raises(TypeError):
@@ -73,8 +74,8 @@ def test_ensure_float():
 
 
 def test_ensure_complex():
-    assert TypeCheck.ensure_complex(12+5j) is None
-    assert TypeCheck.ensure_complex(135453123123+0.00000000000000000001j) is None
+    assert TypeCheck.ensure_complex(12 + 5j) is None
+    assert TypeCheck.ensure_complex(135453123123 + 0.00000000000000000001j) is None
     with pytest.raises(TypeError):
         TypeCheck.ensure_complex(8)
     with pytest.raises(TypeError):
@@ -120,7 +121,7 @@ def test_ensure_list():
 
 def test_ensure_tuple():
     assert TypeCheck.ensure_tuple(tuple()) is None
-    assert TypeCheck.ensure_tuple((5, )) is None
+    assert TypeCheck.ensure_tuple((5,)) is None
     with pytest.raises(TypeError):
         TypeCheck.ensure_tuple(8)
     with pytest.raises(TypeError):
@@ -156,6 +157,7 @@ def test_ensure_frozenset():
 def test_ensure_generator():
     def a():
         yield 1
+
     a = a()
     assert TypeCheck.ensure_generator(a) is None
     with pytest.raises(TypeError):
