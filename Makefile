@@ -14,8 +14,6 @@ dev-install:
 test:
 	rm -rf .test_dir && mkdir .test_dir
 	export SUPER_HELPER_APP_DIR=./.test_dir && pytest --cov=src --forked
-	rm -rf .test_dir .pytest_cache coverage.xml .coverage
-	rm -rf .coverage.*
 
 clean-all: clean clean-cfg
 
@@ -26,3 +24,7 @@ clean:
 
 clean-cfg:
 	rm -rf ~/Library/Application\ Support/SuperHelper/ ~/.config/SuperHelper
+
+clean-test:
+	rm -rf .test_dir .pytest_cache coverage.xml .coverage
+	rm -rf .coverage.*
