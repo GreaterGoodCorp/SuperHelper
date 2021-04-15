@@ -12,8 +12,8 @@ dev-install:
 	pip3 install -e .
 
 test:
-	mkdir .test_dir
-	export SUPER_HELPER_APP_DIR=./.test_dir; pytest --cov=src/SuperHelper
+	rm -rf .test_dir && mkdir .test_dir
+	export SUPER_HELPER_APP_DIR=./.test_dir && pytest --cov=src/SuperHelper --forked
 	rm -rf .test_dir
 	rm -rf .pytest_cache
 	rm -rf .coverage
