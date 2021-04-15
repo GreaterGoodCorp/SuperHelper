@@ -73,42 +73,42 @@ def main() -> None:
 @main.command("add")
 @click.option("-c", "--clear", is_flag=True, help="(Optionally) Remove all blacklisted domains (same as 'remove')")
 @click.argument("domains", nargs=-1, required=True)
-def add_domain(clear, domains) -> int:
+def add_domain(clear, domains) -> None:
     """Add DOMAINS to blacklist."""
     if is_root():
         logger.warning("Please do not run this command as 'root'")
-        return 1
+        sys.exit(1)
     if clear:
         with io.StringIO() as sio:
             remove_domain_internal(False, ".", sio)
-    return add_domain_internal(domains)
+    sys.exit(add_domain_internal(domains))
 
 
 @main.command("list")
 @pass_config_no_lock()
-def list_domain(config: dict[str, ...]) -> int:
+def list_domain(config: dict[str, ...]) -> None:
     """List blacklisted domains"""
     if is_root():
         logger.warning("Please do not run this command as 'root'")
-        return 1
+        sys.exit(1)
     if len(config["BL_DOMAINS"]) == 0:
         click.echo("No blacklisted domains found")
-        return 0
+        sys.exit(0)
     click.echo("All blacklisted domains:")
     for domain, count in zip(config["BL_DOMAINS"], itertools.count()):
         click.echo(f"({count + 1}) {domain}")
-    return 0
+    sys.exit(0)
 
 
 @main.command("remove")
 @click.option("-c", "--confirm", is_flag=True, help="Ask before removing each domain")
 @click.argument("domains", nargs=-1, required=True)
-def remove_domain(confirm, domains) -> int:
+def remove_domain(confirm, domains) -> None:
     """Remove DOMAINS from blacklist"""
     if is_root():
         logger.warning("Please do not run this command as 'root'")
-        return 1
-    return remove_domain_internal(confirm, domains, sys.stdout)
+        sys.exit(1)
+    sys.exit(remove_domain_internal(confirm, domains, sys.stdout))
 
 
 @main.command("activate")
