@@ -8,14 +8,6 @@ build:
 publish: build
 	twine check dist/* && twine upload dist/*
 
-clean-all: clean clean-cfg
-
-clean:
-	pip3 uninstall -y SuperHelper && rm -rf src/*.egg-info
-	rm -rf build
-	rm -rf dist
-	find . -type d -name __pycache__ -exec rm -r {} \+
-
 dev-install:
 	pip3 install -e .
 
@@ -26,6 +18,14 @@ test:
 	rm -rf .pytest_cache
 	rm -rf .coverage
 	rm -rf .coverage.*
+
+clean-all: clean clean-cfg
+
+clean:
+	pip3 uninstall -y SuperHelper && rm -rf src/*.egg-info
+	rm -rf build
+	rm -rf dist
+	find . -type d -name __pycache__ -exec rm -r {} \+
 
 clean-cfg:
 	rm -rf ~/Library/Application\ Support/SuperHelper/
