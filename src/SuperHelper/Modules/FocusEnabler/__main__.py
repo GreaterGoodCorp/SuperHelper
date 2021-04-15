@@ -203,16 +203,21 @@ def flush_dns():
 @pass_config_with_lock()
 def add_domain_internal(domains: list[str], config: dict[str, ...]) -> int:
     """(Internal) Add domain to config."""
+    all_domains = config["BL_DOMAINS"]
     for dm in domains:
         if is_domain_valid(dm):
-            if dm not in config["BL_DOMAINS"]:
-                config["BL_DOMAINS"].append(dm)
+            if dm not in all_domains:
+                all_domains.append(dm)
                 click.echo(f"Blacklisted: {dm}")
             else:
                 click.echo(f"Already blacklisted: {dm}")
         else:
             click.echo(f"Invalid domain: {dm}")
-    return 0
+            break
+    else:
+        config["BL_DOMAINS"] = all_domains
+        return 0
+    return 1
 
 
 @pass_config_with_lock()
@@ -223,15 +228,22 @@ def remove_domain_internal(confirm: bool, domains: list[str], fp: io.IOBase, con
             click.echo("No blacklisted domains found", fp)
             exit(0)
         domains = config["BL_DOMAINS"]
+    all_domains = config["BL_DOMAINS"]
     for dm in domains:
-        if dm in config["BL_DOMAINS"]:
+        if dm in all_domains:
             option = None
-            while confirm and option not in ("y", "n"):
+            while not confirm and option not in ("y", "n"):
                 option = input(get_input_prompt(f"Un-blacklist '{dm}'? [Y/N]"))
             if option == "n":
                 continue
-            config["BL_DOMAINS"].remove(dm)
+            all_domains.remove(dm)
             click.echo(f"Un-blacklisted: {dm}", fp)
+        elif dm in config["BL_DOMAINS"]:
+            click.echo(f"Already un-blacklisted: {dm}", fp)
         else:
             click.echo(f"Domain not found: {dm}", fp)
-    return 0
+            break
+    else:
+        config["BL_DOMAINS"] = all_domains
+        return 0
+    return 1
