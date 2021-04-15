@@ -1,6 +1,6 @@
 [run]
 branch = True
-source = .
+source = src/
 
 [report]
 exclude_lines =
@@ -17,4 +17,3 @@ exclude_lines =
 ignore_errors = True
 omit =
    src/SuperHelper/Tests/*
-   .venv
