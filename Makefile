@@ -8,15 +8,12 @@ build:
 publish: build
 	./.venv/bin/twine check dist/* && twine upload dist/*
 
-clean:
+clean-all: clean-build clean-test
+
+clean-build:
 	./.venv/bin/pip3 uninstall -y SuperHelper && rm -rf src/*.egg-info
 	rm -rf build
 	rm -rf dist
-	rm -rf ~/Library/Application\ Support/SuperHelper/
-	rm -rf ~/.config/SuperHelper
-	rm -rf .pytest_cache
-	rm -rf .coverage
-	rm -rf .coverage.*
 	find . -type d -name __pycache__ -exec rm -r {} \+
 
 dev-install:
@@ -24,3 +21,12 @@ dev-install:
 
 test:
 	pytest --cov=src/SuperHelper
+
+clean-cfg:
+	rm -rf ~/Library/Application\ Support/SuperHelper/
+	rm -rf ~/.config/SuperHelper
+
+clean-test:
+	rm -rf .pytest_cache
+	rm -rf .coverage
+	rm -rf .coverage.*
