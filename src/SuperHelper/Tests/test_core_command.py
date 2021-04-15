@@ -11,6 +11,12 @@ def test_add_single():
         main_entry()
 
 
+def test_add_multiple():
+    sys.argv = ["helper", "add", "FocusEnabler", "Stenographer"]
+    with pytest.raises(SystemExit, match=r"0"):
+        main_entry()
+
+
 def test_add_invalid():
     sys.argv = ["helper", "add", "test"]
     with pytest.raises(SystemExit, match=r"1"):
@@ -19,6 +25,13 @@ def test_add_invalid():
 
 def test_remove_single():
     sys.argv = ["helper", "remove", "FocusEnabler"]
+    with pytest.raises(SystemExit, match=r"0"):
+        main_entry()
+
+
+def test_remove_multiple():
+    test_add_single()
+    sys.argv = ["helper", "remove", "FocusEnabler", "Stenographer"]
     with pytest.raises(SystemExit, match=r"0"):
         main_entry()
 
@@ -33,3 +46,8 @@ def test_list():
     sys.argv = ["helper", "list"]
     with pytest.raises(SystemExit, match=r"0"):
         main_entry()
+
+
+def test_flush_dns():
+    from SuperHelper.Modules.FocusEnabler.__main__ import flush_dns
+    assert flush_dns() is None
