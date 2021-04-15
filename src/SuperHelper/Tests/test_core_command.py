@@ -1,5 +1,4 @@
 import sys
-from subprocess import Popen
 
 import pytest
 
@@ -8,12 +7,10 @@ from SuperHelper.Core import main_entry
 
 @pytest.fixture(autouse=True)
 def create_and_clean_config():
-    Popen(["make", "clean"])
     sys.argv = ["helper", "add", "Stenographer"]
     with pytest.raises(SystemExit, match=r"0"):
         main_entry()
     yield
-    Popen(["make", "clean"])
 
 
 def test_add_valid():
