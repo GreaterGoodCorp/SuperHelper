@@ -8,7 +8,9 @@ build:
 publish: build
 	./.venv/bin/twine check dist/* && twine upload dist/*
 
-clean-all: clean-build clean-test
+clean-all: clean clean-cfg
+
+clean: clean-build clean-test
 
 clean-build:
 	./.venv/bin/pip3 uninstall -y SuperHelper && rm -rf src/*.egg-info
