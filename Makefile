@@ -14,19 +14,14 @@ dev-install:
 test:
 	rm -rf .test_dir && mkdir .test_dir
 	export SUPER_HELPER_APP_DIR=./.test_dir && pytest --cov=src --forked
-	rm -rf .test_dir
-	rm -rf .pytest_cache
-	rm -rf .coverage.*
+	rm -rf .test_dir .pytest_cache .coverage.* coverage.xml
 
 clean-all: clean clean-cfg
 
 clean:
 	pip3 uninstall -y SuperHelper && rm -rf src/*.egg-info
-	rm -rf build
-	rm -rf dist
-	rm -rf .coverage
+	rm -rf build/ dist/ .coverage
 	find . -type d -name __pycache__ -exec rm -r {} \+
 
 clean-cfg:
-	rm -rf ~/Library/Application\ Support/SuperHelper/
-	rm -rf ~/.config/SuperHelper
+	rm -rf ~/Library/Application\ Support/SuperHelper/ ~/.config/SuperHelper
