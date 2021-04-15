@@ -10,9 +10,7 @@ publish: build
 
 clean-all: clean clean-cfg
 
-clean: clean-build clean-test
-
-clean-build:
+clean:
 	pip3 uninstall -y SuperHelper && rm -rf src/*.egg-info
 	rm -rf build
 	rm -rf dist
