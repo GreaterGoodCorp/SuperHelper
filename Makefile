@@ -25,12 +25,10 @@ test:
 	mkdir .test_dir
 	export SUPER_HELPER_APP_DIR=./.test_dir; pytest --cov=src/SuperHelper
 	rm -rf .test_dir
+	rm -rf .pytest_cache
+	rm -rf .coverage
+	rm -rf .coverage.*
 
 clean-cfg:
 	rm -rf ~/Library/Application\ Support/SuperHelper/
 	rm -rf ~/.config/SuperHelper
-
-clean-test:
-	rm -rf .pytest_cache
-	rm -rf .coverage
-	rm -rf .coverage.*
