@@ -1,6 +1,11 @@
-# SuperHelper CLI application
+# SuperHelper CLI application [![Build Status][A1]][A2] [![codecov][B1]][B2]
 
 A collection of Python CLI to make life easier for terminal geeks!
+
+[A1]: https://www.travis-ci.com/GreaterGoodCorp/SuperHelper.svg?branch=main
+[A2]: https://www.travis-ci.com/GreaterGoodCorp/SuperHelper
+[B1]: https://codecov.io/gh/GreaterGoodCorp/SuperHelper/branch/main/graph/badge.svg?token=1AX2GQRZE5
+[B2]: https://codecov.io/gh/GreaterGoodCorp/SuperHelper
 
 ## Installation
 
