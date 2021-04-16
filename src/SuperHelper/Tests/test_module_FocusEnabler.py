@@ -78,3 +78,8 @@ class TestFocusEnabler:
     @staticmethod
     def test_remove_invalid():
         assert run("focus remove -c 12345").exit_code == 1
+
+    @staticmethod
+    def test_get_input_prompt():
+        from SuperHelper.Modules.FocusEnabler.__main__ import get_input_prompt
+        assert type(get_input_prompt("TEST")) == str
