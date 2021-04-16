@@ -18,12 +18,24 @@ class TestConfig:
         test_a()
 
     @staticmethod
-    def test_no_core_and_module():
+    def test_no_core_and_module_a():
         @pass_config(module_name="test", lock=True)
         def test_a(config):
             return config
         run_startup()
         test_a()
+
+    @staticmethod
+    def test_no_core_and_module_b():
+        @pass_config(module_name="test", lock=True)
+        def test_a(config):
+            if config:
+                raise SystemExit
+            else:
+                raise SystemExit
+        run_startup()
+        with pytest.raises(SystemExit):
+            test_a()
 
     @staticmethod
     def test_core_and_module():
