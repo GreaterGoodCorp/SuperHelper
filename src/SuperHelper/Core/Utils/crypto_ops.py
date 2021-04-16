@@ -41,8 +41,8 @@ class Cryptographer:
         return Cryptographer.encode_salt(self.salt)
 
     @staticmethod
-    def make_encrypter(key: str) -> Cryptographer:
-        return Cryptographer(Cryptographer.make_salt(), key.encode(), True)
+    def make_encrypter(salt: str, key: str) -> Cryptographer:
+        return Cryptographer(Cryptographer.decode_salt(salt), key.encode(), True)
 
     @staticmethod
     def make_decrypter(salt: str, key: str) -> Cryptographer:

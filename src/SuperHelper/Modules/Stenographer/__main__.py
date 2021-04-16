@@ -165,7 +165,7 @@ def write_steganography(input_file: io.IOBase, image_file: Image.Image, output_f
         # Compress using the builtin bzip2 library
         data = bz2.compress(data, compresslevel=compression)
 
-    crypto = Cryptographer.make_encrypter(auth_key)
+    crypto = Cryptographer.make_encrypter(Cryptographer.encode_salt(Cryptographer.make_salt()), auth_key)
     data = crypto.encrypt(data)
     data = fix(data)
     # Craft the finished input_file
