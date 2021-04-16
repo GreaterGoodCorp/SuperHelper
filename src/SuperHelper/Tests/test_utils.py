@@ -74,8 +74,8 @@ class TestCryptographer:
 
     @staticmethod
     @pytest.fixture()
-    def decrypted_data(decrypter, decrypted_data):
-        return decrypter.encrypt(decrypted_data)
+    def decrypted_data(decrypter, encrypted_data):
+        return decrypter.decrypt(encrypted_data)
 
     @staticmethod
     def test_salt_length(binary_salt):
