@@ -31,28 +31,88 @@ class TestBitOps:
         assert BitOps.unset_bit(a, 5) == 0b10001010
 
 
-def test_cryptographer():
-    salt = Cryptographer.make_salt()
-    assert len(salt) == 16
-    assert Cryptographer.encode_salt(salt) is not None
-    assert Cryptographer.decode_salt(Cryptographer.encode_salt(salt)) == salt
+class TestCryptographer:
+    @staticmethod
+    @pytest.fixture()
+    def salt():
+        return Cryptographer.make_salt()
 
-    true_key = "test_key"
-    false_key = "t3st_k3y"
-    assert Cryptographer.make_kdf(salt)
-    assert Cryptographer.make_kdf(salt).derive(true_key.encode()) is not None
-    assert Cryptographer.make_kdf(salt).derive(false_key.encode()) is not None
+    @staticmethod
+    @pytest.fixture()
+    def true_key():
+        return "test_key"
 
-    data = "data"
-    crypto = Cryptographer.make_encrypter(true_key)
-    assert crypto.encrypt(data.encode()) is not None
+    @staticmethod
+    @pytest.fixture()
+    def false_key():
+        return "test_key"
 
-    encrypted_data = crypto.encrypt(data.encode())
-    crypto.is_encrypt = False
-    assert crypto.decrypt(encrypted_data) == data.encode()
-    with pytest.raises(ValueError):
-        crypto.is_encrypt = True
-        assert crypto.decrypt(encrypted_data) == data.encode()
+    @staticmethod
+    @pytest.fixture()
+    def data():
+        return "data"
+
+    @staticmethod
+    @pytest.fixture()
+    def encrypter(data, true_key):
+        return Cryptographer.make_encrypter(true_key)
+
+    @staticmethod
+    @pytest.fixture()
+    def decrypter(data, true_key):
+        return Cryptographer.make_decrypter(true_key)
+
+    @staticmethod
+    @pytest.fixture()
+    def encrypted_data(encrypter, data):
+        return encrypter.encrypt(data.encode())
+
+    @staticmethod
+    @pytest.fixture()
+    def decrypted_data(decrypter, decrypted_data):
+        return decrypter.encrypt(decrypted_data)
+
+    @staticmethod
+    def test_salt_length(salt):
+        assert len(salt) == 16
+
+    @staticmethod
+    def test_encode_and_decode_salt(salt):
+        assert Cryptographer.encode_salt(salt) is not None
+        assert type(Cryptographer.encode_salt(salt)) == str
+        assert Cryptographer.decode_salt(Cryptographer.encode_salt(salt)) == salt
+
+    @staticmethod
+    def test_make_kdf(salt, true_key, false_key):
+        assert Cryptographer.make_kdf(salt)
+        assert Cryptographer.make_kdf(salt).derive(true_key.encode()) is not None
+        assert Cryptographer.make_kdf(salt).derive(false_key.encode()) is not None
+
+    @staticmethod
+    def test_make_encrypter(encrypter):
+        assert encrypter is not None
+
+    @staticmethod
+    def test_encrypted_data(encrypted_data):
+        assert encrypted_data is not None
+
+    @staticmethod
+    def test_make_decrypter(decrypter):
+        assert decrypter is not None
+
+    @staticmethod
+    def test_decrypted_data(decrypted_data):
+        assert decrypted_data is not None
+
+    @staticmethod
+    def test_encrypt_with_decrypter(decrypter, data):
+        with pytest.raises(ValueError):
+            decrypter.encrypt(data.encode())
+
+    @staticmethod
+    def test_decrypt_with_encrypter(encrypter, encrypted_data):
+        with pytest.raises(ValueError):
+            encrypter.decrypt(encrypted_data)
 
 
 def test_ensure_int():
