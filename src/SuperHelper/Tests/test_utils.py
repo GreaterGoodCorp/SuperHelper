@@ -33,9 +33,14 @@ class TestBitOps:
 
 class TestCryptographer:
     @staticmethod
-    @pytest.fixture()
-    def salt():
+    @pytest.fixture(scope="session")
+    def binary_salt():
         return Cryptographer.make_salt()
+
+    @staticmethod
+    @pytest.fixture()
+    def string_salt(binary_salt):
+        return Cryptographer.encode_salt(binary_salt)
 
     @staticmethod
     @pytest.fixture()
@@ -54,13 +59,13 @@ class TestCryptographer:
 
     @staticmethod
     @pytest.fixture()
-    def encrypter(data, true_key):
-        return Cryptographer.make_encrypter(true_key)
+    def encrypter(string_salt, true_key):
+        return Cryptographer.make_encrypter(string_salt, true_key)
 
     @staticmethod
     @pytest.fixture()
-    def decrypter(data, true_key):
-        return Cryptographer.make_decrypter(true_key)
+    def decrypter(string_salt, true_key):
+        return Cryptographer.make_decrypter(string_salt, true_key)
 
     @staticmethod
     @pytest.fixture()
@@ -73,20 +78,19 @@ class TestCryptographer:
         return decrypter.encrypt(decrypted_data)
 
     @staticmethod
-    def test_salt_length(salt):
-        assert len(salt) == 16
+    def test_salt_length(binary_salt):
+        assert len(binary_salt) == 16
 
     @staticmethod
-    def test_encode_and_decode_salt(salt):
-        assert Cryptographer.encode_salt(salt) is not None
-        assert type(Cryptographer.encode_salt(salt)) == str
-        assert Cryptographer.decode_salt(Cryptographer.encode_salt(salt)) == salt
+    def test_encode_and_decode_salt(string_salt, binary_salt):
+        assert type(string_salt) == str
+        assert Cryptographer.decode_salt(string_salt) == binary_salt
 
     @staticmethod
-    def test_make_kdf(salt, true_key, false_key):
-        assert Cryptographer.make_kdf(salt)
-        assert Cryptographer.make_kdf(salt).derive(true_key.encode()) is not None
-        assert Cryptographer.make_kdf(salt).derive(false_key.encode()) is not None
+    def test_make_kdf(binary_salt, true_key, false_key):
+        assert Cryptographer.make_kdf(binary_salt)
+        assert Cryptographer.make_kdf(binary_salt).derive(true_key.encode()) is not None
+        assert Cryptographer.make_kdf(binary_salt).derive(false_key.encode()) is not None
 
     @staticmethod
     def test_make_encrypter(encrypter):
