@@ -50,7 +50,7 @@ class TestCryptographer:
     @staticmethod
     @pytest.fixture()
     def false_key():
-        return "test_key"
+        return "t3st_k3y"
 
     @staticmethod
     @pytest.fixture()
