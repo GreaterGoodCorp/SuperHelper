@@ -111,6 +111,7 @@ def main_entry() -> NoReturn:
 
 __all__ = [
     "run_startup",
+    "load_config",
     "save_config",
     "main_entry",
     "cli",
