@@ -87,6 +87,10 @@ class TestCryptographer:
         assert Cryptographer.decode_salt(string_salt) == binary_salt
 
     @staticmethod
+    def test_salt_in_class(encrypter, decrypter, string_salt):
+        assert encrypter.get_salt_string() == decrypter.get_salt_string() == string_salt
+
+    @staticmethod
     def test_make_kdf(binary_salt, true_key, false_key):
         assert Cryptographer.make_kdf(binary_salt)
         assert Cryptographer.make_kdf(binary_salt).derive(true_key.encode()) is not None
