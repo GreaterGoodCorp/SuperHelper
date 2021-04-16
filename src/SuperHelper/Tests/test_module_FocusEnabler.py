@@ -19,19 +19,45 @@ class TestFocusEnabler:
 
     @staticmethod
     def test_add_single():
-        assert run("focus add google.com").exit_code == 0
+        assert run("focus add -c google.com").exit_code == 0
+
+    @staticmethod
+    def test_list_single_positive():
+        result = run("focus list")
+        assert result.exit_code == 0
+        assert "google.com" in result.output
 
     @staticmethod
     def test_remove_single():
         assert run("focus remove -c google.com").exit_code == 0
 
     @staticmethod
+    def test_list_single_negative():
+        result = run("focus list")
+        assert result.exit_code == 0
+        assert "google.com" not in result.output
+
+    @staticmethod
     def test_add_multiple():
         assert run("focus add facebook.com youtube.com").exit_code == 0
 
     @staticmethod
+    def test_list_multiple_positive():
+        result = run("focus list")
+        assert result.exit_code == 0
+        assert "facebook.com" in result.output
+        assert "youtube.com" in result.output
+
+    @staticmethod
     def test_remove_multiple():
         assert run("focus remove -c facebook.com youtube.com").exit_code == 0
+
+    @staticmethod
+    def test_list_multiple_negative():
+        result = run("focus list")
+        assert result.exit_code == 0
+        assert "facebook.com" not in result.output
+        assert "youtube.com" not in result.output
 
     @staticmethod
     def test_add_same():
@@ -48,7 +74,3 @@ class TestFocusEnabler:
     @staticmethod
     def test_remove_invalid():
         assert run("focus remove -c 12345").exit_code == 1
-
-    @staticmethod
-    def test_list():
-        assert run("focus list").exit_code == 0
