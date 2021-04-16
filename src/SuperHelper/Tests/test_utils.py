@@ -261,3 +261,9 @@ class TestTypeCheck:
             TypeCheck.ensure_function({1})
         with pytest.raises(TypeError):
             TypeCheck.ensure_function("string".split())
+
+    @staticmethod
+    def test_ensure_with_name():
+        name = "test_name"
+        with pytest.raises(TypeError, match=name):
+            TypeCheck.ensure_int("", name)
