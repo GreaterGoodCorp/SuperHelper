@@ -19,6 +19,14 @@ class TestCore:
         assert run("remove FocusEnabler Stenographer").exit_code == 0
 
     @staticmethod
+    def test_add_same():
+        assert run("add FocusEnabler FocusEnabler").exit_code == 0
+
+    @staticmethod
+    def test_remove_same():
+        assert run("remove FocusEnabler FocusEnabler").exit_code == 0
+
+    @staticmethod
     def test_add_invalid():
         assert run("add test").exit_code == 1
 
