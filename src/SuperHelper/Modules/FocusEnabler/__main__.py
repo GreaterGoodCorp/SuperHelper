@@ -15,6 +15,8 @@ import click
 from SuperHelper.Core import Config
 from SuperHelper.Core.Config import pass_config
 
+PATH_HOST = str(Path("/etc") / "hosts")
+
 MODULE_NAME: str = "FocusEnabler"
 pass_config_no_lock = functools.partial(pass_config, module_name=MODULE_NAME, lock=False)
 pass_config_with_lock = functools.partial(pass_config, module_name=MODULE_NAME, lock=True)
@@ -37,13 +39,6 @@ def is_domain_valid(domain):
     ) else False
 
 
-def get_host_path() -> str:
-    if sys.platform == "win32":
-        return str(Path(os.getenv("WINDIR")) / "System32" / "Driver" / "etc" / "hosts")
-    else:
-        return str(Path("/etc") / "hosts")
-
-
 @pass_config()
 def patch_config(config: Config) -> None:
     """Initialise a new config dictionary."""
@@ -51,7 +46,7 @@ def patch_config(config: Config) -> None:
         "BL_SECTION_START": "# Added by FocusEnabler, do not modify!",
         "BL_SECTION_END": "# End of section FocusEnabler",
         "BL_DOMAINS": [],
-        "PATH_HOST": get_host_path(),
+        "PATH_HOST": PATH_HOST,
     }
     config.apply_module_patch(MODULE_NAME, cfg)
 
