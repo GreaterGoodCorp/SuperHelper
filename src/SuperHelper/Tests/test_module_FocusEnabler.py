@@ -1,60 +1,46 @@
-import sys
-
 import pytest
 
-from SuperHelper.Core import main_entry
+from SuperHelper.Tests import *
 
 
-@pytest.fixture(scope="module", autouse=True)
-def add_focus():
-    sys.argv = ["helper", "add", "FocusEnabler"]
-    with pytest.raises(SystemExit, match=r"0"):
-        main_entry()
+class TestFocusEnabler:
+    @staticmethod
+    @pytest.fixture()
+    def setup():
+        run("add FocusEnabler")
 
+    @staticmethod
+    def test_validate_setup(setup):
+        assert "FocusEnabler" in run("list").output
 
-def test_help():
-    sys.argv = ["helper", "focus", "--help"]
-    with pytest.raises(SystemExit, match=r"0"):
-        main_entry()
+    @staticmethod
+    def test_help():
+        assert run("focus --help").exit_code == 0
 
+    @staticmethod
+    def test_add_single():
+        assert run("focus add google.com").exit_code == 0
 
-def test_add_single():
-    sys.argv = ["helper", "focus", "add", "google.com"]
-    with pytest.raises(SystemExit, match=r"0"):
-        main_entry()
+    @staticmethod
+    def test_remove_single():
+        assert run("focus remove -c google.com").exit_code == 0
 
+    @staticmethod
+    def test_add_multiple():
+        assert run("focus add facebook.com youtube.com").exit_code == 0
 
-def test_add_multiple():
-    sys.argv = ["helper", "focus", "add", "facebook.com", "youtube.com"]
-    with pytest.raises(SystemExit, match=r"0"):
-        main_entry()
+    @staticmethod
+    def test_remove_multiple():
+        assert run("focus remove -c facebook.com youtube.com").exit_code == 0
 
+    @staticmethod
+    def test_add_invalid():
+        assert run("focus add 12345").exit_code == 1
 
-def test_add_invalid():
-    sys.argv = ["helper", "focus", "add", "123123"]
-    with pytest.raises(SystemExit, match=r"1"):
-        main_entry()
+    @staticmethod
+    def test_remove_invalid():
+        assert run("focus remove -c 12345").exit_code == 1
 
-
-def test_remove_single():
-    sys.argv = ["helper", "focus", "remove", "-c", "google.com"]
-    with pytest.raises(SystemExit, match=r"0"):
-        main_entry()
-
-
-def test_remove_multiple():
-    sys.argv = ["helper", "focus", "remove", "-c", "facebook.com", "youtube.com"]
-    with pytest.raises(SystemExit, match=r"0"):
-        main_entry()
-
-
-def test_remove_invalid():
-    sys.argv = ["helper", "focus", "remove", "-c", "123123"]
-    with pytest.raises(SystemExit, match=r"1"):
-        main_entry()
-
-
-def test_list():
-    sys.argv = ["helper", "focus", "list"]
-    with pytest.raises(SystemExit, match=r"0"):
-        main_entry()
+    @staticmethod
+    def test_list():
+        assert run("focus list").exit_code == 0
