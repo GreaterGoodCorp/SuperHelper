@@ -29,7 +29,7 @@ logger: logging.Logger
 # Program entry point
 @click.group()
 @click.version_option(Version, prog_name=APP_NAME, message=version_message)
-def cli() -> int:
+def cli() -> None:
     pass
 
 
