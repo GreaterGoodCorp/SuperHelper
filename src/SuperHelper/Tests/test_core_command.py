@@ -7,6 +7,10 @@ class TestCore:
         assert run("add FocusEnabler").exit_code == 0
 
     @staticmethod
+    def test_add_single_again():
+        assert run("add FocusEnabler").exit_code == 0
+
+    @staticmethod
     def test_list_single_positive():
         result = run("list")
         assert result.exit_code == 0
@@ -71,4 +75,20 @@ class TestCore:
 
     @staticmethod
     def test_list_negative():
+        assert run("list").exit_code == 0
+
+
+class TestOtherUtils:
+    @staticmethod
+    def test_load_installed_modules_a():
+        from SuperHelper.Core.core_cli import load_config, save_config
+        load_config()
+        save_config()
+        from SuperHelper.Core.Config import pass_config
+
+        @pass_config(core=True, lock=True)
+        def edit_cfg(config):
+            config["INSTALLED_MODULES"].append("SuperHelper")
+            config["INSTALLED_MODULES"].append("SuperHelper.Hello")
+        edit_cfg()
         assert run("list").exit_code == 0
