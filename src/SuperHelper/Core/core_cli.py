@@ -109,6 +109,13 @@ def main_entry() -> NoReturn:
         raise
 
 
+__all__ = [
+    "run_startup",
+    "save_config",
+    "main_entry",
+    "cli",
+]
+
 if __name__ == '__main__':
     sys.argv[0] = "SuperHelper"
     main_entry()
