@@ -8,6 +8,7 @@ import sys
 import typing
 import logging
 import functools
+import copy
 from pathlib import Path
 
 import click
@@ -203,12 +204,14 @@ def flush_dns():
 @pass_config_with_lock()
 def add_domain_internal(domains: list[str], config: dict[str, ...]) -> int:
     """(Internal) Add domain to config."""
-    all_domains = config["BL_DOMAINS"]
+    all_domains = copy.deepcopy(config["BL_DOMAINS"])
     for dm in domains:
         if is_domain_valid(dm):
             if dm not in all_domains:
                 all_domains.append(dm)
                 click.echo(f"Blacklisted: {dm}")
+            elif dm not in config["BL_DOMAINS"]:
+                continue
             else:
                 click.echo(f"Already blacklisted: {dm}")
         else:
@@ -228,7 +231,7 @@ def remove_domain_internal(confirm: bool, domains: list[str], fp: io.IOBase, con
             click.echo("No blacklisted domains found", fp)
             exit(0)
         domains = config["BL_DOMAINS"]
-    all_domains = config["BL_DOMAINS"]
+    all_domains = copy.deepcopy(config["BL_DOMAINS"])
     for dm in domains:
         if dm in all_domains:
             option = None
@@ -239,7 +242,7 @@ def remove_domain_internal(confirm: bool, domains: list[str], fp: io.IOBase, con
             all_domains.remove(dm)
             click.echo(f"Un-blacklisted: {dm}", fp)
         elif dm in config["BL_DOMAINS"]:
-            click.echo(f"Already un-blacklisted: {dm}", fp)
+            continue
         else:
             click.echo(f"Domain not found: {dm}", fp)
             break
