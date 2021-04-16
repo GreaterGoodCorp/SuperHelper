@@ -1,4 +1,3 @@
-import ctypes
 import io
 import itertools
 import os
@@ -58,10 +57,7 @@ def patch_config(config: Config) -> None:
 
 
 def is_root():
-    try:
-        return os.getuid() == 0
-    except AttributeError:
-        return ctypes.windll.shell32.IsUserAnAdmin()
+    return os.getuid() == 0
 
 
 @click.group("focus")
