@@ -1,48 +1,29 @@
-import sys
-
-import pytest
-
-from SuperHelper.Core import main_entry
+from SuperHelper.Tests import *
 
 
 def test_add_single():
-    sys.argv = ["helper", "add", "FocusEnabler"]
-    with pytest.raises(SystemExit, match=r"0"):
-        main_entry()
-
-
-def test_add_multiple():
-    sys.argv = ["helper", "add", "FocusEnabler", "Stenographer"]
-    with pytest.raises(SystemExit, match=r"0"):
-        main_entry()
-
-
-def test_add_invalid():
-    sys.argv = ["helper", "add", "test"]
-    with pytest.raises(SystemExit, match=r"1"):
-        main_entry()
+    assert run("add FocusEnabler").exit_code == 0
 
 
 def test_remove_single():
-    sys.argv = ["helper", "remove", "FocusEnabler"]
-    with pytest.raises(SystemExit, match=r"0"):
-        main_entry()
+    assert run("remove FocusEnabler").exit_code == 0
+
+
+def test_add_multiple():
+    assert run("add FocusEnabler Stenographer").exit_code == 0
 
 
 def test_remove_multiple():
-    test_add_single()
-    sys.argv = ["helper", "remove", "FocusEnabler", "Stenographer"]
-    with pytest.raises(SystemExit, match=r"0"):
-        main_entry()
+    assert run("remove FocusEnabler Stenographer").exit_code == 0
+
+
+def test_add_invalid():
+    assert run("add test").exit_code == 1
 
 
 def test_remove_invalid():
-    sys.argv = ["helper", "remove", "test"]
-    with pytest.raises(SystemExit, match=r"1"):
-        main_entry()
+    assert run("remove test").exit_code == 1
 
 
 def test_list():
-    sys.argv = ["helper", "list"]
-    with pytest.raises(SystemExit, match=r"0"):
-        main_entry()
+    assert run("list").exit_code == 0
