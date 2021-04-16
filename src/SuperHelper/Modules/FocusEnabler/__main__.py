@@ -105,18 +105,18 @@ def remove_domain(confirm, domains) -> None:
 
 @main.command("activate")
 @pass_config_no_lock()
-def activate_app(config: dict[str, ...]) -> int:
+def activate_app(config: dict[str, ...]) -> None:
     """Activate FocusEnabler."""
     if not is_root():
         logger.warning("Please run this command as 'root'")
-        return 1
+        sys.exit(1)
     if not os.access(config["PATH_HOST"], os.W_OK):
         logger.warning("Hosts file is inaccessible!")
-        return 1
+        sys.exit(1)
     with open(config["PATH_HOST"]) as fp:
         if config["BL_SECTION_START"] in fp.read():
             logger.warning("FocusEnabler is already activated! Deactivate first.")
-            return 1
+            sys.exit(1)
     entries: typing.List[str] = [config["BL_SECTION_START"]]
     for domain in config["BL_DOMAINS"]:
         logger.info(f"Adding entry {domain}", "Done")
@@ -129,22 +129,22 @@ def activate_app(config: dict[str, ...]) -> int:
         click.echo("Written to host file!")
         flush_dns()
         click.echo("FocusEnabler is enabled!")
-        return 0
     except OSError:
         logger.exception("Unable to write to host file")
-        return 0
+        sys.exit(1)
+    sys.exit(0)
 
 
 @main.command("deactivate")
 @pass_config_no_lock()
-def deactivate_app(config: dict[str, ...]) -> int:
+def deactivate_app(config: dict[str, ...]) -> None:
     """Deactivate FocusEnabler"""
     if not is_root():
         logger.warning("Please run this command as 'root'")
-        return 1
+        sys.exit(1)
     if not os.access(config["PATH_HOST"], os.W_OK):
         logger.warning("Hosts file is inaccessible!")
-        return 1
+        sys.exit(1)
     try:
         with open(config["PATH_HOST"]) as fp:
             content = fp.read()
@@ -152,18 +152,18 @@ def deactivate_app(config: dict[str, ...]) -> int:
         content = re.sub(rf"{config['BL_SECTION_START']}(.|[\n\r\t])*{config['BL_SECTION_END']}", "", content)
         if len(content) == original_content_len:
             logger.warning("FocusEnabler is not activated! Activate first")
-            return 1
+            sys.exit(1)
     except OSError:
         logger.exception("Unable to read host file")
-        return 1
+        sys.exit(1)
     try:
         with open(config["PATH_HOST"], "w") as fp:
             fp.write(content)
         click.echo("FocusEnabler is disabled!")
     except OSError:
         logger.exception("Writing to host file", "Failed", content_colour="red", fp=sys.stderr)
-        return 1
-    return 0
+        sys.exit(1)
+    sys.exit(0)
 
 
 def flush_dns():
