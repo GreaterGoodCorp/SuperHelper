@@ -3,22 +3,32 @@ import pytest
 from SuperHelper.Core.Utils import BitOps, Cryptographer, TypeCheck
 
 
-def test_bit_ops():
-    a: int = 0b10101010
-    assert BitOps.is_bit_set(a, 1)
-    assert BitOps.is_bit_set(a, 3)
-    assert not BitOps.is_bit_set(a, 2)
-    assert not BitOps.is_bit_set(a, 16)
+class TestBitOps:
+    @staticmethod
+    @pytest.fixture()
+    def a():
+        return 0b10101010
 
-    assert BitOps.set_bit(a, 1) == a
-    assert BitOps.set_bit(a, 0) == 0b10101011
-    assert BitOps.set_bit(a, 5) == a
-    assert BitOps.set_bit(a, 4) == 0b10111010
+    @staticmethod
+    def test_is_bit_set(a):
+        assert BitOps.is_bit_set(a, 1)
+        assert BitOps.is_bit_set(a, 3)
+        assert not BitOps.is_bit_set(a, 2)
+        assert not BitOps.is_bit_set(a, 16)
 
-    assert BitOps.unset_bit(a, 0) == a
-    assert BitOps.unset_bit(a, 1) == 0b10101000
-    assert BitOps.unset_bit(a, 4) == a
-    assert BitOps.unset_bit(a, 5) == 0b10001010
+    @staticmethod
+    def test_set_bit(a):
+        assert BitOps.set_bit(a, 1) == a
+        assert BitOps.set_bit(a, 0) == 0b10101011
+        assert BitOps.set_bit(a, 5) == a
+        assert BitOps.set_bit(a, 4) == 0b10111010
+
+    @staticmethod
+    def test_unset_bit(a):
+        assert BitOps.unset_bit(a, 0) == a
+        assert BitOps.unset_bit(a, 1) == 0b10101000
+        assert BitOps.unset_bit(a, 4) == a
+        assert BitOps.unset_bit(a, 5) == 0b10001010
 
 
 def test_cryptographer():
