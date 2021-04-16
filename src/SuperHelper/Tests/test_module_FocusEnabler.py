@@ -34,6 +34,14 @@ class TestFocusEnabler:
         assert run("focus remove -c facebook.com youtube.com").exit_code == 0
 
     @staticmethod
+    def test_add_same():
+        assert run("focus add facebook.com facebook.com").exit_code == 0
+
+    @staticmethod
+    def test_remove_same():
+        assert run("focus remove -c facebook.com facebook.com").exit_code == 0
+
+    @staticmethod
     def test_add_invalid():
         assert run("focus add 12345").exit_code == 1
 
