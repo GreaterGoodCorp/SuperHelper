@@ -22,6 +22,10 @@ class TestFocusEnabler:
         assert run("focus add -c google.com").exit_code == 0
 
     @staticmethod
+    def test_add_single_again():
+        assert run("focus add google.com").exit_code == 0
+
+    @staticmethod
     def test_list_single_positive():
         result = run("focus list")
         assert result.exit_code == 0
