@@ -1,4 +1,5 @@
 # This module defines core utilities and functionalities
+import copy
 import importlib.util
 import logging
 import pkgutil
@@ -27,7 +28,7 @@ def load_core_commands() -> list[tuple[Callable, str]]:
 def add_modules(config: dict[str, ...], modules: list[str]) -> None:
     """Adds new modules into SuperHelper."""
     module_prefix = "SuperHelper.Modules.{}"
-    all_modules = config["INSTALLED_MODULES"]
+    all_modules = copy.deepcopy(config["INSTALLED_MODULES"])
     for module in modules:
         module_fullname = module_prefix.format(module)
         try:
@@ -51,7 +52,7 @@ def add_modules(config: dict[str, ...], modules: list[str]) -> None:
 def remove_modules(config: dict[str, ...], modules: list[str]) -> None:
     """Removes existing modules from SuperHelper."""
     module_prefix = "SuperHelper.Modules.{}"
-    all_modules = config["INSTALLED_MODULES"]
+    all_modules = copy.deepcopy(config["INSTALLED_MODULES"])
     for module in modules:
         module_fullname = module_prefix.format(module)
         if module_fullname in all_modules:
