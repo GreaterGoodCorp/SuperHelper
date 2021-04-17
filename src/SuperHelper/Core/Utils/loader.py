@@ -24,6 +24,7 @@ def load_added_modules(config: dict[str, ...]) -> list[tuple[click.Command, str]
     module_entries = []
     for module_name in config["INSTALLED_MODULES"]:
         try:
+            # Attempt to import the module
             module = importlib.import_module(module_name)
             module_entries.append((module.main, module_name))
         except ImportError:
