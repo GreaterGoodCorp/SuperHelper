@@ -1,6 +1,6 @@
 import pytest
 
-from SuperHelper.Core.Utils import BitOps, Cryptographer, TypeCheck
+from SuperHelper.Core.Utils import BitOps, Cryptographer, TypeCheck, FP, FileOps
 
 
 class TestBitOps:
@@ -267,3 +267,38 @@ class TestTypeCheck:
         name = "test_name"
         with pytest.raises(TypeError, match=name):
             TypeCheck.ensure_int("", name)
+
+
+class TestFileOps:
+    @staticmethod
+    def test_is_mine_positive():
+        assert FileOps.is_mine("LICENSE")
+
+    @staticmethod
+    def test_is_mine_negative():
+        assert not FileOps.is_mine("/etc")
+
+    @staticmethod
+    def test_is_root_positive():
+        assert FileOps.is_roots("/etc")
+
+    @staticmethod
+    def test_is_root_negative():
+        assert not FileOps.is_roots("LICENSE")
+
+    @staticmethod
+    def test_check_fp_usr():
+        assert FileOps.check_fp("LICENSE", FP.R_USR | FP.W_USR)
+        assert not FileOps.check_fp("LICENSE", FP.X_USR)
+
+    @staticmethod
+    def test_check_fp_grp():
+        assert FileOps.check_fp("LICENSE", FP.R_GRP)
+        assert not FileOps.check_fp("LICENSE", FP.W_GRP)
+        assert not FileOps.check_fp("LICENSE", FP.X_GRP)
+
+    @staticmethod
+    def test_check_fp_oth():
+        assert FileOps.check_fp("LICENSE", FP.R_OTH)
+        assert not FileOps.check_fp("LICENSE", FP.W_OTH)
+        assert not FileOps.check_fp("LICENSE", FP.X_OTH)
