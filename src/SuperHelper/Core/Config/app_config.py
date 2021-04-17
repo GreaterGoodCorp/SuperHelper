@@ -7,6 +7,7 @@ from SuperHelper.Core.Utils import PathLike
 from SuperHelper.Core.Config import Config, DefaultCoreConfig, make_config_global, pass_config
 
 logger = logging.getLogger("SuperHelper.Core.Config")
+logger.setLevel(logging.DEBUG)
 
 
 def load_app_config(config_path: PathLike) -> None:
