@@ -161,7 +161,7 @@ class Config(metaclass=Singleton):
 global_config: Config
 
 
-def make_config_global(cfg: Config):
+def make_config_global(cfg: Config) -> None:
     """Makes the configuration global.
 
     This function is intended for internal use only.
