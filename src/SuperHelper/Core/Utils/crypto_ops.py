@@ -23,6 +23,7 @@ class Cryptographer:
     """
     A utility class for cryptographic functions.
     """
+
     def __init__(self, salt: bytes, auth_key: bytes, encrypt: bool = True) -> None:
         self.salt = salt
         self.kdf = self.make_kdf(self.salt)

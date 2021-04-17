@@ -1,6 +1,6 @@
 import pytest
 
-from SuperHelper.Core.Utils import BitOps, Cryptographer, TypeCheck, FP, FileOps
+from SuperHelper.Core.Utils import BitOps, Cryptographer, FileOps, FP, TypeCheck
 
 
 class TestBitOps:

@@ -14,6 +14,7 @@ class TestConfig:
         @pass_config(core=True, lock=True)
         def test_a(config):
             return config
+
         run_startup()
         test_a()
 
@@ -22,6 +23,7 @@ class TestConfig:
         @pass_config(module_name="test", lock=True)
         def test_a(config):
             return config
+
         run_startup()
         test_a()
 
@@ -33,6 +35,7 @@ class TestConfig:
                 raise SystemExit
             else:
                 raise SystemExit
+
         run_startup()
         with pytest.raises(SystemExit):
             test_a()
@@ -43,5 +46,6 @@ class TestConfig:
             @pass_config(core=True, module_name="test", lock=True)
             def test_a(config):
                 return config
+
             run_startup()
             test_a()

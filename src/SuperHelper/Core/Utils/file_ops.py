@@ -45,6 +45,7 @@ class FileOps:
     """
     A utility class for file ownership and permissions.
     """
+
     @staticmethod
     @functools.cache
     def get_stat(path: PathLike) -> os.stat_result:
