@@ -1,4 +1,4 @@
-# This module defines the module loader function.
+# This module defines the modules loader function.
 import importlib
 import logging
 
@@ -16,7 +16,11 @@ __all__ = [
 
 @pass_config(core=True, lock=False)
 def load_added_modules(config: dict[str, ...]) -> list[tuple[click.Command, str]]:
-    """Loads the main() method of all installed modules."""
+    """Loads all added modules.
+
+    :return: A list of command-name pairs to be added to Core CLI
+    :rtype: list[tuple[click.Command, str]]
+    """
     module_entries = []
     for module_name in config["INSTALLED_MODULES"]:
         try:
