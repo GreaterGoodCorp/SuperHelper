@@ -15,6 +15,9 @@ test:
 	rm -rf .test_dir && mkdir .test_dir
 	export SUPER_HELPER_APP_DIR=./.test_dir && pytest --cov
 
+docs:
+	pdoc --html --forced src/SuperHelper
+
 clean-all: clean clean-cfg clean-test
 
 clean:
