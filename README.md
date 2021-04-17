@@ -1,4 +1,4 @@
-# SuperHelper CLI application [![Build Status][A1]][A2] [![codecov][B1]][B2]
+# SuperHelper [![Build Status][A1]][A2] [![codecov][B1]][B2]
 
 A collection of Python CLI to make life easier for terminal geeks!
 
@@ -15,10 +15,10 @@ Python (`python3.6` and above) with `pip` installed.
 
 ### Via `pip`
 
-For most end-users, this package can be installed by running:
+For most end-users, the latest version of the application can be installed by running:
 
 ```bash
-pip3 install SuperHelper
+pip3 install SuperHelper==1.0.0
 ```
 
 > Notes:
@@ -36,7 +36,7 @@ make dev-install
 
 ## Documentation
 
-Please refer to `README.md` files located in each subpackage.
+Updating...
 
 ## Contributing
 
