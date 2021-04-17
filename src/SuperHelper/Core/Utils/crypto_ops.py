@@ -13,6 +13,10 @@ from cryptography.fernet import Fernet, InvalidToken
 logger = logging.getLogger("SuperHelper.Core.Utils")
 logger.setLevel(logging.DEBUG)
 
+__all__ = [
+    "Cryptographer",
+]
+
 
 class Cryptographer:
     def __init__(self, salt: bytes, auth_key: bytes, encrypt: bool = True) -> None:
@@ -73,6 +77,3 @@ class Cryptographer:
     @staticmethod
     def make_fernet(key: bytes) -> Fernet:
         return Fernet(base64.urlsafe_b64encode(key))
-
-
-__all__ = ["Cryptographer"]

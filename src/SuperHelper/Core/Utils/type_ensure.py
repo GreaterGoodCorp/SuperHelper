@@ -1,6 +1,10 @@
 from typing import NoReturn
 from types import FunctionType, GeneratorType
 
+__all__ = [
+    "TypeCheck",
+]
+
 
 def _is_obj_of_type(t: type, obj: ...) -> bool:
     return type(obj) == t

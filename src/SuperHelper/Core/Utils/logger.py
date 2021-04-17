@@ -3,6 +3,10 @@ import logging
 
 from SuperHelper.Core.Utils import PathLike
 
+__all__ = [
+    "setup_core_logger",
+]
+
 
 class TracebackInfoFilter(logging.Filter):
     """Clear or restore the exception on log records"""

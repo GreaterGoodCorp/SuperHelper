@@ -13,6 +13,10 @@ from SuperHelper.Core.Config import pass_config
 logger = logging.getLogger("SuperHelper.Core.Utils")
 logger.setLevel(logging.DEBUG)
 
+__all__ = [
+    "load_core_commands",
+]
+
 
 def load_core_commands() -> list[tuple[Callable, str]]:
     return [
