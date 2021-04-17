@@ -27,6 +27,14 @@ class TracebackInfoFilter(logging.Filter):
 
 
 def setup_core_logger(logging_path: PathLike) -> logging.Logger:
+    """Sets up the core logger.
+
+    Args:
+        logging_path (PathLike): The path to the logging file.
+
+    Returns:
+        A `logging.Logger` instance with name set to `SuperHelper`.
+    """
     logger = logging.getLogger("SuperHelper")
     logger.setLevel(logging.DEBUG)
     fh = logging.FileHandler(logging_path, mode="a+")

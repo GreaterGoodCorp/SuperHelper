@@ -127,15 +127,6 @@ class TestCryptographer:
 
 class TestTypeCheck:
     @staticmethod
-    def test_ensure_int():
-        assert TypeCheck.ensure_int(12345) is None
-        assert TypeCheck.ensure_int(12341234123412341234) is None
-        with pytest.raises(TypeError):
-            TypeCheck.ensure_int("12345")
-        with pytest.raises(TypeError):
-            TypeCheck.ensure_int(12345.0)
-
-    @staticmethod
     def test_ensure_custom():
         class Test:
             pass
@@ -144,6 +135,24 @@ class TestTypeCheck:
         assert TypeCheck.ensure_custom(Test, test) is None
         with pytest.raises(TypeError):
             TypeCheck.ensure_custom(Test, object())
+
+    @staticmethod
+    def test_ensure_bool():
+        assert TypeCheck.ensure_bool(True) is None
+        assert TypeCheck.ensure_bool(False) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_bool(0)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_bool(1)
+
+    @staticmethod
+    def test_ensure_int():
+        assert TypeCheck.ensure_int(12345) is None
+        assert TypeCheck.ensure_int(12341234123412341234) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_int("12345")
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_int(12345.0)
 
     @staticmethod
     def test_ensure_float():
@@ -263,6 +272,15 @@ class TestTypeCheck:
             TypeCheck.ensure_function({1})
         with pytest.raises(TypeError):
             TypeCheck.ensure_function("string".split())
+
+    @staticmethod
+    def test_ensure_path_like():
+        assert TypeCheck.ensure_path_like("") is None
+        assert TypeCheck.ensure_path_like(b"") is None
+        from pathlib import Path
+        assert TypeCheck.ensure_path_like(Path("hello")) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_path_like(1)
 
     @staticmethod
     def test_ensure_with_name():

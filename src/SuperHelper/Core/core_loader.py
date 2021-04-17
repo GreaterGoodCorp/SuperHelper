@@ -18,8 +18,15 @@ __all__ = [
 def load_added_modules(config: dict[str, ...]) -> list[tuple[click.Command, str]]:
     """Loads all added modules.
 
-    :return: A list of command-name pairs to be added to Core CLI
-    :rtype: list[tuple[click.Command, str]]
+    Returns:
+        A list of a 2-tuple elements, where the first index is the `click.command` object, and the second index is the
+        technical name of the command. For example:
+
+        ```
+        [(main, "main"), ...]
+        ```
+
+        The first index can be added to a `click.group`, i.e the `cli` function.
     """
     module_entries = []
     for module_name in config["INSTALLED_MODULES"]:

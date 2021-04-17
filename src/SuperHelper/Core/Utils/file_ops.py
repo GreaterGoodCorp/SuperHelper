@@ -31,14 +31,23 @@ class FP(enum.Flag):
     OTH = Other users/groups
     """
     R_USR = enum.auto()
+    """User readable."""
     W_USR = enum.auto()
+    """User writable."""
     X_USR = enum.auto()
+    """User executable."""
     R_GRP = enum.auto()
+    """Group readable."""
     W_GRP = enum.auto()
+    """Group writable."""
     X_GRP = enum.auto()
+    """Group executable."""
     R_OTH = enum.auto()
+    """Other readable."""
     W_OTH = enum.auto()
+    """Other writable."""
     X_OTH = enum.auto()
+    """Other executable."""
 
 
 class FileOps:
@@ -53,10 +62,11 @@ class FileOps:
 
         This function is decorated by @cache to reduce the amount of syscall, since `os.stat` is an expensive function.
 
-        :param path: Path to the file to check
-        :type path: PathLike
-        :return: An os.stat_result instance containing the stat of the file
-        :rtype: os.stat_result
+        Args:
+            path (PathLike): Path to the file to check
+
+        Returns:
+            An os.stat_result instance containing the stat of the file.
         """
         return os.stat(path)
 

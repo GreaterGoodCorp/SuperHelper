@@ -6,6 +6,8 @@ import logging
 from functools import wraps
 from typing import Callable
 
+from SuperHelper.Core.Utils import TypeCheck
+
 logger: logging.Logger = logging.getLogger("SuperHelper.Core.Config")
 
 DefaultCoreConfig: dict[str, ...] = {
@@ -23,9 +25,7 @@ __all__ = [
 
 
 class Singleton(type):
-    """
-    An internal metaclass, only used for `Config`.
-    """
+    """An internal metaclass, only used for `Config`."""
     _instances = {}
 
     def __call__(cls, *args, **kwargs):
@@ -37,9 +37,7 @@ class Singleton(type):
 
 
 class Config(metaclass=Singleton):
-    """
-    The configuration of the application.
-    """
+    """The configuration of the application."""
     _core_lock: bool = False
 
     def __init__(self, core: dict[str, ...] = None, modules: dict[str, dict[str, ...]] = None) -> None:
@@ -51,7 +49,24 @@ class Config(metaclass=Singleton):
         """Gets the configuration of Core CLI.
 
         This function is intended for internal use only, used for the decorator `pass_config`.
+
+        Args:
+            lock (bool): Whether to lock the config or not.
+
+        Returns:
+            A dictionary mapping keys to corresponding values of the core config. Each entry is represented by a
+            key-value pair of the dictionary. For example:
+
+            ```
+            {"DEBUG": ..., "INSTALLED_MODULES": [...]}
+            ```
+
+            The keys are always strings, and the values can be of any JSON-serializable type.
+
+        Raises:
+            RuntimeError: The core config is locked by another call.
         """
+        TypeCheck.ensure_bool(lock, "lock")
         if Config._core_lock:
             raise RuntimeError("Core config is already retrieved!")
         if lock:
@@ -63,6 +78,15 @@ class Config(metaclass=Singleton):
         """Sets the configuration of Core CLI.
 
         This function is intended for internal use only, used for the decorator `pass_config`.
+
+        Args:
+            config (dict[str, ...]): A dictionary with string keys of the core configuration.
+
+        Returns:
+            None
+
+        Raises:
+            RuntimeError: The last retrieval of the core config was not locked, hence it is read-only.
         """
         # Release lock core config
         if not Config._core_lock:
@@ -76,28 +100,48 @@ class Config(metaclass=Singleton):
 
         This function should only be used by Core CLI.
 
-        :param config: The patch of the configuration.
-        :type config: dict[str, ...]
+        Args:
+            config (dict[str, ...]): The patch of the configuration.
+
+        Returns:
+            None
+
+        Raises:
+            RuntimeError: An error has occurred in `self.get_core_config()`
         """
-        try:
-            # Secure core config
-            core_config = self.get_core_config()
-            # Apply patch
-            config = copy.deepcopy(config)
-            config.update(core_config)
-            # Release core config
-            self.set_core_config(core_config)
-        except RuntimeError:
-            logger.exception("Cannot secure core config")
-            raise
+        # Secure core config
+        core_config = self.get_core_config()
+        # Apply patch
+        config = copy.deepcopy(config)
+        config.update(core_config)
+        # Release core config
+        self.set_core_config(core_config)
 
     def get_module_config(self, module_name: str, lock: bool = True) -> dict[str, ...]:
-        """Get the module configuration
+        """Gets the configuration of the specified module.
 
         This function is intended for internal use only, used for the decorator `pass_config`.
+
+        Args:
+            module_name (str): The name of the module that the config belongs to.
+            lock (bool): Whether to lock the config or not.
+
+        Returns:
+            A dictionary mapping keys to corresponding values of the module config. Each entry is represented by a
+            key-value pair of the dictionary. For example:
+
+            ```
+            {"DEBUG": ..., "INSTALLED_MODULES": [...]}
+            ```
+
+            The keys are always strings, and the values can be of any JSON-serializable type.
+
+        Raises:
+            RuntimeError: The module config is locked by another call.
         """
         lock_name = f"{module_name}_lock"
-        assert not getattr(self, lock_name, False), f"{module_name} config is already retrieved!"
+        if getattr(self, lock_name, False):
+            raise RuntimeError(f"{module_name} config is already retrieved!")
         if lock:
             # Lock module config
             setattr(self, lock_name, True)
@@ -107,9 +151,19 @@ class Config(metaclass=Singleton):
         return copy.deepcopy(self._Modules[module_name])
 
     def set_module_config(self, module_name: str, config: dict[str, ...]) -> None:
-        """Set the module configuration.
+        """Sets the module configuration.
 
         This function is intended for internal use only, used for the decorator `pass_config`.
+
+        Args:
+            module_name (str): The name of the module that the config belongs to.
+            config (dict[str, ...]): A dictionary with string keys of the core configuration.
+
+        Returns:
+            None
+
+        Raises:
+            RuntimeError: The last retrieval of the module config was not locked, hence it is read-only.
         """
         # Release lock module config
         lock_name = f"{module_name}_lock"
@@ -122,12 +176,14 @@ class Config(metaclass=Singleton):
         return
 
     def apply_module_patch(self, module_name: str, config: dict[str, ...]) -> None:
-        """Applies a new patch to the module configuration
+        """Applies a new patch to the module configuration.
 
-        :param module_name: The name of the module to apply patch to
-        :type module_name: str
-        :param config: The patch of the configuration
-        :type config: dict[str, ...]
+        Args:
+            module_name (str): The name of the module to apply patch to.
+            config (dict[str, ...]): The patch of the configuration.
+
+        Returns:
+            None
         """
         try:
             # Secure module config
@@ -149,10 +205,6 @@ class Config(metaclass=Singleton):
 
     @staticmethod
     def from_dict(config: dict[str]) -> Config:
-        """Deserializes a JSON dictionary to Config object.
-
-        This function is intended for internal use only.
-        """
         if "Core" in config.keys() and "Modules" in config.keys():
             return Config(core=config["Core"], modules=config["Modules"])
 
@@ -164,7 +216,11 @@ global_config: Config
 def make_config_global(cfg: Config) -> None:
     """Makes the configuration global.
 
-    This function is intended for internal use only.
+    Args:
+        cfg (Config): The `Config` instance.
+
+    Returns:
+        None
     """
     global global_config
     global_config = cfg
@@ -173,14 +229,21 @@ def make_config_global(cfg: Config) -> None:
 def pass_config(core: bool = None, module_name: str = None, lock: bool = False, param_name: str = "config") -> Callable:
     """Passes the requested config to decorated functions.
 
-    :param core: Whether to request core config
-    :type core: bool
-    :param module_name: The name of the module
-    :type module_name: str
-    :param lock: Whether to lock the config, i.e allow writing to the config
-    :type lock: bool
-    :param param_name: The name of the parameter that the config will be passed as
-    :type param_name: str
+    The wrapped function will receive the config (as requested). When the function returns (or raises SystemExit), this
+    decorator will capture that signal, save the config (if locked) before returning (or re-raising SystemExit).
+
+    Args:
+        core (bool): Whether to request core config.
+        module_name (str): The name of the module.
+        lock (bool): Whether to lock the config, i.e allow writing to the config.
+        param_name (str): The name of the parameter that the config will be passed as.
+
+    Returns:
+        A Callable instance (the decorated function).
+
+    Raises:
+        SystemExit: Re-raises the `SystemExit()` raised by the wrapped function.
+        ValueError: Both `core` and `module_name` are specified.
     """
 
     def decorator(f: Callable) -> Callable:

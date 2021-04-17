@@ -13,14 +13,20 @@ from SuperHelper import Version
 from SuperHelper.Core.Utils import setup_core_logger
 
 APP_NAME = "SuperHelper"
+"""Name of the application."""
 APP_DIR = pathlib.Path(os.getenv("SUPER_HELPER_APP_DIR", click.get_app_dir(APP_NAME)))
+"""Path to the application directory."""
 APP_DIR.mkdir(parents=True, exist_ok=True)
 
 CONFIG_FILENAME = f"{APP_NAME}.cfg"
+"""Name of the config file."""
 CONFIG_PATH = APP_DIR / CONFIG_FILENAME
+"""Path to the config file."""
 
 LOGGING_FILENAME = f"{APP_NAME}.log"
+"""Name of the logging file."""
 LOGGING_PATH = APP_DIR / LOGGING_FILENAME
+"""Path to the logging file."""
 
 version_message = f"%(prog)s-%(version)s {platform.platform(terse=True)} Python-{platform.python_version()}"
 logger = logging.getLogger("SuperHelper")
