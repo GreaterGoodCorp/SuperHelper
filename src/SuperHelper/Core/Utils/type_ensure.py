@@ -1,5 +1,9 @@
 # This module defines the TypeCheck class, a utility class for type checking functions.
+import os
 from types import FunctionType, GeneratorType
+from typing import Union
+
+from SuperHelper.Core.Utils import PathLike
 
 __all__ = [
     "TypeCheck",
@@ -7,15 +11,6 @@ __all__ = [
 
 
 def _raise_type_error(t: type, obj: ..., name: str) -> None:
-    """Raises TypeError for the specified object.
-
-    :param t: The expected type of the object
-    :type t: type
-    :param obj: The object to raise
-    :type obj: object
-    :param name: Name of the object
-    :type name: str
-    """
     if name is not None:
         raise TypeError(f"The expected type of '{name}' is {t.__name__} (given '{type(obj).__name__}' instead)")
     else:
@@ -23,31 +18,13 @@ def _raise_type_error(t: type, obj: ..., name: str) -> None:
 
 
 def _raise_on_failure(b: bool, t: type, obj: ..., name: str) -> None:
-    """Raises TypeError if failed to match correct type.
-
-    :param b: Whether the type is correct
-    :type b: bool
-    :param t: The expected type of the object
-    :type t: type
-    :param obj: The object to raise
-    :type obj: object
-    :param name: Name of the object
-    :type name: str
-    """
     return _raise_type_error(t, obj, name) if not b else None
 
 
-def _ensure_obj_of_type(t: type, obj: ..., name: str = None) -> None:
-    """Ensures the object is of the expected type.
-
-    :param t: The expected type of the object
-    :type t: type
-    :param obj: The object to check
-    :type obj: object
-    :param name: The name of the object
-    :type name: str
-    """
-    return _raise_on_failure(type(obj) == t, t, obj, name)
+def _ensure_obj_of_type(t: Union[type, list, tuple], obj: ..., name: str = None) -> None:
+    if type(t) == type:
+        return _raise_on_failure(isinstance(obj, t), t, obj, name)
+    return _raise_on_failure(isinstance(obj, t[1:]), t[1], obj, name)
 
 
 class TypeCheck:
@@ -59,23 +36,47 @@ class TypeCheck:
     def ensure_custom(t: type, obj: ..., name: str = None) -> None:
         """Ensures the object is of the expected type.
 
-        :param t: The expected type of the object
-        :type t: type
-        :param obj: The object to check
-        :type obj: object
-        :param name: The name of the object
-        :type name: str
+        Args:
+            t (type): The expected type of the object.
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+        Raises:
+            TypeError: The type of the object is not the specified type.
         """
         return _ensure_obj_of_type(t, obj, name)
+
+    @staticmethod
+    def ensure_bool(obj: ..., name: str = None) -> None:
+        """Ensures the object is of type `bool`.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        """
+        return _ensure_obj_of_type(bool, obj, name)
 
     @staticmethod
     def ensure_int(obj: ..., name: str = None) -> None:
         """Ensures the object is of type `int`.
 
-        :param obj: The object to check
-        :type obj: object
-        :param name: The name of the object
-        :type name: str
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
         """
         return _ensure_obj_of_type(int, obj, name)
 
@@ -83,21 +84,31 @@ class TypeCheck:
     def ensure_float(obj: ..., name: str = None) -> None:
         """Ensures the object is of type `float`.
 
-        :param obj: The object to check
-        :type obj: object
-        :param name: The name of the object
-        :type name: str
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
         """
         return _ensure_obj_of_type(float, obj, name)
 
     @staticmethod
     def ensure_complex(obj: ..., name: str = None) -> None:
-        """Ensures the object is of type `float`.
+        """Ensures the object is of type `complex`.
 
-        :param obj: The object to check
-        :type obj: object
-        :param name: The name of the object
-        :type name: str
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
         """
         return _ensure_obj_of_type(complex, obj, name)
 
@@ -105,10 +116,15 @@ class TypeCheck:
     def ensure_str(obj: ..., name: str = None) -> None:
         """Ensures the object is of type `str`.
 
-        :param obj: The object to check
-        :type obj: object
-        :param name: The name of the object
-        :type name: str
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
         """
         return _ensure_obj_of_type(str, obj, name)
 
@@ -116,10 +132,15 @@ class TypeCheck:
     def ensure_bytes(obj: ..., name: str = None) -> None:
         """Ensures the object is of type `bytes`.
 
-        :param obj: The object to check
-        :type obj: object
-        :param name: The name of the object
-        :type name: str
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
         """
         return _ensure_obj_of_type(bytes, obj, name)
 
@@ -127,10 +148,15 @@ class TypeCheck:
     def ensure_bytearray(obj: ..., name: str = None) -> None:
         """Ensures the object is of type `bytearray`.
 
-        :param obj: The object to check
-        :type obj: object
-        :param name: The name of the object
-        :type name: str
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
         """
         return _ensure_obj_of_type(bytearray, obj, name)
 
@@ -138,10 +164,15 @@ class TypeCheck:
     def ensure_list(obj: ..., name: str = None) -> None:
         """Ensures the object is of type `list`.
 
-        :param obj: The object to check
-        :type obj: object
-        :param name: The name of the object
-        :type name: str
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
         """
         return _ensure_obj_of_type(list, obj, name)
 
@@ -149,10 +180,15 @@ class TypeCheck:
     def ensure_tuple(obj: ..., name: str = None) -> None:
         """Ensures the object is of type `tuple`.
 
-        :param obj: The object to check
-        :type obj: object
-        :param name: The name of the object
-        :type name: str
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
         """
         return _ensure_obj_of_type(tuple, obj, name)
 
@@ -160,10 +196,15 @@ class TypeCheck:
     def ensure_dict(obj: ..., name: str = None) -> None:
         """Ensures the object is of type `dict`.
 
-        :param obj: The object to check
-        :type obj: object
-        :param name: The name of the object
-        :type name: str
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
         """
         return _ensure_obj_of_type(dict, obj, name)
 
@@ -171,10 +212,15 @@ class TypeCheck:
     def ensure_set(obj: ..., name: str = None) -> None:
         """Ensures the object is of type `set`.
 
-        :param obj: The object to check
-        :type obj: object
-        :param name: The name of the object
-        :type name: str
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
         """
         return _ensure_obj_of_type(set, obj, name)
 
@@ -182,10 +228,15 @@ class TypeCheck:
     def ensure_frozenset(obj: ..., name: str = None) -> None:
         """Ensures the object is of type `frozenset`.
 
-        :param obj: The object to check
-        :type obj: object
-        :param name: The name of the object
-        :type name: str
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
         """
         return _ensure_obj_of_type(frozenset, obj, name)
 
@@ -193,10 +244,15 @@ class TypeCheck:
     def ensure_generator(obj: ..., name: str = None) -> None:
         """Ensures the object is a generator.
 
-        :param obj: The object to check
-        :type obj: object
-        :param name: The name of the object
-        :type name: str
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
         """
         return _ensure_obj_of_type(GeneratorType, obj, name)
 
@@ -204,10 +260,15 @@ class TypeCheck:
     def ensure_memoryview(obj: ..., name: str = None) -> None:
         """Ensures the object is of type `memoryview`.
 
-        :param obj: The object to check
-        :type obj: object
-        :param name: The name of the object
-        :type name: str
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
         """
         return _ensure_obj_of_type(memoryview, obj, name)
 
@@ -215,9 +276,30 @@ class TypeCheck:
     def ensure_function(obj: ..., name: str = None) -> None:
         """Ensures the object is a function.
 
-        :param obj: The object to check
-        :type obj: object
-        :param name: The name of the object
-        :type name: str
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
         """
         return _ensure_obj_of_type(FunctionType, obj, name)
+
+    @staticmethod
+    def ensure_path_like(obj: ..., name: str = None):
+        """Ensures the object can be used as a path.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        """
+        return _ensure_obj_of_type((PathLike, str, bytes, os.PathLike), obj, name)

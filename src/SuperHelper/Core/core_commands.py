@@ -26,7 +26,7 @@ def load_core_commands() -> list[tuple[Callable, str]]:
         technical name of the command. For example:
 
         ```
-        [(add_modules, "core_add", ...]
+        [(add_modules, "core_add"), ...]
         ```
 
         The first index can be added to a `click.group`, i.e the `cli` function.
