@@ -1,3 +1,6 @@
+__all__ = ["BitOps"]
+
+
 class BitOps:
     @staticmethod
     def is_bit_set(i: int, pos: int) -> bool:
@@ -16,6 +19,3 @@ class BitOps:
             return i
         else:
             return i - (1 << pos)
-
-
-__all__ = ["BitOps"]

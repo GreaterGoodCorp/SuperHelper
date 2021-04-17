@@ -9,6 +9,10 @@ from SuperHelper.Core.Config import pass_config
 logger = logging.getLogger("SuperHelper.Core.Utils")
 logger.setLevel(logging.DEBUG)
 
+__all__ = [
+    "load_added_modules",
+]
+
 
 @pass_config(core=True, lock=False)
 def load_installed_modules(config: dict[str, ...]) -> list[tuple[click.Command, str]]:
