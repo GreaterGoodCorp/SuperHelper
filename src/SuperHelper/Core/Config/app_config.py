@@ -1,4 +1,4 @@
-# This module defines two config functions, load_app_config() and save_app_config()
+# This module defines the config loader and saver functions.
 import json
 import logging
 import sys
@@ -16,6 +16,11 @@ __all__ = [
 
 
 def load_app_config(config_path: PathLike) -> None:
+    """Loads the configuration of the application.
+
+    :param config_path: The path to config file
+    :type config_path: PathLike
+    """
     try:
         with open(config_path) as fp:
             # De-serialise JSON to Python's dict and update
@@ -32,6 +37,13 @@ def load_app_config(config_path: PathLike) -> None:
 
 @pass_config()
 def save_app_config(config: Config, config_path: PathLike) -> None:
+    """Saves the configuration of the application.
+
+    :param config: The global Config instance
+    :type config: Config
+    :param config_path: The path to config file
+    :type config_path: PathLike
+    """
     try:
         with open(config_path, "w") as fp:
             json.dump(config.__dict__(), fp)
