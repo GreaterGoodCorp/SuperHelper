@@ -10,7 +10,7 @@ from typing import NoReturn
 import click
 
 from SuperHelper import Version
-from SuperHelper.Core.Utils import initialise_core_logger
+from SuperHelper.Core.Utils import setup_core_logger
 
 APP_NAME = "SuperHelper"
 APP_DIR = pathlib.Path(os.getenv("SUPER_HELPER_APP_DIR", click.get_app_dir(APP_NAME)))
@@ -44,7 +44,7 @@ def validate_no_win32() -> None:
 
 def make_logger_global():
     global logger
-    logger = initialise_core_logger(LOGGING_PATH)
+    logger = setup_core_logger(LOGGING_PATH)
 
 
 def load_config():
@@ -70,8 +70,8 @@ def load_core_commands():
 
 
 def load_added_modules():
-    from SuperHelper.Core.Utils import load_installed_modules
-    for module in load_installed_modules():
+    from SuperHelper.Core.Utils import load_added_modules
+    for module in load_added_modules():
         try:
             cli.add_command(module[0])
         except Exception or BaseException:
