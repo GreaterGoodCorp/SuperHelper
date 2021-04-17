@@ -7,7 +7,6 @@
 - Added new core utilities: `FileOps`
 - Added full test suites for the core package (`SuperHelper.Core` and its subpackages)
 - Re-written API signature of core utilities
-- Added *ReadTheDocs-styled* documentation
 
 #### Bug fixes
 
