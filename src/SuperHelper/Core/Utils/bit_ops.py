@@ -6,6 +6,7 @@ class BitOps:
     """
     A utility class for bitwise operations.
     """
+
     @staticmethod
     def is_bit_set(i: int, pos: int) -> bool:
         """Checks if the `pos`-th bit of the integer `i` is set.

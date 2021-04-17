@@ -54,6 +54,7 @@ class TypeCheck:
     """
     A utility class for type checking functions.
     """
+
     @staticmethod
     def ensure_custom(t: type, obj: ..., name: str = None) -> None:
         """Ensures the object is of the expected type.

@@ -90,5 +90,6 @@ class TestOtherUtils:
         def edit_cfg(config):
             config["INSTALLED_MODULES"].append("SuperHelper")
             config["INSTALLED_MODULES"].append("SuperHelper.Hello")
+
         edit_cfg()
         assert run("list").exit_code == 0
