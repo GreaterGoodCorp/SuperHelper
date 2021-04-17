@@ -16,7 +16,7 @@ test:
 	export SUPER_HELPER_APP_DIR=./.test_dir && pytest --cov
 
 docs:
-	pdoc --html --force src/SuperHelper
+	pdoc --html -fo docs/ src/SuperHelper
 
 clean-all: clean clean-cfg clean-test
 
