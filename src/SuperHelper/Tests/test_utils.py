@@ -1,3 +1,5 @@
+import sys
+
 import pytest
 
 from SuperHelper.Core.Utils import BitOps, Cryptographer, FileOps, FP, TypeCheck
@@ -294,7 +296,10 @@ class TestFileOps:
     @staticmethod
     def test_check_fp_grp():
         assert FileOps.check_fp("LICENSE", FP.R_GRP)
-        assert not FileOps.check_fp("LICENSE", FP.W_GRP)
+        if sys.platform == "darwin":
+            assert not FileOps.check_fp("LICENSE", FP.W_GRP)
+        else:
+            assert FileOps.check_fp("LICENSE", FP.W_GRP)
         assert not FileOps.check_fp("LICENSE", FP.X_GRP)
 
     @staticmethod
