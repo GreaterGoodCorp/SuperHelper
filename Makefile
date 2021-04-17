@@ -13,7 +13,7 @@ dev-install:
 
 test:
 	rm -rf .test_dir && mkdir .test_dir
-	export SUPER_HELPER_APP_DIR=./.test_dir && pytest --forked --cov
+	export SUPER_HELPER_APP_DIR=./.test_dir && pytest --cov
 
 clean-all: clean clean-cfg clean-test
 

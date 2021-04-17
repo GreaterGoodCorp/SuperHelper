@@ -7,4 +7,3 @@ cryptography
 pytest
 setuptools
 pytest-cov
-pytest-forked
