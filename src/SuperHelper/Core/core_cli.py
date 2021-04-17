@@ -70,7 +70,7 @@ def save_config():
 
 
 def load_core_commands():
-    from SuperHelper.Core.Utils import load_core_commands as _load_core_commands
+    from SuperHelper.Core import load_core_commands as _load_core_commands
     for core_module in _load_core_commands():
         try:
             cli.add_command(core_module[0])
@@ -82,7 +82,7 @@ def load_core_commands():
 
 
 def load_added_modules():
-    from SuperHelper.Core.Utils import load_added_modules as _load_added_modules
+    from SuperHelper.Core import load_added_modules as _load_added_modules
     for module in _load_added_modules():
         try:
             cli.add_command(module[0])
