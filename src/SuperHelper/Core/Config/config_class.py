@@ -13,6 +13,13 @@ DefaultCoreConfig: dict[str, ...] = {
     ],
 }
 
+__all__ = [
+    "DefaultCoreConfig",
+    "Config",
+    "make_config_global",
+    "pass_config",
+]
+
 
 class Singleton(type):
     _instances = {}
