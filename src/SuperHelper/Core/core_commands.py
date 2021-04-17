@@ -19,10 +19,17 @@ __all__ = [
 
 
 def load_core_commands() -> list[tuple[Callable, str]]:
-    """Returns the Core CLI commands.
+    """Loads the Core CLI commands.
 
-    :return: A list of command-name pairs to be added to Core CLI
-    :rtype: list[tuple[Callable, str]]
+    Returns:
+        A list of a 2-tuple elements, where the first index is the `click.command` object, and the second index is the
+        technical name of the command. For example:
+
+        ```
+        [(add_modules, "core_add", ...]
+        ```
+
+        The first index can be added to a `click.group`, i.e the `cli` function.
     """
     return [
         (add_modules, "core_add"),
