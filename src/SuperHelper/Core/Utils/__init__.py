@@ -1,5 +1,5 @@
 # Type hinting utilities
-from .type_hinting import Generic, PathLike
+from .type_hinting import PathLike
 # Type checking utilities
 from .type_ensure import TypeCheck
 # Logger setup utility
@@ -11,7 +11,6 @@ from .file_ops import FileOps, FP
 
 __all__ = [
     "PathLike",
-    "Generic",
     "TypeCheck",
     "setup_core_logger",
     "BitOps",
