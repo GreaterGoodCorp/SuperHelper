@@ -8,3 +8,4 @@ pytest
 setuptools
 pytest-cov
 setuptools
+pdoc3
