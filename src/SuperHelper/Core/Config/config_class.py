@@ -1,3 +1,4 @@
+# This module contains the Config class, which contains the application configuration.
 from __future__ import annotations
 
 import copy
@@ -22,6 +23,9 @@ __all__ = [
 
 
 class Singleton(type):
+    """
+    An internal metaclass, only used for `Config`.
+    """
     _instances = {}
 
     def __call__(cls, *args, **kwargs):
@@ -33,6 +37,9 @@ class Singleton(type):
 
 
 class Config(metaclass=Singleton):
+    """
+    The configuration of the application.
+    """
     _core_lock: bool = False
 
     def __init__(self, core: dict[str, ...] = None, modules: dict[str, dict[str, ...]] = None) -> None:
@@ -41,7 +48,10 @@ class Config(metaclass=Singleton):
         return
 
     def get_core_config(self, lock: bool = True) -> dict[str, ...]:
-        """Get the core configuration. Can only get once!"""
+        """Gets the configuration of Core CLI.
+
+        This function is intended for internal use only, used for the decorator `pass_config`.
+        """
         if Config._core_lock:
             raise RuntimeError("Core config is already retrieved!")
         if lock:
@@ -50,7 +60,10 @@ class Config(metaclass=Singleton):
         return copy.deepcopy(self._Core)
 
     def set_core_config(self, config: dict[str, ...]) -> None:
-        """Set the core configuration."""
+        """Sets the configuration of Core CLI.
+
+        This function is intended for internal use only, used for the decorator `pass_config`.
+        """
         # Release lock core config
         if not Config._core_lock:
             raise RuntimeError("No lock was acquired! Write access is disabled!")
@@ -59,7 +72,13 @@ class Config(metaclass=Singleton):
         return
 
     def apply_core_patch(self, config: dict[str, ...]) -> None:
-        """Apply a new patch to core configuration."""
+        """Applies a new patch to core configuration.
+
+        This function should only be used by Core CLI.
+
+        :param config: The patch of the configuration.
+        :type config: dict[str, ...]
+        """
         try:
             # Secure core config
             core_config = self.get_core_config()
@@ -73,7 +92,10 @@ class Config(metaclass=Singleton):
             raise
 
     def get_module_config(self, module_name: str, lock: bool = True) -> dict[str, ...]:
-        """Get the module configuration. Can only get once!"""
+        """Get the module configuration
+
+        This function is intended for internal use only, used for the decorator `pass_config`.
+        """
         lock_name = f"{module_name}_lock"
         assert not getattr(self, lock_name, False), f"{module_name} config is already retrieved!"
         if lock:
@@ -85,7 +107,10 @@ class Config(metaclass=Singleton):
         return copy.deepcopy(self._Modules[module_name])
 
     def set_module_config(self, module_name: str, config: dict[str, ...]) -> None:
-        """Set the module configuration."""
+        """Set the module configuration.
+
+        This function is intended for internal use only, used for the decorator `pass_config`.
+        """
         # Release lock module config
         lock_name = f"{module_name}_lock"
         is_locked = not getattr(self, lock_name, False)
@@ -97,6 +122,13 @@ class Config(metaclass=Singleton):
         return
 
     def apply_module_patch(self, module_name: str, config: dict[str, ...]) -> None:
+        """Applies a new patch to the module configuration
+
+        :param module_name: The name of the module to apply patch to
+        :type module_name: str
+        :param config: The patch of the configuration
+        :type config: dict[str, ...]
+        """
         try:
             # Secure module config
             module_config = self.get_module_config(module_name)
@@ -117,21 +149,39 @@ class Config(metaclass=Singleton):
 
     @staticmethod
     def from_dict(config: dict[str]) -> Config:
+        """Deserializes a JSON dictionary to Config object.
+
+        This function is intended for internal use only.
+        """
         if "Core" in config.keys() and "Modules" in config.keys():
             return Config(core=config["Core"], modules=config["Modules"])
 
 
+# The container for the global configuration of the application
 global_config: Config
 
 
 def make_config_global(cfg: Config):
-    """(Internal) Makes the config class global."""
+    """Makes the configuration global.
+
+    This function is intended for internal use only.
+    """
     global global_config
     global_config = cfg
 
 
 def pass_config(core: bool = None, module_name: str = None, lock: bool = False, param_name: str = "config") -> Callable:
-    """Automatically passes the config (as required) as the first positional argument."""
+    """Passes the requested config to decorated functions.
+
+    :param core: Whether to request core config
+    :type core: bool
+    :param module_name: The name of the module
+    :type module_name: str
+    :param lock: Whether to lock the config, i.e allow writing to the config
+    :type lock: bool
+    :param param_name: The name of the parameter that the config will be passed as
+    :type param_name: str
+    """
 
     def decorator(f: Callable) -> Callable:
         @wraps(f)
