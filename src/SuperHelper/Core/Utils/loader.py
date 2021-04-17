@@ -15,7 +15,7 @@ __all__ = [
 
 
 @pass_config(core=True, lock=False)
-def load_installed_modules(config: dict[str, ...]) -> list[tuple[click.Command, str]]:
+def load_added_modules(config: dict[str, ...]) -> list[tuple[click.Command, str]]:
     """Loads the main() method of all installed modules."""
     module_entries = []
     for module_name in config["INSTALLED_MODULES"]:
