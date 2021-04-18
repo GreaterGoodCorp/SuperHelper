@@ -15,7 +15,15 @@ test:
 	rm -rf .test_dir && mkdir .test_dir
 	export SUPER_HELPER_APP_DIR=./.test_dir && pytest --cov
 
-docs:
+docs: docs-html docs-pdf
+
+docs-pdf:
+	@pdoc --pdf -f src/SuperHelper > .docs
+	@pandoc --metadata=title:"MyProject Documentation" --from=markdown+abbreviations+tex_math_single_backslash \
+	--pdf-engine=xelatex --variable=mainfont:"DejaVu Sans" --toc --toc-depth=4 --output=documentation.pdf .docs
+	@rm .docs
+
+docs-html:
 	pdoc --html -fo docs/ src/SuperHelper
 
 clean-all: clean clean-cfg clean-test
