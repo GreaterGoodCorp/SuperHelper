@@ -22,106 +22,6 @@
 <h1 class="title">Module <code>SuperHelper.Tests.test_core_command</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">from SuperHelper.Tests import *
-
-
-class TestCore:
-    @staticmethod
-    def test_add_single():
-        assert run(&#34;add FocusEnabler&#34;).exit_code == 0
-
-    @staticmethod
-    def test_add_single_again():
-        assert run(&#34;add FocusEnabler&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_single_positive():
-        result = run(&#34;list&#34;)
-        assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; in result.output
-        assert &#34;Stenographer&#34; not in result.output
-
-    @staticmethod
-    def test_remove_single():
-        assert run(&#34;remove FocusEnabler&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_single_negative():
-        result = run(&#34;list&#34;)
-        assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; not in result.output
-        assert &#34;Stenographer&#34; not in result.output
-
-    @staticmethod
-    def test_add_multiple():
-        assert run(&#34;add FocusEnabler Stenographer&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_multiple_positive():
-        result = run(&#34;list&#34;)
-        assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; in result.output
-        assert &#34;Stenographer&#34; in result.output
-
-    @staticmethod
-    def test_remove_multiple():
-        assert run(&#34;remove FocusEnabler Stenographer&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_multiple_negative():
-        result = run(&#34;list&#34;)
-        assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; not in result.output
-        assert &#34;Stenographer&#34; not in result.output
-
-    @staticmethod
-    def test_list_all():
-        result = run(&#34;list -a&#34;)
-        assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; in result.output
-        assert &#34;Stenographer&#34; in result.output
-
-    @staticmethod
-    def test_add_same():
-        assert run(&#34;add FocusEnabler FocusEnabler&#34;).exit_code == 0
-
-    @staticmethod
-    def test_remove_same():
-        assert run(&#34;remove FocusEnabler FocusEnabler&#34;).exit_code == 0
-
-    @staticmethod
-    def test_add_invalid():
-        assert run(&#34;add test&#34;).exit_code == 1
-
-    @staticmethod
-    def test_remove_invalid():
-        assert run(&#34;remove test&#34;).exit_code == 1
-
-    @staticmethod
-    def test_list_negative():
-        assert run(&#34;list&#34;).exit_code == 0
-
-
-class TestOtherUtils:
-    @staticmethod
-    def test_load_installed_modules_a():
-        from SuperHelper.Core.core_cli import load_config, save_config
-        load_config()
-        save_config()
-        from SuperHelper.Core.Config import pass_config
-
-        @pass_config(core=True, lock=True)
-        def edit_cfg(config):
-            config[&#34;INSTALLED_MODULES&#34;].append(&#34;SuperHelper&#34;)
-            config[&#34;INSTALLED_MODULES&#34;].append(&#34;SuperHelper.Hello&#34;)
-
-        edit_cfg()
-        assert run(&#34;list&#34;).exit_code == 0</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -137,86 +37,6 @@ class TestOtherUtils:
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class TestCore:
-    @staticmethod
-    def test_add_single():
-        assert run(&#34;add FocusEnabler&#34;).exit_code == 0
-
-    @staticmethod
-    def test_add_single_again():
-        assert run(&#34;add FocusEnabler&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_single_positive():
-        result = run(&#34;list&#34;)
-        assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; in result.output
-        assert &#34;Stenographer&#34; not in result.output
-
-    @staticmethod
-    def test_remove_single():
-        assert run(&#34;remove FocusEnabler&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_single_negative():
-        result = run(&#34;list&#34;)
-        assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; not in result.output
-        assert &#34;Stenographer&#34; not in result.output
-
-    @staticmethod
-    def test_add_multiple():
-        assert run(&#34;add FocusEnabler Stenographer&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_multiple_positive():
-        result = run(&#34;list&#34;)
-        assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; in result.output
-        assert &#34;Stenographer&#34; in result.output
-
-    @staticmethod
-    def test_remove_multiple():
-        assert run(&#34;remove FocusEnabler Stenographer&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_multiple_negative():
-        result = run(&#34;list&#34;)
-        assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; not in result.output
-        assert &#34;Stenographer&#34; not in result.output
-
-    @staticmethod
-    def test_list_all():
-        result = run(&#34;list -a&#34;)
-        assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; in result.output
-        assert &#34;Stenographer&#34; in result.output
-
-    @staticmethod
-    def test_add_same():
-        assert run(&#34;add FocusEnabler FocusEnabler&#34;).exit_code == 0
-
-    @staticmethod
-    def test_remove_same():
-        assert run(&#34;remove FocusEnabler FocusEnabler&#34;).exit_code == 0
-
-    @staticmethod
-    def test_add_invalid():
-        assert run(&#34;add test&#34;).exit_code == 1
-
-    @staticmethod
-    def test_remove_invalid():
-        assert run(&#34;remove test&#34;).exit_code == 1
-
-    @staticmethod
-    def test_list_negative():
-        assert run(&#34;list&#34;).exit_code == 0</code></pre>
-</details>
 <h3>Static methods</h3>
 <dl>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_add_invalid"><code class="name flex">
@@ -224,225 +44,90 @@ class TestOtherUtils:
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_add_invalid():
-    assert run(&#34;add test&#34;).exit_code == 1</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_add_multiple"><code class="name flex">
 <span>def <span class="ident">test_add_multiple</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_add_multiple():
-    assert run(&#34;add FocusEnabler Stenographer&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_add_same"><code class="name flex">
 <span>def <span class="ident">test_add_same</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_add_same():
-    assert run(&#34;add FocusEnabler FocusEnabler&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_add_single"><code class="name flex">
 <span>def <span class="ident">test_add_single</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_add_single():
-    assert run(&#34;add FocusEnabler&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_add_single_again"><code class="name flex">
 <span>def <span class="ident">test_add_single_again</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_add_single_again():
-    assert run(&#34;add FocusEnabler&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_list_all"><code class="name flex">
 <span>def <span class="ident">test_list_all</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_list_all():
-    result = run(&#34;list -a&#34;)
-    assert result.exit_code == 0
-    assert &#34;FocusEnabler&#34; in result.output
-    assert &#34;Stenographer&#34; in result.output</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_list_multiple_negative"><code class="name flex">
 <span>def <span class="ident">test_list_multiple_negative</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_list_multiple_negative():
-    result = run(&#34;list&#34;)
-    assert result.exit_code == 0
-    assert &#34;FocusEnabler&#34; not in result.output
-    assert &#34;Stenographer&#34; not in result.output</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_list_multiple_positive"><code class="name flex">
 <span>def <span class="ident">test_list_multiple_positive</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_list_multiple_positive():
-    result = run(&#34;list&#34;)
-    assert result.exit_code == 0
-    assert &#34;FocusEnabler&#34; in result.output
-    assert &#34;Stenographer&#34; in result.output</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_list_negative"><code class="name flex">
 <span>def <span class="ident">test_list_negative</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_list_negative():
-    assert run(&#34;list&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_list_single_negative"><code class="name flex">
 <span>def <span class="ident">test_list_single_negative</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_list_single_negative():
-    result = run(&#34;list&#34;)
-    assert result.exit_code == 0
-    assert &#34;FocusEnabler&#34; not in result.output
-    assert &#34;Stenographer&#34; not in result.output</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_list_single_positive"><code class="name flex">
 <span>def <span class="ident">test_list_single_positive</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_list_single_positive():
-    result = run(&#34;list&#34;)
-    assert result.exit_code == 0
-    assert &#34;FocusEnabler&#34; in result.output
-    assert &#34;Stenographer&#34; not in result.output</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_remove_invalid"><code class="name flex">
 <span>def <span class="ident">test_remove_invalid</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_remove_invalid():
-    assert run(&#34;remove test&#34;).exit_code == 1</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_remove_multiple"><code class="name flex">
 <span>def <span class="ident">test_remove_multiple</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_remove_multiple():
-    assert run(&#34;remove FocusEnabler Stenographer&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_remove_same"><code class="name flex">
 <span>def <span class="ident">test_remove_same</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_remove_same():
-    assert run(&#34;remove FocusEnabler FocusEnabler&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_remove_single"><code class="name flex">
 <span>def <span class="ident">test_remove_single</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_remove_single():
-    assert run(&#34;remove FocusEnabler&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 </dl>
 </dd>
@@ -451,26 +136,6 @@ def test_remove_single():
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class TestOtherUtils:
-    @staticmethod
-    def test_load_installed_modules_a():
-        from SuperHelper.Core.core_cli import load_config, save_config
-        load_config()
-        save_config()
-        from SuperHelper.Core.Config import pass_config
-
-        @pass_config(core=True, lock=True)
-        def edit_cfg(config):
-            config[&#34;INSTALLED_MODULES&#34;].append(&#34;SuperHelper&#34;)
-            config[&#34;INSTALLED_MODULES&#34;].append(&#34;SuperHelper.Hello&#34;)
-
-        edit_cfg()
-        assert run(&#34;list&#34;).exit_code == 0</code></pre>
-</details>
 <h3>Static methods</h3>
 <dl>
 <dt id="SuperHelper.Tests.test_core_command.TestOtherUtils.test_load_installed_modules_a"><code class="name flex">
@@ -478,25 +143,6 @@ def test_remove_single():
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_load_installed_modules_a():
-    from SuperHelper.Core.core_cli import load_config, save_config
-    load_config()
-    save_config()
-    from SuperHelper.Core.Config import pass_config
-
-    @pass_config(core=True, lock=True)
-    def edit_cfg(config):
-        config[&#34;INSTALLED_MODULES&#34;].append(&#34;SuperHelper&#34;)
-        config[&#34;INSTALLED_MODULES&#34;].append(&#34;SuperHelper.Hello&#34;)
-
-    edit_cfg()
-    assert run(&#34;list&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 </dl>
 </dd>

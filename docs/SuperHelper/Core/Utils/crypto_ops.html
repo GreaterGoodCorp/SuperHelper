@@ -22,190 +22,6 @@
 <h1 class="title">Module <code>SuperHelper.Core.Utils.crypto_ops</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python"># This module defines the Cryptographer class, a utility class for cryptographic functions.
-from __future__ import annotations
-
-import base64
-import os
-import hashlib
-import logging
-
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from cryptography.fernet import Fernet, InvalidToken
-
-from SuperHelper.Core.Utils import TypeCheck
-
-logger = logging.getLogger(&#34;SuperHelper.Core.Utils&#34;)
-logger.setLevel(logging.DEBUG)
-
-__all__ = [
-    &#34;Cryptographer&#34;,
-]
-
-
-class Cryptographer:
-    &#34;&#34;&#34;A utility class for cryptographic functions.&#34;&#34;&#34;
-
-    def __init__(self, salt: bytes, auth_key: bytes, encrypt: bool = True) -&gt; None:
-        &#34;&#34;&#34;Initialises a `Cryptographer` instance.
-        Args:
-            salt (bytes): The raw salt, in bytes.
-            auth_key (bytes): The authentication key, in bytes.
-            encrypt (bool): True to make an encrypter, otherwise False.
-        &#34;&#34;&#34;
-        self.salt = salt
-        self.kdf = self.make_kdf(self.salt)
-        self.auth_hash = hashlib.sha256(auth_key).digest()
-        self.key = self.kdf.derive(self.auth_hash)
-        self.is_encrypt = encrypt
-
-    def encrypt(self, raw_data: bytes) -&gt; bytes:
-        &#34;&#34;&#34;Encrypts raw data.
-
-        Args:
-            raw_data (bytes): The raw data to be encrypted.
-
-        Returns:
-            The encrypted data, in bytes, which is encrypted using the `Fernet` (created by `Cryptography.make_fernet`)
-
-        Raises:
-            ValueError: A decrypter is used to encrypt.
-        &#34;&#34;&#34;
-        TypeCheck.ensure_bytes(raw_data, &#34;raw_data&#34;)
-        if not self.is_encrypt:
-            raise ValueError(&#34;Not an encrypter!&#34;)
-        fernet = Cryptographer.make_fernet(self.key)
-        return fernet.encrypt(raw_data)
-
-    def decrypt(self, encrypted_data: bytes) -&gt; bytes:
-        &#34;&#34;&#34;Decrypts the encrypted data.
-
-        Args:
-            encrypted_data (bytes): The encrypted data to be decrypted.
-
-        Returns:
-            The decrypted data, in bytes, which is decrypted using the `Fernet` (created by `Cryptography.make_fernet`)
-        &#34;&#34;&#34;
-        TypeCheck.ensure_bytes(encrypted_data, &#34;encrypted_data&#34;)
-        if self.is_encrypt:
-            raise ValueError(&#34;Not a decrypter!&#34;)
-        fernet = Cryptographer.make_fernet(self.key)
-        try:
-            return fernet.decrypt(encrypted_data)
-        except InvalidToken:
-            raise
-
-    def get_salt_string(self) -&gt; str:
-        &#34;&#34;&#34;String-ify the raw salt.
-
-        Returns:
-            The Base64-encoded string of the raw salt.
-        &#34;&#34;&#34;
-        return Cryptographer.encode_salt(self.salt)
-
-    @staticmethod
-    def make_encrypter(salt: str, key: str) -&gt; Cryptographer:
-        &#34;&#34;&#34;Makes a Fernet encrypter for salt and key.
-
-        Args:
-            salt (str): The Base64-encoded string of the raw salt.
-            key (str): The authentication key.
-
-        Returns:
-            A `Cryptographer` instance, which can be used to encrypt data.
-        &#34;&#34;&#34;
-        TypeCheck.ensure_str(salt, &#34;salt&#34;)
-        TypeCheck.ensure_str(key, &#34;key&#34;)
-        return Cryptographer(Cryptographer.decode_salt(salt), key.encode(), True)
-
-    @staticmethod
-    def make_decrypter(salt: str, key: str) -&gt; Cryptographer:
-        &#34;&#34;&#34;Makes a Fernet decrypter for salt and key.
-
-        Args:
-            salt (str): The Base64-encoded string of the raw salt.
-            key (str): The authentication key.
-
-        Returns:
-            A `Cryptographer` instance, which can be used to decrypt data.
-        &#34;&#34;&#34;
-        TypeCheck.ensure_str(salt, &#34;salt&#34;)
-        TypeCheck.ensure_str(key, &#34;key&#34;)
-        return Cryptographer(Cryptographer.decode_salt(salt), key.encode(), False)
-
-    @staticmethod
-    def make_salt() -&gt; bytes:
-        &#34;&#34;&#34;Generates a cryptographically secure salt for cryptography.
-
-        Returns:
-            A 16-byte raw salt
-        &#34;&#34;&#34;
-        return os.urandom(16)
-
-    @staticmethod
-    def encode_salt(salt: bytes) -&gt; str:
-        &#34;&#34;&#34;Encodes the raw salt as string.
-
-        Args:
-            salt (bytes): The raw salt, in bytes.
-
-        Returns:
-            The Base64-encoded string of the raw salt
-        &#34;&#34;&#34;
-        TypeCheck.ensure_bytes(salt, &#34;salt&#34;)
-        return str(base64.b64encode(salt), &#34;utf-8&#34;)
-
-    @staticmethod
-    def decode_salt(salt: str) -&gt; bytes:
-        &#34;&#34;&#34;Decodes the salt string to raw salt.
-
-        Args:
-            salt (str): The Base64-encoded string of the raw salt.
-
-        Returns:
-            The raw salt
-        &#34;&#34;&#34;
-        TypeCheck.ensure_str(salt, &#34;salt&#34;)
-        return base64.b64decode(bytes(salt, &#34;utf-8&#34;))
-
-    @staticmethod
-    def make_kdf(salt: bytes) -&gt; PBKDF2HMAC:
-        &#34;&#34;&#34;Makes a key derivation function from raw salt.
-
-        Args:
-            salt (bytes): The raw salt, in bytes.
-
-        Returns:
-            A PBKDF2HMAC instance, which can be used to derive key from the authentication key.
-        &#34;&#34;&#34;
-        TypeCheck.ensure_bytes(salt, &#34;salt&#34;)
-        return PBKDF2HMAC(
-            algorithm=hashes.SHA512(),
-            length=32,
-            salt=salt,
-            iterations=10000,
-            backend=default_backend(),
-        )
-
-    @staticmethod
-    def make_fernet(key: bytes) -&gt; Fernet:
-        &#34;&#34;&#34;Makes a Fernet encrypter/decrypter from the derived key.
-
-        Args:
-            key (bytes): The derived key, in bytes.
-
-        Returns:
-            A Fernet instance, which can be used to either encrypt or decrypt data.
-        &#34;&#34;&#34;
-        TypeCheck.ensure_bytes(key, &#34;key&#34;)
-        return Fernet(base64.urlsafe_b64encode(key))</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -232,167 +48,6 @@ class Cryptographer:
 <dt><strong><code>encrypt</code></strong> :&ensp;<code>bool</code></dt>
 <dd>True to make an encrypter, otherwise False.</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class Cryptographer:
-    &#34;&#34;&#34;A utility class for cryptographic functions.&#34;&#34;&#34;
-
-    def __init__(self, salt: bytes, auth_key: bytes, encrypt: bool = True) -&gt; None:
-        &#34;&#34;&#34;Initialises a `Cryptographer` instance.
-        Args:
-            salt (bytes): The raw salt, in bytes.
-            auth_key (bytes): The authentication key, in bytes.
-            encrypt (bool): True to make an encrypter, otherwise False.
-        &#34;&#34;&#34;
-        self.salt = salt
-        self.kdf = self.make_kdf(self.salt)
-        self.auth_hash = hashlib.sha256(auth_key).digest()
-        self.key = self.kdf.derive(self.auth_hash)
-        self.is_encrypt = encrypt
-
-    def encrypt(self, raw_data: bytes) -&gt; bytes:
-        &#34;&#34;&#34;Encrypts raw data.
-
-        Args:
-            raw_data (bytes): The raw data to be encrypted.
-
-        Returns:
-            The encrypted data, in bytes, which is encrypted using the `Fernet` (created by `Cryptography.make_fernet`)
-
-        Raises:
-            ValueError: A decrypter is used to encrypt.
-        &#34;&#34;&#34;
-        TypeCheck.ensure_bytes(raw_data, &#34;raw_data&#34;)
-        if not self.is_encrypt:
-            raise ValueError(&#34;Not an encrypter!&#34;)
-        fernet = Cryptographer.make_fernet(self.key)
-        return fernet.encrypt(raw_data)
-
-    def decrypt(self, encrypted_data: bytes) -&gt; bytes:
-        &#34;&#34;&#34;Decrypts the encrypted data.
-
-        Args:
-            encrypted_data (bytes): The encrypted data to be decrypted.
-
-        Returns:
-            The decrypted data, in bytes, which is decrypted using the `Fernet` (created by `Cryptography.make_fernet`)
-        &#34;&#34;&#34;
-        TypeCheck.ensure_bytes(encrypted_data, &#34;encrypted_data&#34;)
-        if self.is_encrypt:
-            raise ValueError(&#34;Not a decrypter!&#34;)
-        fernet = Cryptographer.make_fernet(self.key)
-        try:
-            return fernet.decrypt(encrypted_data)
-        except InvalidToken:
-            raise
-
-    def get_salt_string(self) -&gt; str:
-        &#34;&#34;&#34;String-ify the raw salt.
-
-        Returns:
-            The Base64-encoded string of the raw salt.
-        &#34;&#34;&#34;
-        return Cryptographer.encode_salt(self.salt)
-
-    @staticmethod
-    def make_encrypter(salt: str, key: str) -&gt; Cryptographer:
-        &#34;&#34;&#34;Makes a Fernet encrypter for salt and key.
-
-        Args:
-            salt (str): The Base64-encoded string of the raw salt.
-            key (str): The authentication key.
-
-        Returns:
-            A `Cryptographer` instance, which can be used to encrypt data.
-        &#34;&#34;&#34;
-        TypeCheck.ensure_str(salt, &#34;salt&#34;)
-        TypeCheck.ensure_str(key, &#34;key&#34;)
-        return Cryptographer(Cryptographer.decode_salt(salt), key.encode(), True)
-
-    @staticmethod
-    def make_decrypter(salt: str, key: str) -&gt; Cryptographer:
-        &#34;&#34;&#34;Makes a Fernet decrypter for salt and key.
-
-        Args:
-            salt (str): The Base64-encoded string of the raw salt.
-            key (str): The authentication key.
-
-        Returns:
-            A `Cryptographer` instance, which can be used to decrypt data.
-        &#34;&#34;&#34;
-        TypeCheck.ensure_str(salt, &#34;salt&#34;)
-        TypeCheck.ensure_str(key, &#34;key&#34;)
-        return Cryptographer(Cryptographer.decode_salt(salt), key.encode(), False)
-
-    @staticmethod
-    def make_salt() -&gt; bytes:
-        &#34;&#34;&#34;Generates a cryptographically secure salt for cryptography.
-
-        Returns:
-            A 16-byte raw salt
-        &#34;&#34;&#34;
-        return os.urandom(16)
-
-    @staticmethod
-    def encode_salt(salt: bytes) -&gt; str:
-        &#34;&#34;&#34;Encodes the raw salt as string.
-
-        Args:
-            salt (bytes): The raw salt, in bytes.
-
-        Returns:
-            The Base64-encoded string of the raw salt
-        &#34;&#34;&#34;
-        TypeCheck.ensure_bytes(salt, &#34;salt&#34;)
-        return str(base64.b64encode(salt), &#34;utf-8&#34;)
-
-    @staticmethod
-    def decode_salt(salt: str) -&gt; bytes:
-        &#34;&#34;&#34;Decodes the salt string to raw salt.
-
-        Args:
-            salt (str): The Base64-encoded string of the raw salt.
-
-        Returns:
-            The raw salt
-        &#34;&#34;&#34;
-        TypeCheck.ensure_str(salt, &#34;salt&#34;)
-        return base64.b64decode(bytes(salt, &#34;utf-8&#34;))
-
-    @staticmethod
-    def make_kdf(salt: bytes) -&gt; PBKDF2HMAC:
-        &#34;&#34;&#34;Makes a key derivation function from raw salt.
-
-        Args:
-            salt (bytes): The raw salt, in bytes.
-
-        Returns:
-            A PBKDF2HMAC instance, which can be used to derive key from the authentication key.
-        &#34;&#34;&#34;
-        TypeCheck.ensure_bytes(salt, &#34;salt&#34;)
-        return PBKDF2HMAC(
-            algorithm=hashes.SHA512(),
-            length=32,
-            salt=salt,
-            iterations=10000,
-            backend=default_backend(),
-        )
-
-    @staticmethod
-    def make_fernet(key: bytes) -&gt; Fernet:
-        &#34;&#34;&#34;Makes a Fernet encrypter/decrypter from the derived key.
-
-        Args:
-            key (bytes): The derived key, in bytes.
-
-        Returns:
-            A Fernet instance, which can be used to either encrypt or decrypt data.
-        &#34;&#34;&#34;
-        TypeCheck.ensure_bytes(key, &#34;key&#34;)
-        return Fernet(base64.urlsafe_b64encode(key))</code></pre>
-</details>
 <h3>Static methods</h3>
 <dl>
 <dt id="SuperHelper.Core.Utils.crypto_ops.Cryptographer.decode_salt"><code class="name flex">
@@ -407,23 +62,6 @@ class Cryptographer:
 </dl>
 <h2 id="returns">Returns</h2>
 <p>The raw salt</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def decode_salt(salt: str) -&gt; bytes:
-    &#34;&#34;&#34;Decodes the salt string to raw salt.
-
-    Args:
-        salt (str): The Base64-encoded string of the raw salt.
-
-    Returns:
-        The raw salt
-    &#34;&#34;&#34;
-    TypeCheck.ensure_str(salt, &#34;salt&#34;)
-    return base64.b64decode(bytes(salt, &#34;utf-8&#34;))</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Core.Utils.crypto_ops.Cryptographer.encode_salt"><code class="name flex">
 <span>def <span class="ident">encode_salt</span></span>(<span>salt: bytes) ‑> str</span>
@@ -437,23 +75,6 @@ def decode_salt(salt: str) -&gt; bytes:
 </dl>
 <h2 id="returns">Returns</h2>
 <p>The Base64-encoded string of the raw salt</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def encode_salt(salt: bytes) -&gt; str:
-    &#34;&#34;&#34;Encodes the raw salt as string.
-
-    Args:
-        salt (bytes): The raw salt, in bytes.
-
-    Returns:
-        The Base64-encoded string of the raw salt
-    &#34;&#34;&#34;
-    TypeCheck.ensure_bytes(salt, &#34;salt&#34;)
-    return str(base64.b64encode(salt), &#34;utf-8&#34;)</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Core.Utils.crypto_ops.Cryptographer.make_decrypter"><code class="name flex">
 <span>def <span class="ident">make_decrypter</span></span>(<span>salt: str, key: str) ‑> <a title="SuperHelper.Core.Utils.crypto_ops.Cryptographer" href="#SuperHelper.Core.Utils.crypto_ops.Cryptographer">Cryptographer</a></span>
@@ -469,25 +90,6 @@ def encode_salt(salt: bytes) -&gt; str:
 </dl>
 <h2 id="returns">Returns</h2>
 <p>A <code><a title="SuperHelper.Core.Utils.crypto_ops.Cryptographer" href="#SuperHelper.Core.Utils.crypto_ops.Cryptographer">Cryptographer</a></code> instance, which can be used to decrypt data.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def make_decrypter(salt: str, key: str) -&gt; Cryptographer:
-    &#34;&#34;&#34;Makes a Fernet decrypter for salt and key.
-
-    Args:
-        salt (str): The Base64-encoded string of the raw salt.
-        key (str): The authentication key.
-
-    Returns:
-        A `Cryptographer` instance, which can be used to decrypt data.
-    &#34;&#34;&#34;
-    TypeCheck.ensure_str(salt, &#34;salt&#34;)
-    TypeCheck.ensure_str(key, &#34;key&#34;)
-    return Cryptographer(Cryptographer.decode_salt(salt), key.encode(), False)</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Core.Utils.crypto_ops.Cryptographer.make_encrypter"><code class="name flex">
 <span>def <span class="ident">make_encrypter</span></span>(<span>salt: str, key: str) ‑> <a title="SuperHelper.Core.Utils.crypto_ops.Cryptographer" href="#SuperHelper.Core.Utils.crypto_ops.Cryptographer">Cryptographer</a></span>
@@ -503,25 +105,6 @@ def make_decrypter(salt: str, key: str) -&gt; Cryptographer:
 </dl>
 <h2 id="returns">Returns</h2>
 <p>A <code><a title="SuperHelper.Core.Utils.crypto_ops.Cryptographer" href="#SuperHelper.Core.Utils.crypto_ops.Cryptographer">Cryptographer</a></code> instance, which can be used to encrypt data.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def make_encrypter(salt: str, key: str) -&gt; Cryptographer:
-    &#34;&#34;&#34;Makes a Fernet encrypter for salt and key.
-
-    Args:
-        salt (str): The Base64-encoded string of the raw salt.
-        key (str): The authentication key.
-
-    Returns:
-        A `Cryptographer` instance, which can be used to encrypt data.
-    &#34;&#34;&#34;
-    TypeCheck.ensure_str(salt, &#34;salt&#34;)
-    TypeCheck.ensure_str(key, &#34;key&#34;)
-    return Cryptographer(Cryptographer.decode_salt(salt), key.encode(), True)</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Core.Utils.crypto_ops.Cryptographer.make_fernet"><code class="name flex">
 <span>def <span class="ident">make_fernet</span></span>(<span>key: bytes) ‑> cryptography.fernet.Fernet</span>
@@ -535,23 +118,6 @@ def make_encrypter(salt: str, key: str) -&gt; Cryptographer:
 </dl>
 <h2 id="returns">Returns</h2>
 <p>A Fernet instance, which can be used to either encrypt or decrypt data.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def make_fernet(key: bytes) -&gt; Fernet:
-    &#34;&#34;&#34;Makes a Fernet encrypter/decrypter from the derived key.
-
-    Args:
-        key (bytes): The derived key, in bytes.
-
-    Returns:
-        A Fernet instance, which can be used to either encrypt or decrypt data.
-    &#34;&#34;&#34;
-    TypeCheck.ensure_bytes(key, &#34;key&#34;)
-    return Fernet(base64.urlsafe_b64encode(key))</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Core.Utils.crypto_ops.Cryptographer.make_kdf"><code class="name flex">
 <span>def <span class="ident">make_kdf</span></span>(<span>salt: bytes) ‑> cryptography.hazmat.primitives.kdf.pbkdf2.PBKDF2HMAC</span>
@@ -565,29 +131,6 @@ def make_fernet(key: bytes) -&gt; Fernet:
 </dl>
 <h2 id="returns">Returns</h2>
 <p>A PBKDF2HMAC instance, which can be used to derive key from the authentication key.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def make_kdf(salt: bytes) -&gt; PBKDF2HMAC:
-    &#34;&#34;&#34;Makes a key derivation function from raw salt.
-
-    Args:
-        salt (bytes): The raw salt, in bytes.
-
-    Returns:
-        A PBKDF2HMAC instance, which can be used to derive key from the authentication key.
-    &#34;&#34;&#34;
-    TypeCheck.ensure_bytes(salt, &#34;salt&#34;)
-    return PBKDF2HMAC(
-        algorithm=hashes.SHA512(),
-        length=32,
-        salt=salt,
-        iterations=10000,
-        backend=default_backend(),
-    )</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Core.Utils.crypto_ops.Cryptographer.make_salt"><code class="name flex">
 <span>def <span class="ident">make_salt</span></span>(<span>) ‑> bytes</span>
@@ -596,19 +139,6 @@ def make_kdf(salt: bytes) -&gt; PBKDF2HMAC:
 <div class="desc"><p>Generates a cryptographically secure salt for cryptography.</p>
 <h2 id="returns">Returns</h2>
 <p>A 16-byte raw salt</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def make_salt() -&gt; bytes:
-    &#34;&#34;&#34;Generates a cryptographically secure salt for cryptography.
-
-    Returns:
-        A 16-byte raw salt
-    &#34;&#34;&#34;
-    return os.urandom(16)</code></pre>
-</details>
 </dd>
 </dl>
 <h3>Methods</h3>
@@ -625,28 +155,6 @@ def make_salt() -&gt; bytes:
 </dl>
 <h2 id="returns">Returns</h2>
 <p>The decrypted data, in bytes, which is decrypted using the <code>Fernet</code> (created by <code>Cryptography.make_fernet</code>)</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def decrypt(self, encrypted_data: bytes) -&gt; bytes:
-    &#34;&#34;&#34;Decrypts the encrypted data.
-
-    Args:
-        encrypted_data (bytes): The encrypted data to be decrypted.
-
-    Returns:
-        The decrypted data, in bytes, which is decrypted using the `Fernet` (created by `Cryptography.make_fernet`)
-    &#34;&#34;&#34;
-    TypeCheck.ensure_bytes(encrypted_data, &#34;encrypted_data&#34;)
-    if self.is_encrypt:
-        raise ValueError(&#34;Not a decrypter!&#34;)
-    fernet = Cryptographer.make_fernet(self.key)
-    try:
-        return fernet.decrypt(encrypted_data)
-    except InvalidToken:
-        raise</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Core.Utils.crypto_ops.Cryptographer.encrypt"><code class="name flex">
 <span>def <span class="ident">encrypt</span></span>(<span>self, raw_data: bytes) ‑> bytes</span>
@@ -665,28 +173,6 @@ def make_salt() -&gt; bytes:
 <dt><code>ValueError</code></dt>
 <dd>A decrypter is used to encrypt.</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def encrypt(self, raw_data: bytes) -&gt; bytes:
-    &#34;&#34;&#34;Encrypts raw data.
-
-    Args:
-        raw_data (bytes): The raw data to be encrypted.
-
-    Returns:
-        The encrypted data, in bytes, which is encrypted using the `Fernet` (created by `Cryptography.make_fernet`)
-
-    Raises:
-        ValueError: A decrypter is used to encrypt.
-    &#34;&#34;&#34;
-    TypeCheck.ensure_bytes(raw_data, &#34;raw_data&#34;)
-    if not self.is_encrypt:
-        raise ValueError(&#34;Not an encrypter!&#34;)
-    fernet = Cryptographer.make_fernet(self.key)
-    return fernet.encrypt(raw_data)</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Core.Utils.crypto_ops.Cryptographer.get_salt_string"><code class="name flex">
 <span>def <span class="ident">get_salt_string</span></span>(<span>self) ‑> str</span>
@@ -695,18 +181,6 @@ def make_salt() -&gt; bytes:
 <div class="desc"><p>String-ify the raw salt.</p>
 <h2 id="returns">Returns</h2>
 <p>The Base64-encoded string of the raw salt.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_salt_string(self) -&gt; str:
-    &#34;&#34;&#34;String-ify the raw salt.
-
-    Returns:
-        The Base64-encoded string of the raw salt.
-    &#34;&#34;&#34;
-    return Cryptographer.encode_salt(self.salt)</code></pre>
-</details>
 </dd>
 </dl>
 </dd>

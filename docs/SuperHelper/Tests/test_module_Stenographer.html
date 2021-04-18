@@ -22,29 +22,6 @@
 <h1 class="title">Module <code>SuperHelper.Tests.test_module_Stenographer</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">import pytest
-
-from SuperHelper.Tests import *
-
-
-class TestStenographer:
-    @staticmethod
-    @pytest.fixture()
-    def setup():
-        run(&#34;add Stenographer&#34;)
-
-    @staticmethod
-    def test_validate_setup(setup):
-        assert &#34;Stenographer&#34; in run(&#34;list&#34;).output
-
-    @staticmethod
-    def test_help():
-        assert run(&#34;steg --help&#34;).exit_code == 0</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -60,24 +37,6 @@ class TestStenographer:
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class TestStenographer:
-    @staticmethod
-    @pytest.fixture()
-    def setup():
-        run(&#34;add Stenographer&#34;)
-
-    @staticmethod
-    def test_validate_setup(setup):
-        assert &#34;Stenographer&#34; in run(&#34;list&#34;).output
-
-    @staticmethod
-    def test_help():
-        assert run(&#34;steg --help&#34;).exit_code == 0</code></pre>
-</details>
 <h3>Static methods</h3>
 <dl>
 <dt id="SuperHelper.Tests.test_module_Stenographer.TestStenographer.setup"><code class="name flex">
@@ -85,43 +44,18 @@ class TestStenographer:
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-@pytest.fixture()
-def setup():
-    run(&#34;add Stenographer&#34;)</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_Stenographer.TestStenographer.test_help"><code class="name flex">
 <span>def <span class="ident">test_help</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_help():
-    assert run(&#34;steg --help&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_Stenographer.TestStenographer.test_validate_setup"><code class="name flex">
 <span>def <span class="ident">test_validate_setup</span></span>(<span>setup)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_validate_setup(setup):
-    assert &#34;Stenographer&#34; in run(&#34;list&#34;).output</code></pre>
-</details>
 </dd>
 </dl>
 </dd>

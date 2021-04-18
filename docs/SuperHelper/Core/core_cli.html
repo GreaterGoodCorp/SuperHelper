@@ -22,143 +22,6 @@
 <h1 class="title">Module <code>SuperHelper.Core.core_cli</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python"># This module defines the entry Click CLI function
-# All modules of SuperHelper should define its own group, which can imported by this module.
-import logging
-import os
-import pathlib
-import platform
-import sys
-from typing import NoReturn
-
-import click
-
-from SuperHelper import Version
-from SuperHelper.Core.Utils import setup_core_logger
-
-APP_NAME = &#34;SuperHelper&#34;
-&#34;&#34;&#34;Name of the application.&#34;&#34;&#34;
-APP_DIR = pathlib.Path(os.getenv(&#34;SUPER_HELPER_APP_DIR&#34;, click.get_app_dir(APP_NAME)))
-&#34;&#34;&#34;Path to the application directory.&#34;&#34;&#34;
-APP_DIR.mkdir(parents=True, exist_ok=True)
-
-CONFIG_FILENAME = f&#34;{APP_NAME}.cfg&#34;
-&#34;&#34;&#34;Name of the config file.&#34;&#34;&#34;
-CONFIG_PATH = APP_DIR / CONFIG_FILENAME
-&#34;&#34;&#34;Path to the config file.&#34;&#34;&#34;
-
-LOGGING_FILENAME = f&#34;{APP_NAME}.log&#34;
-&#34;&#34;&#34;Name of the logging file.&#34;&#34;&#34;
-LOGGING_PATH = APP_DIR / LOGGING_FILENAME
-&#34;&#34;&#34;Path to the logging file.&#34;&#34;&#34;
-
-version_message = f&#34;%(prog)s-%(version)s {platform.platform(terse=True)} Python-{platform.python_version()}&#34;
-logger = logging.getLogger(&#34;SuperHelper&#34;)
-
-__all__ = [
-    &#34;run_startup&#34;,
-    &#34;load_config&#34;,
-    &#34;save_config&#34;,
-    &#34;main_entry&#34;,
-    &#34;cli&#34;,
-]
-
-
-# Program entry point
-@click.group()
-@click.version_option(Version, prog_name=APP_NAME, message=version_message)
-def cli() -&gt; None:
-    &#34;&#34;&#34;Executes SuperHelper tools.&#34;&#34;&#34;
-    pass
-
-
-def validate_no_win32() -&gt; None:
-    &#34;&#34;&#34;Asserts that the platform is not &#39;win32&#39;.&#34;&#34;&#34;
-    try:
-        assert sys.platform != &#34;win32&#34;
-    except AssertionError:
-        logger.exception(&#34;This application cannot run on Windows!&#34;)
-        sys.exit(1)
-
-
-def make_logger_global() -&gt; None:
-    &#34;&#34;&#34;Sets up and makes core logger global.&#34;&#34;&#34;
-    global logger
-    logger = setup_core_logger(LOGGING_PATH)
-
-
-def load_config():
-    &#34;&#34;&#34;Loads application config.&#34;&#34;&#34;
-    from SuperHelper.Core.Config import load_app_config
-    load_app_config(CONFIG_PATH)
-
-
-def save_config():
-    &#34;&#34;&#34;Saves application config.&#34;&#34;&#34;
-    from SuperHelper.Core.Config import save_app_config
-    save_app_config(CONFIG_PATH)
-
-
-def load_core_commands():
-    from SuperHelper.Core import load_core_commands as _load_core_commands
-    for core_module in _load_core_commands():
-        try:
-            cli.add_command(core_module[0])
-        except Exception or BaseException:
-            logger.exception(f&#34;Unable to load core module {core_module[1]}&#34;)
-            sys.exit(1)
-        else:
-            logger.debug(f&#34;Loaded core module {core_module[1]}&#34;)
-
-
-def load_added_modules():
-    from SuperHelper.Core import load_added_modules as _load_added_modules
-    for module in _load_added_modules():
-        try:
-            cli.add_command(module[0])
-        except Exception or BaseException:
-            logger.exception(f&#34;Unable to load module {module[1]}&#34;)
-        else:
-            logger.debug(f&#34;Loaded module {module[1]}&#34;)
-
-
-def run_startup():
-    # Load core logger
-    make_logger_global()
-    # Validate platform
-    validate_no_win32()
-    # Load config
-    load_config()
-    # Load core utilities and functionalities
-    load_core_commands()
-    # Load installed modules
-    load_added_modules()
-    # Print all messages before executing CLI
-    sys.stdout.flush()
-    sys.stderr.flush()
-
-
-# Console entry call
-def main_entry() -&gt; NoReturn:
-    # Run startup setting
-    run_startup()
-    try:
-        # Execute CLI
-        sys.exit(cli())
-    except SystemExit:
-        # Save application config
-        save_config()
-        raise
-
-
-if __name__ == &#39;__main__&#39;:
-    sys.argv[0] = &#34;SuperHelper&#34;
-    main_entry()</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -172,76 +35,24 @@ if __name__ == &#39;__main__&#39;:
 </code></dt>
 <dd>
 <div class="desc"><p>Loads application config.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def load_config():
-    &#34;&#34;&#34;Loads application config.&#34;&#34;&#34;
-    from SuperHelper.Core.Config import load_app_config
-    load_app_config(CONFIG_PATH)</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Core.core_cli.main_entry"><code class="name flex">
 <span>def <span class="ident">main_entry</span></span>(<span>) ‑> NoReturn</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def main_entry() -&gt; NoReturn:
-    # Run startup setting
-    run_startup()
-    try:
-        # Execute CLI
-        sys.exit(cli())
-    except SystemExit:
-        # Save application config
-        save_config()
-        raise</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Core.core_cli.run_startup"><code class="name flex">
 <span>def <span class="ident">run_startup</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def run_startup():
-    # Load core logger
-    make_logger_global()
-    # Validate platform
-    validate_no_win32()
-    # Load config
-    load_config()
-    # Load core utilities and functionalities
-    load_core_commands()
-    # Load installed modules
-    load_added_modules()
-    # Print all messages before executing CLI
-    sys.stdout.flush()
-    sys.stderr.flush()</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Core.core_cli.save_config"><code class="name flex">
 <span>def <span class="ident">save_config</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Saves application config.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def save_config():
-    &#34;&#34;&#34;Saves application config.&#34;&#34;&#34;
-    from SuperHelper.Core.Config import save_app_config
-    save_app_config(CONFIG_PATH)</code></pre>
-</details>
 </dd>
 </dl>
 </section>

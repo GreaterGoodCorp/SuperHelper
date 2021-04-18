@@ -22,52 +22,6 @@
 <h1 class="title">Module <code>SuperHelper.Core.core_loader</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python"># This module defines the modules loader function.
-import importlib
-import logging
-
-import click
-
-from SuperHelper.Core.Config import pass_config
-
-logger = logging.getLogger(&#34;SuperHelper.Core.Utils&#34;)
-logger.setLevel(logging.DEBUG)
-
-__all__ = [
-    &#34;load_added_modules&#34;,
-]
-
-
-@pass_config(core=True, lock=False)
-def load_added_modules(config: dict[str, ...]) -&gt; list[tuple[click.Command, str]]:
-    &#34;&#34;&#34;Loads all added modules.
-
-    Returns:
-        A list of a 2-tuple elements, where the first index is the `click.command` object, and the second index is the
-        technical name of the command. For example:
-
-        ```
-        [(main, &#34;main&#34;), ...]
-        ```
-
-        The first index can be added to a `click.group`, i.e the `cli` function.
-    &#34;&#34;&#34;
-    module_entries = []
-    for module_name in config[&#34;INSTALLED_MODULES&#34;]:
-        try:
-            # Attempt to import the module
-            module = importlib.import_module(module_name)
-            module_entries.append((module.main, module_name))
-        except ImportError:
-            logger.exception(f&#34;Cannot import module &#39;{module_name}&#39;!&#34;)
-        except AttributeError:
-            logger.exception(f&#34;Module &#39;{module_name}&#39; does not have main()!&#34;)
-    return module_entries</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -87,36 +41,6 @@ technical name of the command. For example:</p>
 <pre><code>[(main, &quot;main&quot;), ...]
 </code></pre>
 <p>The first index can be added to a <code>click.group</code>, i.e the <code>cli</code> function.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@pass_config(core=True, lock=False)
-def load_added_modules(config: dict[str, ...]) -&gt; list[tuple[click.Command, str]]:
-    &#34;&#34;&#34;Loads all added modules.
-
-    Returns:
-        A list of a 2-tuple elements, where the first index is the `click.command` object, and the second index is the
-        technical name of the command. For example:
-
-        ```
-        [(main, &#34;main&#34;), ...]
-        ```
-
-        The first index can be added to a `click.group`, i.e the `cli` function.
-    &#34;&#34;&#34;
-    module_entries = []
-    for module_name in config[&#34;INSTALLED_MODULES&#34;]:
-        try:
-            # Attempt to import the module
-            module = importlib.import_module(module_name)
-            module_entries.append((module.main, module_name))
-        except ImportError:
-            logger.exception(f&#34;Cannot import module &#39;{module_name}&#39;!&#34;)
-        except AttributeError:
-            logger.exception(f&#34;Module &#39;{module_name}&#39; does not have main()!&#34;)
-    return module_entries</code></pre>
-</details>
 </dd>
 </dl>
 </section>
