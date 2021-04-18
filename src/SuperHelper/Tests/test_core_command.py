@@ -93,3 +93,10 @@ class TestOtherUtils:
 
         edit_cfg()
         assert run("list").exit_code == 0
+
+        @pass_config(core=True, lock=True)
+        def remove_cfg(config):
+            config["INSTALLED_MODULES"].remove("SuperHelper")
+            config["INSTALLED_MODULES"].remove("SuperHelper.Hello")
+
+        remove_cfg()
