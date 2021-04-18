@@ -7,11 +7,13 @@
 - Added new core utilities: `FileOps`
 - Added full test suites for the core package (`SuperHelper.Core` and its subpackages)
 - Re-written API signature of core utilities
+- Added technical documentation for the whole package
 
 #### Bug fixes
 
 - Fixed a bug that caused the tests to fail randomly
 - Fixed a bug that caused the program to fail for missing config
+- Fixed a bug that caused the tests not to import the required modules
 
 #### Non-functional changes
 
