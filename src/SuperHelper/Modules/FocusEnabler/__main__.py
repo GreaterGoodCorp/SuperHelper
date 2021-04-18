@@ -16,7 +16,6 @@ from SuperHelper.Core import Config
 from SuperHelper.Core.Config import pass_config
 
 PATH_HOST = str(Path("/etc") / "hosts")
-
 MODULE_NAME: str = "FocusEnabler"
 pass_config_no_lock = functools.partial(pass_config, module_name=MODULE_NAME, lock=False)
 pass_config_with_lock = functools.partial(pass_config, module_name=MODULE_NAME, lock=True)
@@ -25,13 +24,18 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 
-def get_input_prompt(title):
-    """Get prompt for input() function"""
-    return f"{title} \u2192 "
+def is_domain_valid(domain) -> bool:
+    """Checks if the domain is valid.
 
+    This function matches the domain with a regex pattern of the domain specification. It does not check for domain
+    availability or connectivity.
 
-def is_domain_valid(domain):
-    """Check if the domain contains valid syntax."""
+    Args:
+        domain (str): The domain to check.
+
+    Returns:
+        True if the domain is valid, otherwise False.
+    """
     return True if re.match(
         r"^(([a-zA-Z])|([a-zA-Z][a-zA-Z])|([a-zA-Z][0-9])|([0-9][a-zA-Z])"
         r"|([a-zA-Z0-9][a-zA-Z0-9-_]{1,61}[a-zA-Z0-9]))\.([a-zA-Z]{2,6}|[a-zA-Z0-9-]{2,30}\.[a-zA-Z]{2,3})$",
@@ -41,7 +45,13 @@ def is_domain_valid(domain):
 
 @pass_config()
 def patch_config(config: Config) -> None:
-    """Initialise a new config dictionary."""
+    """Initialise a new config dictionary.
+
+    This function can also be used to patch the existing config.
+
+    Returns:
+        None
+    """
     cfg = {
         "BL_SECTION_START": "# Added by FocusEnabler, do not modify!",
         "BL_SECTION_END": "# End of section FocusEnabler",
@@ -51,7 +61,14 @@ def patch_config(config: Config) -> None:
     config.apply_module_patch(MODULE_NAME, cfg)
 
 
-def is_root():
+def is_root() -> bool:
+    """Checks if the user is root.
+
+    This function checks for the effective uid of the user.
+
+    Returns:
+        True if the user is root, otherwise False.
+    """
     return os.getuid() == 0
 
 
@@ -166,13 +183,12 @@ def deactivate_app(config: dict[str, ...]) -> None:
     sys.exit(0)
 
 
-def flush_dns():
-    """Flush DNS cache on machine."""
+def flush_dns() -> None:
+    """Flushes DNS cache on machine.
 
-    def flush_dns_win32():
-        """Flush DNS on Windows."""
-        subprocess.Popen(["ipconfig", "/flushdns"])
-
+    Returns:
+        None
+    """
     def flush_dns_linux():
         """Flush DNS on Linux."""
         subprocess.Popen(["sudo", "/etc/init.d/nscd", "restart"])
@@ -184,9 +200,7 @@ def flush_dns():
         subprocess.Popen(["sudo", "killall", "-HUP", "mDNSResponder"])
         subprocess.Popen(["sudo", "dscacheutil", "-flushcache"])
 
-    if sys.platform == "win32":
-        flush_dns_win32()
-    elif sys.platform == "darwin":
+    if sys.platform == "darwin":
         flush_dns_darwin()
     else:
         flush_dns_linux()
@@ -194,7 +208,15 @@ def flush_dns():
 
 @pass_config_with_lock()
 def add_domain_internal(domains: list[str], config: dict[str, ...]) -> int:
-    """(Internal) Add domain to config."""
+    """Adds domains to module config.
+
+    Args:
+        domains (list[str]): A list of domain name strings to be added.
+        config (dict[str, ...]): The module config.
+
+    Returns:
+        0 if the operation succeeds, otherwise 1.
+    """
     all_domains = copy.deepcopy(config["BL_DOMAINS"])
     for dm in domains:
         if is_domain_valid(dm):
@@ -216,7 +238,17 @@ def add_domain_internal(domains: list[str], config: dict[str, ...]) -> int:
 
 @pass_config_with_lock()
 def remove_domain_internal(confirm: bool, domains: list[str], fp: io.IOBase, config: dict[str, ...]) -> int:
-    """(Internal) Remove domain from config."""
+    """Removes domains from module config.
+
+    Args:
+        confirm (bool): Whether not to ask for confirmation.
+        domains (list[str]): A list of domain name strings to be added.
+        fp (io.IOBase): The target output buffer (in place of `sys.stdout`)
+        config (dict[str, ...]): The module config.
+
+    Returns:
+        0 if the operation succeeds, otherwise 1.
+    """
     if domains == (".",):
         if len(config["BL_DOMAINS"]) == 0:
             click.echo("No blacklisted domains found", fp)
@@ -225,11 +257,9 @@ def remove_domain_internal(confirm: bool, domains: list[str], fp: io.IOBase, con
     all_domains = copy.deepcopy(config["BL_DOMAINS"])
     for dm in domains:
         if dm in all_domains:
-            option = None
-            while not confirm and option not in ("y", "n"):
-                option = input(get_input_prompt(f"Un-blacklist '{dm}'? [Y/N]"))
-            if option == "n":
-                continue
+            if not confirm:
+                if not click.confirm(f"Un-blacklist '{dm}'?"):
+                    continue
             all_domains.remove(dm)
             click.echo(f"Un-blacklisted: {dm}", fp)
         elif dm in config["BL_DOMAINS"]:
