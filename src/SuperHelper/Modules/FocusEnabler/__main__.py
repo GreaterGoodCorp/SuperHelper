@@ -23,6 +23,10 @@ __name__ = f"SuperHelper.Modules.{MODULE_NAME}"
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
+__all__ = [
+    "main",
+]
+
 
 def is_domain_valid(domain) -> bool:
     """Checks if the domain is valid.
@@ -189,6 +193,7 @@ def flush_dns() -> None:
     Returns:
         None
     """
+
     def flush_dns_linux():
         """Flush DNS on Linux."""
         subprocess.Popen(["sudo", "/etc/init.d/nscd", "restart"])
