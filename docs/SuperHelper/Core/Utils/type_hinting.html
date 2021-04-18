@@ -22,22 +22,6 @@
 <h1 class="title">Module <code>SuperHelper.Core.Utils.type_hinting</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python"># This module contains the type hinting extensions.
-import os
-from typing import TypeVar
-
-__all__ = [
-    &#34;PathLike&#34;,
-]
-
-# PathLike type, which can be passed as argument to I/O function
-PathLike: type = TypeVar(&#34;PathLike&#34;, str, bytes, os.PathLike)
-&#34;&#34;&#34;PathLike objects can be used as a path. It can be of type `str`, `bytes` or `os.PathLike`.&#34;&#34;&#34;</code></pre>
-</details>
 </section>
 <section>
 </section>

@@ -22,36 +22,6 @@
 <h1 class="title">Module <code>SuperHelper.Tests.test_base</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">import click.testing
-import pytest
-
-from SuperHelper.Core import cli, run_startup, save_config
-
-runner: click.testing.CliRunner = click.testing.CliRunner()
-
-
-@pytest.fixture(autouse=True)
-def setup_and_cleanup():
-    global runner
-    run_startup()
-    runner = click.testing.CliRunner()
-    yield
-    save_config()
-
-
-def run(args: str = None) -&gt; click.testing.Result:
-    return runner.invoke(cli, args)
-
-
-__all__ = [
-    &#34;setup_and_cleanup&#34;,
-    &#34;run&#34;,
-]</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -65,31 +35,12 @@ __all__ = [
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def run(args: str = None) -&gt; click.testing.Result:
-    return runner.invoke(cli, args)</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_base.setup_and_cleanup"><code class="name flex">
 <span>def <span class="ident">setup_and_cleanup</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@pytest.fixture(autouse=True)
-def setup_and_cleanup():
-    global runner
-    run_startup()
-    runner = click.testing.CliRunner()
-    yield
-    save_config()</code></pre>
-</details>
 </dd>
 </dl>
 </section>

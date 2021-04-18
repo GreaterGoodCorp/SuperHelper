@@ -22,96 +22,6 @@
 <h1 class="title">Module <code>SuperHelper.Tests.test_module_FocusEnabler</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">import pytest
-
-from SuperHelper.Tests import *
-
-
-class TestFocusEnabler:
-    @staticmethod
-    @pytest.fixture()
-    def setup():
-        run(&#34;add FocusEnabler&#34;)
-
-    @staticmethod
-    def test_validate_setup(setup):
-        assert &#34;FocusEnabler&#34; in run(&#34;list&#34;).output
-
-    @staticmethod
-    def test_help():
-        assert run(&#34;focus --help&#34;).exit_code == 0
-
-    @staticmethod
-    def test_add_single():
-        assert run(&#34;focus add -c google.com&#34;).exit_code == 0
-
-    @staticmethod
-    def test_add_single_again():
-        assert run(&#34;focus add google.com&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_single_positive():
-        result = run(&#34;focus list&#34;)
-        assert result.exit_code == 0
-        assert &#34;google.com&#34; in result.output
-
-    @staticmethod
-    def test_remove_single():
-        assert run(&#34;focus remove -c google.com&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_single_negative():
-        result = run(&#34;focus list&#34;)
-        assert result.exit_code == 0
-        assert &#34;google.com&#34; not in result.output
-
-    @staticmethod
-    def test_add_multiple():
-        assert run(&#34;focus add facebook.com youtube.com&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_multiple_positive():
-        result = run(&#34;focus list&#34;)
-        assert result.exit_code == 0
-        assert &#34;facebook.com&#34; in result.output
-        assert &#34;youtube.com&#34; in result.output
-
-    @staticmethod
-    def test_remove_multiple():
-        assert run(&#34;focus remove -c facebook.com youtube.com&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_multiple_negative():
-        result = run(&#34;focus list&#34;)
-        assert result.exit_code == 0
-        assert &#34;facebook.com&#34; not in result.output
-        assert &#34;youtube.com&#34; not in result.output
-
-    @staticmethod
-    def test_add_same():
-        assert run(&#34;focus add facebook.com facebook.com&#34;).exit_code == 0
-
-    @staticmethod
-    def test_remove_same():
-        assert run(&#34;focus remove -c facebook.com facebook.com&#34;).exit_code == 0
-
-    @staticmethod
-    def test_add_invalid():
-        assert run(&#34;focus add 12345&#34;).exit_code == 1
-
-    @staticmethod
-    def test_remove_invalid():
-        assert run(&#34;focus remove -c 12345&#34;).exit_code == 1
-
-    @staticmethod
-    def test_get_input_prompt():
-        from SuperHelper.Modules.FocusEnabler.__main__ import get_input_prompt
-        assert type(get_input_prompt(&#34;TEST&#34;)) == str</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -127,91 +37,6 @@ class TestFocusEnabler:
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class TestFocusEnabler:
-    @staticmethod
-    @pytest.fixture()
-    def setup():
-        run(&#34;add FocusEnabler&#34;)
-
-    @staticmethod
-    def test_validate_setup(setup):
-        assert &#34;FocusEnabler&#34; in run(&#34;list&#34;).output
-
-    @staticmethod
-    def test_help():
-        assert run(&#34;focus --help&#34;).exit_code == 0
-
-    @staticmethod
-    def test_add_single():
-        assert run(&#34;focus add -c google.com&#34;).exit_code == 0
-
-    @staticmethod
-    def test_add_single_again():
-        assert run(&#34;focus add google.com&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_single_positive():
-        result = run(&#34;focus list&#34;)
-        assert result.exit_code == 0
-        assert &#34;google.com&#34; in result.output
-
-    @staticmethod
-    def test_remove_single():
-        assert run(&#34;focus remove -c google.com&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_single_negative():
-        result = run(&#34;focus list&#34;)
-        assert result.exit_code == 0
-        assert &#34;google.com&#34; not in result.output
-
-    @staticmethod
-    def test_add_multiple():
-        assert run(&#34;focus add facebook.com youtube.com&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_multiple_positive():
-        result = run(&#34;focus list&#34;)
-        assert result.exit_code == 0
-        assert &#34;facebook.com&#34; in result.output
-        assert &#34;youtube.com&#34; in result.output
-
-    @staticmethod
-    def test_remove_multiple():
-        assert run(&#34;focus remove -c facebook.com youtube.com&#34;).exit_code == 0
-
-    @staticmethod
-    def test_list_multiple_negative():
-        result = run(&#34;focus list&#34;)
-        assert result.exit_code == 0
-        assert &#34;facebook.com&#34; not in result.output
-        assert &#34;youtube.com&#34; not in result.output
-
-    @staticmethod
-    def test_add_same():
-        assert run(&#34;focus add facebook.com facebook.com&#34;).exit_code == 0
-
-    @staticmethod
-    def test_remove_same():
-        assert run(&#34;focus remove -c facebook.com facebook.com&#34;).exit_code == 0
-
-    @staticmethod
-    def test_add_invalid():
-        assert run(&#34;focus add 12345&#34;).exit_code == 1
-
-    @staticmethod
-    def test_remove_invalid():
-        assert run(&#34;focus remove -c 12345&#34;).exit_code == 1
-
-    @staticmethod
-    def test_get_input_prompt():
-        from SuperHelper.Modules.FocusEnabler.__main__ import get_input_prompt
-        assert type(get_input_prompt(&#34;TEST&#34;)) == str</code></pre>
-</details>
 <h3>Static methods</h3>
 <dl>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.setup"><code class="name flex">
@@ -219,250 +44,102 @@ class TestFocusEnabler:
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-@pytest.fixture()
-def setup():
-    run(&#34;add FocusEnabler&#34;)</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_add_invalid"><code class="name flex">
 <span>def <span class="ident">test_add_invalid</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_add_invalid():
-    assert run(&#34;focus add 12345&#34;).exit_code == 1</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_add_multiple"><code class="name flex">
 <span>def <span class="ident">test_add_multiple</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_add_multiple():
-    assert run(&#34;focus add facebook.com youtube.com&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_add_same"><code class="name flex">
 <span>def <span class="ident">test_add_same</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_add_same():
-    assert run(&#34;focus add facebook.com facebook.com&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_add_single"><code class="name flex">
 <span>def <span class="ident">test_add_single</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_add_single():
-    assert run(&#34;focus add -c google.com&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_add_single_again"><code class="name flex">
 <span>def <span class="ident">test_add_single_again</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_add_single_again():
-    assert run(&#34;focus add google.com&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_get_input_prompt"><code class="name flex">
 <span>def <span class="ident">test_get_input_prompt</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_get_input_prompt():
-    from SuperHelper.Modules.FocusEnabler.__main__ import get_input_prompt
-    assert type(get_input_prompt(&#34;TEST&#34;)) == str</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_help"><code class="name flex">
 <span>def <span class="ident">test_help</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_help():
-    assert run(&#34;focus --help&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_list_multiple_negative"><code class="name flex">
 <span>def <span class="ident">test_list_multiple_negative</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_list_multiple_negative():
-    result = run(&#34;focus list&#34;)
-    assert result.exit_code == 0
-    assert &#34;facebook.com&#34; not in result.output
-    assert &#34;youtube.com&#34; not in result.output</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_list_multiple_positive"><code class="name flex">
 <span>def <span class="ident">test_list_multiple_positive</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_list_multiple_positive():
-    result = run(&#34;focus list&#34;)
-    assert result.exit_code == 0
-    assert &#34;facebook.com&#34; in result.output
-    assert &#34;youtube.com&#34; in result.output</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_list_single_negative"><code class="name flex">
 <span>def <span class="ident">test_list_single_negative</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_list_single_negative():
-    result = run(&#34;focus list&#34;)
-    assert result.exit_code == 0
-    assert &#34;google.com&#34; not in result.output</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_list_single_positive"><code class="name flex">
 <span>def <span class="ident">test_list_single_positive</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_list_single_positive():
-    result = run(&#34;focus list&#34;)
-    assert result.exit_code == 0
-    assert &#34;google.com&#34; in result.output</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_remove_invalid"><code class="name flex">
 <span>def <span class="ident">test_remove_invalid</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_remove_invalid():
-    assert run(&#34;focus remove -c 12345&#34;).exit_code == 1</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_remove_multiple"><code class="name flex">
 <span>def <span class="ident">test_remove_multiple</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_remove_multiple():
-    assert run(&#34;focus remove -c facebook.com youtube.com&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_remove_same"><code class="name flex">
 <span>def <span class="ident">test_remove_same</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_remove_same():
-    assert run(&#34;focus remove -c facebook.com facebook.com&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_remove_single"><code class="name flex">
 <span>def <span class="ident">test_remove_single</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_remove_single():
-    assert run(&#34;focus remove -c google.com&#34;).exit_code == 0</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_FocusEnabler.TestFocusEnabler.test_validate_setup"><code class="name flex">
 <span>def <span class="ident">test_validate_setup</span></span>(<span>setup)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_validate_setup(setup):
-    assert &#34;FocusEnabler&#34; in run(&#34;list&#34;).output</code></pre>
-</details>
 </dd>
 </dl>
 </dd>

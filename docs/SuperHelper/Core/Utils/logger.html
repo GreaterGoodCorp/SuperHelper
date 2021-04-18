@@ -22,61 +22,6 @@
 <h1 class="title">Module <code>SuperHelper.Core.Utils.logger</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python"># This module provides a function to initialise the top-level logger
-import logging
-
-from SuperHelper.Core.Utils import PathLike
-
-__all__ = [
-    &#34;setup_core_logger&#34;,
-]
-
-
-class TracebackInfoFilter(logging.Filter):
-    &#34;&#34;&#34;Clear or restore the exception on log records&#34;&#34;&#34;
-
-    def __init__(self, clear=True):
-        super().__init__()
-        self.clear = clear
-
-    def filter(self, record):
-        if self.clear:
-            record._exc_info_hidden, record.exc_info = record.exc_info, None
-            # clear the exception traceback text cache, if created.
-            record.exc_text = None
-        elif hasattr(record, &#34;_exc_info_hidden&#34;):
-            record.exc_info = record._exc_info_hidden
-            del record._exc_info_hidden
-        return True
-
-
-def setup_core_logger(logging_path: PathLike) -&gt; logging.Logger:
-    &#34;&#34;&#34;Sets up the core logger.
-
-    Args:
-        logging_path (PathLike): The path to the logging file.
-
-    Returns:
-        A `logging.Logger` instance with name set to `SuperHelper`.
-    &#34;&#34;&#34;
-    logger = logging.getLogger(&#34;SuperHelper&#34;)
-    logger.setLevel(logging.DEBUG)
-    fh = logging.FileHandler(logging_path, mode=&#34;a+&#34;)
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(logging.Formatter(&#34;[%(asctime)s](%(name)s) %(levelname)s: %(message)s&#34;))
-    fh.addFilter(TracebackInfoFilter(clear=False))
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.WARNING)
-    ch.setFormatter(logging.Formatter(&#34;%(levelname)s: %(message)s&#34;))
-    ch.addFilter(TracebackInfoFilter())
-    logger.addHandler(fh)
-    logger.addHandler(ch)
-    return logger</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -97,33 +42,6 @@ def setup_core_logger(logging_path: PathLike) -&gt; logging.Logger:
 </dl>
 <h2 id="returns">Returns</h2>
 <p>A <code>logging.Logger</code> instance with name set to <code><a title="SuperHelper" href="../../index.html">SuperHelper</a></code>.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def setup_core_logger(logging_path: PathLike) -&gt; logging.Logger:
-    &#34;&#34;&#34;Sets up the core logger.
-
-    Args:
-        logging_path (PathLike): The path to the logging file.
-
-    Returns:
-        A `logging.Logger` instance with name set to `SuperHelper`.
-    &#34;&#34;&#34;
-    logger = logging.getLogger(&#34;SuperHelper&#34;)
-    logger.setLevel(logging.DEBUG)
-    fh = logging.FileHandler(logging_path, mode=&#34;a+&#34;)
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(logging.Formatter(&#34;[%(asctime)s](%(name)s) %(levelname)s: %(message)s&#34;))
-    fh.addFilter(TracebackInfoFilter(clear=False))
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.WARNING)
-    ch.setFormatter(logging.Formatter(&#34;%(levelname)s: %(message)s&#34;))
-    ch.addFilter(TracebackInfoFilter())
-    logger.addHandler(fh)
-    logger.addHandler(ch)
-    return logger</code></pre>
-</details>
 </dd>
 </dl>
 </section>

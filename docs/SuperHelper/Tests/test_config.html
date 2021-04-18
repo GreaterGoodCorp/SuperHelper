@@ -22,62 +22,6 @@
 <h1 class="title">Module <code>SuperHelper.Tests.test_config</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">import pytest
-
-from SuperHelper.Core import run_startup
-from SuperHelper.Core.Config import Config, pass_config
-
-
-class TestConfig:
-    @staticmethod
-    def test_from_dict():
-        assert Config.from_dict(dict()) is None
-
-    @staticmethod
-    def test_core_and_no_module():
-        @pass_config(core=True, lock=True)
-        def test_a(config):
-            return config
-
-        run_startup()
-        test_a()
-
-    @staticmethod
-    def test_no_core_and_module_a():
-        @pass_config(module_name=&#34;test&#34;, lock=True)
-        def test_a(config):
-            return config
-
-        run_startup()
-        test_a()
-
-    @staticmethod
-    def test_no_core_and_module_b():
-        @pass_config(module_name=&#34;test&#34;, lock=True)
-        def test_a(config):
-            if config:
-                raise SystemExit
-            else:
-                raise SystemExit
-
-        run_startup()
-        with pytest.raises(SystemExit):
-            test_a()
-
-    @staticmethod
-    def test_core_and_module():
-        with pytest.raises(ValueError):
-            @pass_config(core=True, module_name=&#34;test&#34;, lock=True)
-            def test_a(config):
-                return config
-
-            run_startup()
-            test_a()</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -93,56 +37,6 @@ class TestConfig:
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class TestConfig:
-    @staticmethod
-    def test_from_dict():
-        assert Config.from_dict(dict()) is None
-
-    @staticmethod
-    def test_core_and_no_module():
-        @pass_config(core=True, lock=True)
-        def test_a(config):
-            return config
-
-        run_startup()
-        test_a()
-
-    @staticmethod
-    def test_no_core_and_module_a():
-        @pass_config(module_name=&#34;test&#34;, lock=True)
-        def test_a(config):
-            return config
-
-        run_startup()
-        test_a()
-
-    @staticmethod
-    def test_no_core_and_module_b():
-        @pass_config(module_name=&#34;test&#34;, lock=True)
-        def test_a(config):
-            if config:
-                raise SystemExit
-            else:
-                raise SystemExit
-
-        run_startup()
-        with pytest.raises(SystemExit):
-            test_a()
-
-    @staticmethod
-    def test_core_and_module():
-        with pytest.raises(ValueError):
-            @pass_config(core=True, module_name=&#34;test&#34;, lock=True)
-            def test_a(config):
-                return config
-
-            run_startup()
-            test_a()</code></pre>
-</details>
 <h3>Static methods</h3>
 <dl>
 <dt id="SuperHelper.Tests.test_config.TestConfig.test_core_and_module"><code class="name flex">
@@ -150,95 +44,30 @@ class TestConfig:
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_core_and_module():
-    with pytest.raises(ValueError):
-        @pass_config(core=True, module_name=&#34;test&#34;, lock=True)
-        def test_a(config):
-            return config
-
-        run_startup()
-        test_a()</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_config.TestConfig.test_core_and_no_module"><code class="name flex">
 <span>def <span class="ident">test_core_and_no_module</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_core_and_no_module():
-    @pass_config(core=True, lock=True)
-    def test_a(config):
-        return config
-
-    run_startup()
-    test_a()</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_config.TestConfig.test_from_dict"><code class="name flex">
 <span>def <span class="ident">test_from_dict</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_from_dict():
-    assert Config.from_dict(dict()) is None</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_config.TestConfig.test_no_core_and_module_a"><code class="name flex">
 <span>def <span class="ident">test_no_core_and_module_a</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_no_core_and_module_a():
-    @pass_config(module_name=&#34;test&#34;, lock=True)
-    def test_a(config):
-        return config
-
-    run_startup()
-    test_a()</code></pre>
-</details>
 </dd>
 <dt id="SuperHelper.Tests.test_config.TestConfig.test_no_core_and_module_b"><code class="name flex">
 <span>def <span class="ident">test_no_core_and_module_b</span></span>(<span>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@staticmethod
-def test_no_core_and_module_b():
-    @pass_config(module_name=&#34;test&#34;, lock=True)
-    def test_a(config):
-        if config:
-            raise SystemExit
-        else:
-            raise SystemExit
-
-    run_startup()
-    with pytest.raises(SystemExit):
-        test_a()</code></pre>
-</details>
 </dd>
 </dl>
 </dd>

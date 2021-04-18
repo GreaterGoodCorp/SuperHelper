@@ -22,22 +22,6 @@
 <h1 class="title">Module <code>SuperHelper.Tests.test_core</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">import sys
-
-import pytest
-
-from SuperHelper.Core import main_entry
-
-
-def test_main_entry():
-    sys.argv = [&#34;helper&#34;, &#34;--version&#34;]
-    with pytest.raises(SystemExit, match=&#34;0&#34;):
-        main_entry()</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -51,15 +35,6 @@ def test_main_entry():
 </code></dt>
 <dd>
 <div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def test_main_entry():
-    sys.argv = [&#34;helper&#34;, &#34;--version&#34;]
-    with pytest.raises(SystemExit, match=&#34;0&#34;):
-        main_entry()</code></pre>
-</details>
 </dd>
 </dl>
 </section>
