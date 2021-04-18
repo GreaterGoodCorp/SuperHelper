@@ -7,7 +7,7 @@ from typing import NoReturn
 
 import click
 
-from SuperHelper import Version, AppDir, AppName
+from SuperHelper import AppDir, AppName, Version
 from SuperHelper.Core.Utils import setup_core_logger
 
 CONFIG_FILENAME = f"{AppName}.cfg"
