@@ -19,7 +19,7 @@ docs: docs-html docs-pdf
 
 docs-pdf:
 	pdoc --pdf --config show_source_code=False -f src/SuperHelper > .docs
-	pandoc --metadata=title:"MyProject Documentation" --from=markdown+abbreviations+tex_math_single_backslash \
+	pandoc --metadata=title:"SuperHelper Documentation" --from=markdown+abbreviations+tex_math_single_backslash \
 	--pdf-engine=xelatex --variable=mainfont:"DejaVu Sans" --toc --toc-depth=4 --output=documentation.pdf .docs
 	rm .docs
 
