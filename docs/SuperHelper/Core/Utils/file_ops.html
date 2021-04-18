@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>SuperHelper.Core.Utils.file_ops API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>SuperHelper.Core.Utils.file_ops</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># This module defines the FP enum, to specify file permission flags, and the FileOps class, a utility class to check
+# file ownership and permissions.
+import functools
+import os
+import stat
+import enum
+from typing import Callable
+
+from SuperHelper.Core.Utils import PathLike
+
+__all__ = [
+    &#34;FP&#34;,
+    &#34;FileOps&#34;,
+]
+
+
+class FP(enum.Flag):
+    &#34;&#34;&#34;
+    Contains file permission flags.
+
+    R = Read
+
+    W = Write
+
+    X = Execute
+
+    USR = User (file owner)
+
+    GRP = Group owner
+
+    OTH = Other users/groups
+    &#34;&#34;&#34;
+    R_USR = enum.auto()
+    &#34;&#34;&#34;User readable.&#34;&#34;&#34;
+    W_USR = enum.auto()
+    &#34;&#34;&#34;User writable.&#34;&#34;&#34;
+    X_USR = enum.auto()
+    &#34;&#34;&#34;User executable.&#34;&#34;&#34;
+    R_GRP = enum.auto()
+    &#34;&#34;&#34;Group readable.&#34;&#34;&#34;
+    W_GRP = enum.auto()
+    &#34;&#34;&#34;Group writable.&#34;&#34;&#34;
+    X_GRP = enum.auto()
+    &#34;&#34;&#34;Group executable.&#34;&#34;&#34;
+    R_OTH = enum.auto()
+    &#34;&#34;&#34;Other readable.&#34;&#34;&#34;
+    W_OTH = enum.auto()
+    &#34;&#34;&#34;Other writable.&#34;&#34;&#34;
+    X_OTH = enum.auto()
+    &#34;&#34;&#34;Other executable.&#34;&#34;&#34;
+
+
+class FileOps:
+    &#34;&#34;&#34;
+    A utility class for file ownership and permissions.
+    &#34;&#34;&#34;
+
+    @staticmethod
+    @functools.cache
+    def get_stat(path: PathLike) -&gt; os.stat_result:
+        &#34;&#34;&#34;Gets the `stat` of file pointed by the path.
+
+        This function is decorated by @cache to reduce the amount of syscall, since `os.stat` is an expensive function.
+
+        Args:
+            path (PathLike): Path to the file to check
+
+        Returns:
+            An os.stat_result instance containing the stat of the file.
+        &#34;&#34;&#34;
+        return os.stat(path)
+
+    @staticmethod
+    def is_user_own(uid: int, path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the file is owned by the user with `uid`.
+
+        :param uid: The UID of the user
+        :type uid: int
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is owned by the uid, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_uid == uid
+
+    @staticmethod
+    def is_roots(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Check if the file is owned by `root`.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is owned by root, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.is_user_own(0, path)
+
+    @staticmethod
+    def is_mine(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the file is owned by the current user.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is owned by the current user, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.is_user_own(os.getuid(), path)
+
+    @staticmethod
+    def is_owner_readable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the owner of the file can read it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is readable by its owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IRUSR
+
+    @staticmethod
+    def is_owner_writable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the owner of the file can write to it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is writable by its owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IWUSR
+
+    @staticmethod
+    def is_owner_executable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the owner of the file can execute it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is executable by its owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IXUSR
+
+    @staticmethod
+    def is_group_readable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the group owner of the file can read it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is readable by its group owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IRGRP
+
+    @staticmethod
+    def is_group_writable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the group owner of the file can write to it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is writable by its group owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IWGRP
+
+    @staticmethod
+    def is_group_executable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the group owner of the file can execute it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is executable by its group owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IXGRP
+
+    @staticmethod
+    def is_other_readable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the other users or groups can read the file.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is readable by them, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IROTH
+
+    @staticmethod
+    def is_other_writable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the other users or groups can write the file.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is writable by them, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IWOTH
+
+    @staticmethod
+    def is_other_executable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the other users or groups can execute the file.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is executable by them, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IXOTH
+
+    @staticmethod
+    def check_fp(path: PathLike, fp: FP) -&gt; bool:
+        &#34;&#34;&#34;Checks if the file contains the specified file permissions.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :param fp: The flags of the file permissions to check.
+        :type fp: FP
+        :return: True if all the flags are valid, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        flag_match: dict[FP, Callable[[PathLike], bool]] = {
+            FP.R_USR: FileOps.is_owner_readable,
+            FP.W_USR: FileOps.is_owner_writable,
+            FP.X_USR: FileOps.is_owner_executable,
+            FP.R_GRP: FileOps.is_group_readable,
+            FP.W_GRP: FileOps.is_group_writable,
+            FP.X_GRP: FileOps.is_group_executable,
+            FP.R_OTH: FileOps.is_other_readable,
+            FP.W_OTH: FileOps.is_other_writable,
+            FP.X_OTH: FileOps.is_other_executable,
+        }
+        final = True
+        for f in FP:
+            if f &amp; fp:
+                final &amp;= bool(flag_match[f](path))
+        return final</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="SuperHelper.Core.Utils.file_ops.FP"><code class="flex name class">
+<span>class <span class="ident">FP</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Contains file permission flags.</p>
+<p>R = Read</p>
+<p>W = Write</p>
+<p>X = Execute</p>
+<p>USR = User (file owner)</p>
+<p>GRP = Group owner</p>
+<p>OTH = Other users/groups</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FP(enum.Flag):
+    &#34;&#34;&#34;
+    Contains file permission flags.
+
+    R = Read
+
+    W = Write
+
+    X = Execute
+
+    USR = User (file owner)
+
+    GRP = Group owner
+
+    OTH = Other users/groups
+    &#34;&#34;&#34;
+    R_USR = enum.auto()
+    &#34;&#34;&#34;User readable.&#34;&#34;&#34;
+    W_USR = enum.auto()
+    &#34;&#34;&#34;User writable.&#34;&#34;&#34;
+    X_USR = enum.auto()
+    &#34;&#34;&#34;User executable.&#34;&#34;&#34;
+    R_GRP = enum.auto()
+    &#34;&#34;&#34;Group readable.&#34;&#34;&#34;
+    W_GRP = enum.auto()
+    &#34;&#34;&#34;Group writable.&#34;&#34;&#34;
+    X_GRP = enum.auto()
+    &#34;&#34;&#34;Group executable.&#34;&#34;&#34;
+    R_OTH = enum.auto()
+    &#34;&#34;&#34;Other readable.&#34;&#34;&#34;
+    W_OTH = enum.auto()
+    &#34;&#34;&#34;Other writable.&#34;&#34;&#34;
+    X_OTH = enum.auto()
+    &#34;&#34;&#34;Other executable.&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Flag</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="SuperHelper.Core.Utils.file_ops.FP.R_GRP"><code class="name">var <span class="ident">R_GRP</span></code></dt>
+<dd>
+<div class="desc"><p>Group readable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FP.R_OTH"><code class="name">var <span class="ident">R_OTH</span></code></dt>
+<dd>
+<div class="desc"><p>Other readable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FP.R_USR"><code class="name">var <span class="ident">R_USR</span></code></dt>
+<dd>
+<div class="desc"><p>User readable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FP.W_GRP"><code class="name">var <span class="ident">W_GRP</span></code></dt>
+<dd>
+<div class="desc"><p>Group writable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FP.W_OTH"><code class="name">var <span class="ident">W_OTH</span></code></dt>
+<dd>
+<div class="desc"><p>Other writable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FP.W_USR"><code class="name">var <span class="ident">W_USR</span></code></dt>
+<dd>
+<div class="desc"><p>User writable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FP.X_GRP"><code class="name">var <span class="ident">X_GRP</span></code></dt>
+<dd>
+<div class="desc"><p>Group executable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FP.X_OTH"><code class="name">var <span class="ident">X_OTH</span></code></dt>
+<dd>
+<div class="desc"><p>Other executable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FP.X_USR"><code class="name">var <span class="ident">X_USR</span></code></dt>
+<dd>
+<div class="desc"><p>User executable.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FileOps"><code class="flex name class">
+<span>class <span class="ident">FileOps</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>A utility class for file ownership and permissions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FileOps:
+    &#34;&#34;&#34;
+    A utility class for file ownership and permissions.
+    &#34;&#34;&#34;
+
+    @staticmethod
+    @functools.cache
+    def get_stat(path: PathLike) -&gt; os.stat_result:
+        &#34;&#34;&#34;Gets the `stat` of file pointed by the path.
+
+        This function is decorated by @cache to reduce the amount of syscall, since `os.stat` is an expensive function.
+
+        Args:
+            path (PathLike): Path to the file to check
+
+        Returns:
+            An os.stat_result instance containing the stat of the file.
+        &#34;&#34;&#34;
+        return os.stat(path)
+
+    @staticmethod
+    def is_user_own(uid: int, path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the file is owned by the user with `uid`.
+
+        :param uid: The UID of the user
+        :type uid: int
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is owned by the uid, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_uid == uid
+
+    @staticmethod
+    def is_roots(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Check if the file is owned by `root`.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is owned by root, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.is_user_own(0, path)
+
+    @staticmethod
+    def is_mine(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the file is owned by the current user.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is owned by the current user, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.is_user_own(os.getuid(), path)
+
+    @staticmethod
+    def is_owner_readable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the owner of the file can read it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is readable by its owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IRUSR
+
+    @staticmethod
+    def is_owner_writable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the owner of the file can write to it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is writable by its owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IWUSR
+
+    @staticmethod
+    def is_owner_executable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the owner of the file can execute it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is executable by its owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IXUSR
+
+    @staticmethod
+    def is_group_readable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the group owner of the file can read it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is readable by its group owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IRGRP
+
+    @staticmethod
+    def is_group_writable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the group owner of the file can write to it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is writable by its group owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IWGRP
+
+    @staticmethod
+    def is_group_executable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the group owner of the file can execute it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is executable by its group owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IXGRP
+
+    @staticmethod
+    def is_other_readable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the other users or groups can read the file.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is readable by them, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IROTH
+
+    @staticmethod
+    def is_other_writable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the other users or groups can write the file.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is writable by them, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IWOTH
+
+    @staticmethod
+    def is_other_executable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the other users or groups can execute the file.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is executable by them, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IXOTH
+
+    @staticmethod
+    def check_fp(path: PathLike, fp: FP) -&gt; bool:
+        &#34;&#34;&#34;Checks if the file contains the specified file permissions.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :param fp: The flags of the file permissions to check.
+        :type fp: FP
+        :return: True if all the flags are valid, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        flag_match: dict[FP, Callable[[PathLike], bool]] = {
+            FP.R_USR: FileOps.is_owner_readable,
+            FP.W_USR: FileOps.is_owner_writable,
+            FP.X_USR: FileOps.is_owner_executable,
+            FP.R_GRP: FileOps.is_group_readable,
+            FP.W_GRP: FileOps.is_group_writable,
+            FP.X_GRP: FileOps.is_group_executable,
+            FP.R_OTH: FileOps.is_other_readable,
+            FP.W_OTH: FileOps.is_other_writable,
+            FP.X_OTH: FileOps.is_other_executable,
+        }
+        final = True
+        for f in FP:
+            if f &amp; fp:
+                final &amp;= bool(flag_match[f](path))
+        return final</code></pre>
+</details>
+<h3>Static methods</h3>
+<dl>
+<dt id="SuperHelper.Core.Utils.file_ops.FileOps.check_fp"><code class="name flex">
+<span>def <span class="ident">check_fp</span></span>(<span>path: ~PathLike, fp: <a title="SuperHelper.Core.Utils.file_ops.FP" href="#SuperHelper.Core.Utils.file_ops.FP">FP</a>) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the file contains the specified file permissions.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:param fp: The flags of the file permissions to check.
+:type fp: FP
+:return: True if all the flags are valid, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def check_fp(path: PathLike, fp: FP) -&gt; bool:
+    &#34;&#34;&#34;Checks if the file contains the specified file permissions.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :param fp: The flags of the file permissions to check.
+    :type fp: FP
+    :return: True if all the flags are valid, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    flag_match: dict[FP, Callable[[PathLike], bool]] = {
+        FP.R_USR: FileOps.is_owner_readable,
+        FP.W_USR: FileOps.is_owner_writable,
+        FP.X_USR: FileOps.is_owner_executable,
+        FP.R_GRP: FileOps.is_group_readable,
+        FP.W_GRP: FileOps.is_group_writable,
+        FP.X_GRP: FileOps.is_group_executable,
+        FP.R_OTH: FileOps.is_other_readable,
+        FP.W_OTH: FileOps.is_other_writable,
+        FP.X_OTH: FileOps.is_other_executable,
+    }
+    final = True
+    for f in FP:
+        if f &amp; fp:
+            final &amp;= bool(flag_match[f](path))
+    return final</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FileOps.get_stat"><code class="name flex">
+<span>def <span class="ident">get_stat</span></span>(<span>path: ~PathLike) ‑> os.stat_result</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets the <code>stat</code> of file pointed by the path.</p>
+<p>This function is decorated by @cache to reduce the amount of syscall, since <code>os.stat</code> is an expensive function.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>path</code></strong> :&ensp;<code>PathLike</code></dt>
+<dd>Path to the file to check</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>An os.stat_result instance containing the stat of the file.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+@functools.cache
+def get_stat(path: PathLike) -&gt; os.stat_result:
+    &#34;&#34;&#34;Gets the `stat` of file pointed by the path.
+
+    This function is decorated by @cache to reduce the amount of syscall, since `os.stat` is an expensive function.
+
+    Args:
+        path (PathLike): Path to the file to check
+
+    Returns:
+        An os.stat_result instance containing the stat of the file.
+    &#34;&#34;&#34;
+    return os.stat(path)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FileOps.is_group_executable"><code class="name flex">
+<span>def <span class="ident">is_group_executable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the group owner of the file can execute it.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is executable by its group owner, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_group_executable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the group owner of the file can execute it.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is executable by its group owner, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IXGRP</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FileOps.is_group_readable"><code class="name flex">
+<span>def <span class="ident">is_group_readable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the group owner of the file can read it.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is readable by its group owner, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_group_readable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the group owner of the file can read it.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is readable by its group owner, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IRGRP</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FileOps.is_group_writable"><code class="name flex">
+<span>def <span class="ident">is_group_writable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the group owner of the file can write to it.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is writable by its group owner, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_group_writable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the group owner of the file can write to it.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is writable by its group owner, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IWGRP</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FileOps.is_mine"><code class="name flex">
+<span>def <span class="ident">is_mine</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the file is owned by the current user.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is owned by the current user, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_mine(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the file is owned by the current user.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is owned by the current user, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.is_user_own(os.getuid(), path)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FileOps.is_other_executable"><code class="name flex">
+<span>def <span class="ident">is_other_executable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the other users or groups can execute the file.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is executable by them, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_other_executable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the other users or groups can execute the file.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is executable by them, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IXOTH</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FileOps.is_other_readable"><code class="name flex">
+<span>def <span class="ident">is_other_readable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the other users or groups can read the file.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is readable by them, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_other_readable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the other users or groups can read the file.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is readable by them, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IROTH</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FileOps.is_other_writable"><code class="name flex">
+<span>def <span class="ident">is_other_writable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the other users or groups can write the file.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is writable by them, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_other_writable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the other users or groups can write the file.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is writable by them, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IWOTH</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FileOps.is_owner_executable"><code class="name flex">
+<span>def <span class="ident">is_owner_executable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the owner of the file can execute it.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is executable by its owner, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_owner_executable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the owner of the file can execute it.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is executable by its owner, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IXUSR</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FileOps.is_owner_readable"><code class="name flex">
+<span>def <span class="ident">is_owner_readable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the owner of the file can read it.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is readable by its owner, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_owner_readable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the owner of the file can read it.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is readable by its owner, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IRUSR</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FileOps.is_owner_writable"><code class="name flex">
+<span>def <span class="ident">is_owner_writable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the owner of the file can write to it.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is writable by its owner, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_owner_writable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the owner of the file can write to it.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is writable by its owner, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IWUSR</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FileOps.is_roots"><code class="name flex">
+<span>def <span class="ident">is_roots</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Check if the file is owned by <code>root</code>.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is owned by root, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_roots(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Check if the file is owned by `root`.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is owned by root, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.is_user_own(0, path)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Utils.file_ops.FileOps.is_user_own"><code class="name flex">
+<span>def <span class="ident">is_user_own</span></span>(<span>uid: int, path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the file is owned by the user with <code>uid</code>.</p>
+<p>:param uid: The UID of the user
+:type uid: int
+:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is owned by the uid, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_user_own(uid: int, path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the file is owned by the user with `uid`.
+
+    :param uid: The UID of the user
+    :type uid: int
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is owned by the uid, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_uid == uid</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="SuperHelper.Core.Utils" href="index.html">SuperHelper.Core.Utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="SuperHelper.Core.Utils.file_ops.FP" href="#SuperHelper.Core.Utils.file_ops.FP">FP</a></code></h4>
+<ul class="two-column">
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FP.R_GRP" href="#SuperHelper.Core.Utils.file_ops.FP.R_GRP">R_GRP</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FP.R_OTH" href="#SuperHelper.Core.Utils.file_ops.FP.R_OTH">R_OTH</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FP.R_USR" href="#SuperHelper.Core.Utils.file_ops.FP.R_USR">R_USR</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FP.W_GRP" href="#SuperHelper.Core.Utils.file_ops.FP.W_GRP">W_GRP</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FP.W_OTH" href="#SuperHelper.Core.Utils.file_ops.FP.W_OTH">W_OTH</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FP.W_USR" href="#SuperHelper.Core.Utils.file_ops.FP.W_USR">W_USR</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FP.X_GRP" href="#SuperHelper.Core.Utils.file_ops.FP.X_GRP">X_GRP</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FP.X_OTH" href="#SuperHelper.Core.Utils.file_ops.FP.X_OTH">X_OTH</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FP.X_USR" href="#SuperHelper.Core.Utils.file_ops.FP.X_USR">X_USR</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="SuperHelper.Core.Utils.file_ops.FileOps" href="#SuperHelper.Core.Utils.file_ops.FileOps">FileOps</a></code></h4>
+<ul class="two-column">
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FileOps.check_fp" href="#SuperHelper.Core.Utils.file_ops.FileOps.check_fp">check_fp</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FileOps.get_stat" href="#SuperHelper.Core.Utils.file_ops.FileOps.get_stat">get_stat</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FileOps.is_group_executable" href="#SuperHelper.Core.Utils.file_ops.FileOps.is_group_executable">is_group_executable</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FileOps.is_group_readable" href="#SuperHelper.Core.Utils.file_ops.FileOps.is_group_readable">is_group_readable</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FileOps.is_group_writable" href="#SuperHelper.Core.Utils.file_ops.FileOps.is_group_writable">is_group_writable</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FileOps.is_mine" href="#SuperHelper.Core.Utils.file_ops.FileOps.is_mine">is_mine</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FileOps.is_other_executable" href="#SuperHelper.Core.Utils.file_ops.FileOps.is_other_executable">is_other_executable</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FileOps.is_other_readable" href="#SuperHelper.Core.Utils.file_ops.FileOps.is_other_readable">is_other_readable</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FileOps.is_other_writable" href="#SuperHelper.Core.Utils.file_ops.FileOps.is_other_writable">is_other_writable</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FileOps.is_owner_executable" href="#SuperHelper.Core.Utils.file_ops.FileOps.is_owner_executable">is_owner_executable</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FileOps.is_owner_readable" href="#SuperHelper.Core.Utils.file_ops.FileOps.is_owner_readable">is_owner_readable</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FileOps.is_owner_writable" href="#SuperHelper.Core.Utils.file_ops.FileOps.is_owner_writable">is_owner_writable</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FileOps.is_roots" href="#SuperHelper.Core.Utils.file_ops.FileOps.is_roots">is_roots</a></code></li>
+<li><code><a title="SuperHelper.Core.Utils.file_ops.FileOps.is_user_own" href="#SuperHelper.Core.Utils.file_ops.FileOps.is_user_own">is_user_own</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
