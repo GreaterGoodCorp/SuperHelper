@@ -1,31 +1,23 @@
 # This module defines the entry Click CLI function
 # All modules of SuperHelper should define its own group, which can imported by this module.
 import logging
-import os
-import pathlib
 import platform
 import sys
 from typing import NoReturn
 
 import click
 
-from SuperHelper import Version
+from SuperHelper import Version, AppDir, AppName
 from SuperHelper.Core.Utils import setup_core_logger
 
-APP_NAME = "SuperHelper"
-"""Name of the application."""
-APP_DIR = pathlib.Path(os.getenv("SUPER_HELPER_APP_DIR", click.get_app_dir(APP_NAME)))
-"""Path to the application directory."""
-APP_DIR.mkdir(parents=True, exist_ok=True)
-
-CONFIG_FILENAME = f"{APP_NAME}.cfg"
+CONFIG_FILENAME = f"{AppName}.cfg"
 """Name of the config file."""
-CONFIG_PATH = APP_DIR / CONFIG_FILENAME
+CONFIG_PATH = AppDir / CONFIG_FILENAME
 """Path to the config file."""
 
-LOGGING_FILENAME = f"{APP_NAME}.log"
+LOGGING_FILENAME = f"{AppName}.log"
 """Name of the logging file."""
-LOGGING_PATH = APP_DIR / LOGGING_FILENAME
+LOGGING_PATH = AppDir / LOGGING_FILENAME
 """Path to the logging file."""
 
 version_message = f"%(prog)s-%(version)s {platform.platform(terse=True)} Python-{platform.python_version()}"
@@ -42,7 +34,7 @@ __all__ = [
 
 # Program entry point
 @click.group()
-@click.version_option(Version, prog_name=APP_NAME, message=version_message)
+@click.version_option(Version, prog_name=AppName, message=version_message)
 def cli() -> None:
     """Executes SuperHelper tools."""
     pass
