@@ -18,13 +18,13 @@ test:
 docs: docs-html docs-pdf
 
 docs-pdf:
-	@pdoc --pdf -f src/SuperHelper > .docs
-	@pandoc --metadata=title:"MyProject Documentation" --from=markdown+abbreviations+tex_math_single_backslash \
+	pdoc --pdf --config show_source_code=False -f src/SuperHelper > .docs
+	pandoc --metadata=title:"MyProject Documentation" --from=markdown+abbreviations+tex_math_single_backslash \
 	--pdf-engine=xelatex --variable=mainfont:"DejaVu Sans" --toc --toc-depth=4 --output=documentation.pdf .docs
-	@rm .docs
+	rm .docs
 
 docs-html:
-	pdoc --html -fo docs/ src/SuperHelper
+	pdoc --html --config show_source_code=False -fo docs/ src/SuperHelper
 
 clean-all: clean clean-cfg clean-test
 
