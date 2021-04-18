@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 with open("README.md") as fp:
     long_desc = fp.read()
@@ -33,7 +33,7 @@ setup(
         "Topic :: Utilities",
     ],
     package_dir={"": "src"},
-    packages=find_packages(where="src"),
+    packages=find_packages(where="src", exclude=("SuperHelper.Tests",)),
     entry_points={
         "console_scripts": ["helper = SuperHelper.Core:main_entry"],
     },
