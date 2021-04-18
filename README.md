@@ -36,7 +36,8 @@ make dev-install
 
 ## Documentation
 
-Updating...
+A dedicated documentation platform is not yet available. However, for any technical documentation, please visit the
+`docs` folder, which contains documentation for the entire package, or use the consolidated [PDF documentation][PDF].
 
 ## Contributing
 
@@ -50,3 +51,5 @@ This program is licensed under the
 [CONTRIBUTING]: https://github.com/GreaterGoodCorp/SuperHelper/blob/main/CONTRIBUTING.md
 
 [GitHub]: https://github.com/GreaterGoodCorp/SuperHelper
+
+[PDF]: https://github.com/GreaterGoodCorp/SuperHelper/blob/main/documentation.pdf
