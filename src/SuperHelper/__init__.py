@@ -17,3 +17,5 @@ __all__ = [
     "AppName",
     "AppDir",
 ]
+
+__pdoc__ = {"SuperHelper.Tests": False}
