@@ -3,6 +3,7 @@ import functools
 import io
 import logging
 import re
+import sys
 
 import click
 import cryptography.fernet
@@ -399,7 +400,7 @@ def main() -> None:
 @click.argument("input_file", type=click.File("rb"), required=True)
 @pass_config_no_lock()
 def create(image_file: io.IOBase, key: str, compress: int, density: int, output_file: io.IOBase, show_image: bool,
-           input_file: io.IOBase, config: dict[str, ...]):
+           input_file: io.IOBase, config: dict[str, ...]) -> None:
     density = config["default_density"] if density == -1 else density
     if density not in config["available_density"]:
         raise click.exceptions.BadOptionUsage(
@@ -415,10 +416,10 @@ def create(image_file: io.IOBase, key: str, compress: int, density: int, output_
         image = Image.open(image_file)
     except Image.UnidentifiedImageError:
         logger.exception("Not an image file!")
-        return 1
+        sys.exit(1)
 
     # Perform operation
-    return write_steganography(input_file, image, output_file, key, compress, density, show_image)
+    sys.exit(write_steganography(input_file, image, output_file, key, compress, density, show_image))
 
 
 @main.command("extract", help="Extracts steganography")
@@ -426,6 +427,11 @@ def create(image_file: io.IOBase, key: str, compress: int, density: int, output_
 @click.option("-o", "--output_file", help="Path to output file", type=click.File("wb"), required=True)
 @click.argument("steganography", required=True, type=click.File("rb"))
 @pass_config_no_lock()
-def extract(key: str, output_file: io.IOBase, steganography: io.IOBase, config: dict[str, ...]):
+def extract(key: str, output_file: io.IOBase, steganography: io.IOBase, config: dict[str, ...]) -> None:
     key = config["default_auth_key"] if key is None else key
-    return extract_steganography(steganography, output_file, key)
+    try:
+        Image.open(steganography)
+    except Image.UnidentifiedImageError:
+        logger.exception("Not an image file!")
+        sys.exit(1)
+    sys.exit(extract_steganography(steganography, output_file, key))
