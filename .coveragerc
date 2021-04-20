@@ -5,6 +5,7 @@ source = src/
 [report]
 exclude_lines =
     if self.debug:
+    if debug:
     pragma: no cover
     raise NotImplementedError
     if __name__ == .__main__.:
@@ -14,6 +15,7 @@ exclude_lines =
     AssertionError
     BaseException
     InvalidToken
+    except ImportError:
 ignore_errors = True
 omit =
    src/SuperHelper/Tests/*
