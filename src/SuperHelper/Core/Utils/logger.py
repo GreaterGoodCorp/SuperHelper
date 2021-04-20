@@ -26,11 +26,12 @@ class TracebackInfoFilter(logging.Filter):
         return True
 
 
-def setup_core_logger(logging_path: PathLike) -> logging.Logger:
+def setup_core_logger(logging_path: PathLike, debug: bool = False) -> logging.Logger:
     """Sets up the core logger.
 
     Args:
         logging_path (PathLike): The path to the logging file.
+        debug (bool): Whether to print debugging message.
 
     Returns:
         A `logging.Logger` instance with name set to `SuperHelper`.
@@ -42,9 +43,15 @@ def setup_core_logger(logging_path: PathLike) -> logging.Logger:
     fh.setFormatter(logging.Formatter("[%(asctime)s](%(name)s) %(levelname)s: %(message)s"))
     fh.addFilter(TracebackInfoFilter(clear=False))
     ch = logging.StreamHandler()
-    ch.setLevel(logging.WARNING)
+    if debug:
+        ch.setLevel(logging.WARNING)
+    else:
+        ch.setLevel(logging.DEBUG)
     ch.setFormatter(logging.Formatter("%(levelname)s: %(message)s"))
-    ch.addFilter(TracebackInfoFilter())
+    if debug:
+        ch.addFilter(TracebackInfoFilter(clear=False))
+    else:
+        ch.addFilter(TracebackInfoFilter())
     logger.addHandler(fh)
     logger.addHandler(ch)
     return logger
