@@ -15,15 +15,7 @@ test:
 	rm -rf .test_dir && mkdir .test_dir
 	export SUPER_HELPER_APP_DIR=./.test_dir && pytest --cov
 
-docs: docs-html docs-pdf
-
-docs-pdf:
-	pdoc --pdf --config show_source_code=False -f src/SuperHelper > .docs
-	pandoc --metadata=title:"SuperHelper Documentation" --from=markdown+abbreviations+tex_math_single_backslash \
-	--pdf-engine=xelatex --variable=mainfont:"DejaVu Sans" --toc --toc-depth=4 --output=documentation.pdf .docs
-	rm .docs
-
-docs-html:
+docs:
 	pdoc --html --config show_source_code=False -fo docs/ src/SuperHelper
 
 clean-all: clean clean-cfg clean-test
