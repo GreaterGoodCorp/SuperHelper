@@ -1,7 +1,12 @@
 import pathlib
 import os
+import sys
 
-import click
+try:
+    import click
+except ImportError:
+    print("Module 'click' missing! Please install it first.", file=sys.stderr)
+    sys.exit(1)
 
 __version__ = "1.0.0"
 Version = __version__
