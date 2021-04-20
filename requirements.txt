@@ -1,9 +1,6 @@
 click
-colorama
 wheel
 twine
-Pillow
-cryptography
 pytest
 setuptools
 pytest-cov
