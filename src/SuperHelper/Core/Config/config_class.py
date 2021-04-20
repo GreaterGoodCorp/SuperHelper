@@ -11,7 +11,6 @@ from SuperHelper.Core.Utils import TypeCheck
 logger: logging.Logger = logging.getLogger("SuperHelper.Core.Config")
 
 DefaultCoreConfig: dict[str, ...] = {
-    "DEBUG": False,
     "INSTALLED_MODULES": [
     ],
 }
