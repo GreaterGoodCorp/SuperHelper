@@ -41,6 +41,18 @@ def load_core_commands() -> list[tuple[Callable, str]]:
 
 
 def add_individual_module(mod_list: list[str], qualified_name: str) -> None:
+    """Validates the specified module and its dependencies then adds to module list.
+
+    Args:
+        mod_list (list[str]): A list of modules to add to.
+        qualified_name (str): The import name of the module.
+
+    Returns:
+        None
+
+    Raises:
+        ModuleNotFoundError: The module or its dependencies are not found.
+    """
     if importlib.util.find_spec(qualified_name) is not None:
         err = False
         package = pkgutil.get_loader(qualified_name)
