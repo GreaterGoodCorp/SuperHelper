@@ -5,7 +5,11 @@ import platform
 import sys
 from typing import NoReturn
 
-import click
+try:
+    import click
+except ImportError:
+    print("Module 'click' missing! Please install it first.", file=sys.stderr)
+    sys.exit(1)
 
 from SuperHelper import AppDir, AppName, Version
 from SuperHelper.Core.Utils import setup_core_logger
