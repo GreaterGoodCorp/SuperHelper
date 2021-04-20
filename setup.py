@@ -39,9 +39,6 @@ setup(
     },
     install_requires=[
         "click",
-        "colorama",
-        "Pillow",
-        "cryptography",
     ],
     python_requires=">=3.6",
 )
