@@ -35,7 +35,7 @@ def load_app_config(config_path: PathLike) -> None:
             config.apply_core_patch(DefaultCoreConfig)
             make_config_global(config)
     except FileNotFoundError:
-        logger.exception("Config file not found! Auto-configuring...")
+        logger.warning("Config file not found! Auto-configuring...", exc_info=True)
         make_config_global(Config())
     except OSError:
         logger.exception("Config loader failed due to file being unreadable!")
