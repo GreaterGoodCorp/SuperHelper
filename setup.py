@@ -39,6 +39,7 @@ setup(
     },
     install_requires=[
         "click",
+        "cryptography",
     ],
     python_requires=">=3.6",
 )
