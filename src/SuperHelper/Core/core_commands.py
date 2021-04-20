@@ -2,8 +2,10 @@
 import copy
 import importlib.util
 import logging
+import pathlib
 import pkgutil
 import sys
+import json
 from typing import Callable
 
 import click
@@ -38,6 +40,30 @@ def load_core_commands() -> list[tuple[Callable, str]]:
     ]
 
 
+def add_individual_module(mod_list: list[str], qualified_name: str) -> None:
+    if importlib.util.find_spec(qualified_name) is not None:
+        err = False
+        package = pkgutil.get_loader(qualified_name)
+        req_file = pathlib.Path(package.get_filename()).parent / "req.json"
+        if req_file.exists():
+            with open(req_file) as fp:
+                requirements = json.load(fp)
+            for req in requirements:
+                req_loader = pkgutil.get_loader(req)
+                if req_loader is None:
+                    logger.error(f"Missing dependency: {req}")
+                    err = True
+        else:
+            logger.debug(f"Requirement file for '{qualified_name}' not found. Assuming no additional dependency...")
+        if err:
+            logger.error("Please install the above package(s) before installing this module!")
+            raise ModuleNotFoundError
+        elif qualified_name not in mod_list:
+            mod_list.append(qualified_name)
+    else:
+        raise ModuleNotFoundError(name=qualified_name)
+
+
 @click.command("add")
 @click.argument("modules", nargs=-1)
 @pass_config(core=True, lock=True)
@@ -50,17 +76,12 @@ def add_modules(config: dict[str, ...], modules: list[str]) -> None:
         # Append the module prefix to module name
         module_fullname = module_prefix.format(module)
         try:
-            # Check if the module is found
-            # If the module is installed, it should be located as follows:
-            # SuperHelper.Modules.<ModuleName>
-            # Otherwise, it is not found (or not installed)
-            if importlib.util.find_spec(module_fullname) is not None:
-                if module_fullname not in config["INSTALLED_MODULES"]:
-                    all_modules.append(module_fullname)
+            add_individual_module(all_modules, module_fullname)
+        except ModuleNotFoundError as ex:
+            if ex.name == module_fullname:
+                logger.exception(f"Module {module} not found!\nReverting...")
             else:
-                raise ModuleNotFoundError
-        except ModuleNotFoundError:
-            logger.exception(f"Module {module} not found!\nReverting...")
+                logger.exception("Reverting...")
             break
     else:
         # Save the config if and only if there are no errors and exit with 0.
