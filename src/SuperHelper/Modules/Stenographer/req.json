@@ -1,1 +1,4 @@
-["cryptography", "PIL"]
+[
+    "cryptography",
+    "PIL",
+]
