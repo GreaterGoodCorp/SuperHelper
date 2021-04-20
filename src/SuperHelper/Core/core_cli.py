@@ -39,8 +39,11 @@ __all__ = [
 # Program entry point
 @click.group()
 @click.version_option(Version, prog_name=AppName, message=version_message)
-def cli() -> None:
+@click.option("--debug", help="Enable debug mode", default=False, is_flag=True)
+def cli(debug) -> None:
     """Executes SuperHelper tools."""
+    if debug:
+        make_logger_global(True)
     pass
 
 
@@ -53,10 +56,10 @@ def validate_no_win32() -> None:
         sys.exit(1)
 
 
-def make_logger_global() -> None:
+def make_logger_global(debug: bool = False) -> None:
     """Sets up and makes core logger global."""
     global logger
-    logger = setup_core_logger(LOGGING_PATH)
+    logger = setup_core_logger(LOGGING_PATH, debug)
 
 
 def load_config():
