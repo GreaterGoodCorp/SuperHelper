@@ -44,9 +44,9 @@ def setup_core_logger(logging_path: PathLike, debug: bool = False) -> logging.Lo
     fh.addFilter(TracebackInfoFilter(clear=False))
     ch = logging.StreamHandler()
     if debug:
-        ch.setLevel(logging.WARNING)
-    else:
         ch.setLevel(logging.DEBUG)
+    else:
+        ch.setLevel(logging.WARNING)
     ch.setFormatter(logging.Formatter("%(levelname)s: %(message)s"))
     if debug:
         ch.addFilter(TracebackInfoFilter(clear=False))
