@@ -88,7 +88,7 @@ class TestOtherUtils:
 
         @pass_config(core=True, lock=True)
         def edit_cfg(config):
-            config["INSTALLED_MODULES"].append("SuperHelper")
+            config["INSTALLED_MODULES"].append("os")
             config["INSTALLED_MODULES"].append("SuperHelper.Hello")
 
         edit_cfg()
@@ -96,7 +96,7 @@ class TestOtherUtils:
 
         @pass_config(core=True, lock=True)
         def remove_cfg(config):
-            config["INSTALLED_MODULES"].remove("SuperHelper")
+            config["INSTALLED_MODULES"].remove("os")
             config["INSTALLED_MODULES"].remove("SuperHelper.Hello")
 
         remove_cfg()
