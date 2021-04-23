@@ -25,3 +25,21 @@
 This is a major release and also the first release of the program. Hence, the changes in API are drastically different
 from the pre-release versions. As such, the program will certainly and completely backward-incompatible. Please
 uninstall the pre-release and install this new version, **DO NOT** use `pip upgrade`!
+
+### What's new in 1.1.0?
+
+#### New features
+
+- Added a new built-in module: `CovidTracker`
+
+#### Bug fixes
+
+*None*
+
+#### Non-functional changes
+
+*None*
+
+#### Notes
+
+*None*
