@@ -2,10 +2,11 @@ import csv
 import io
 import json
 from urllib.request import urlopen
-from dateutil.parser import parse
 from pathlib import Path
 import re
 import logging
+
+from dateutil.parser import parse
 
 from SuperHelper import AppDir
 from SuperHelper.Core.Utils import PathLike
