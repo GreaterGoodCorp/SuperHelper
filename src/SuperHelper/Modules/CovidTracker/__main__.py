@@ -25,3 +25,12 @@ def normalise_datetime(date_string: str) -> str:
         return parse(date_string, dayfirst=True).strftime("%m-%d-%Y")
     except ValueError:
         raise ValueError("Invalid date format")
+
+
+def create_source_url(date_string: str) -> str:
+    if not re.match(r"^(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])-20\d\d$", date_string):
+        raise ValueError("Invalid date format, must be MM-DD-YYY! Try using normalise_datetime()!")
+    gh_branch_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master"
+    source_path = "/csse_covid_19_data/csse_covid_19_daily_reports/"
+    file_name = f"{date_string}.csv"
+    return gh_branch_url + source_path + file_name
