@@ -58,7 +58,7 @@
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="SuperHelper.Core.Utils.setup_core_logger"><code class="name flex">
-<span>def <span class="ident">setup_core_logger</span></span>(<span>logging_path: ~PathLike) ‑> logging.Logger</span>
+<span>def <span class="ident">setup_core_logger</span></span>(<span>logging_path: ~PathLike, debug: bool = False) ‑> logging.Logger</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets up the core logger.</p>
@@ -66,6 +66,8 @@
 <dl>
 <dt><strong><code>logging_path</code></strong> :&ensp;<code>PathLike</code></dt>
 <dd>The path to the logging file.</dd>
+<dt><strong><code>debug</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to print debugging message.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <p>A <code>logging.Logger</code> instance with name set to <code><a title="SuperHelper" href="../../index.html">SuperHelper</a></code>.</p></div>
