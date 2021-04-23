@@ -91,11 +91,12 @@ def get_data_for_date(date_string: str):
     return extract_source_data(parsed_source_file, cache_filename)
 
 
-def cache_data() -> None:
+def cache_data(no_of_days: int = 365) -> None:
     date = datetime.datetime.today()
     date_string = date.strftime("%m-%d-%Y")
-    origin_date = datetime.datetime(day=22, month=12, year=2020)
-    no_of_days = (date - origin_date).days
+    origin_date = datetime.datetime(day=3, month=12, year=2020)
+    if (date - origin_date).days < no_of_days:
+        no_of_days = (date - origin_date).days
     while True:
         try:
             get_source_file(create_source_url(date_string))
