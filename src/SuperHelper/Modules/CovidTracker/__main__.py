@@ -34,3 +34,16 @@ def create_source_url(date_string: str) -> str:
     source_path = "/csse_covid_19_data/csse_covid_19_daily_reports/"
     file_name = f"{date_string}.csv"
     return gh_branch_url + source_path + file_name
+
+
+def get_source_file(url: str) -> list:
+    filename = Path(url).name
+    source_file_location = MODULE_DIR / "Cache" / filename
+    if source_file_location.is_file():
+        with open(source_file_location) as fp:
+            return fp.readlines()
+    raw_data = list(urlopen(url))
+    string_data = list(map(lambda s: str(s, "utf-8"), raw_data))
+    with open(source_file_location, "w") as fp:
+        fp.writelines(string_data)
+    return string_data
