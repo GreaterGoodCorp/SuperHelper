@@ -18,3 +18,10 @@ CACHE_DIR.mkdir(parents=True, exist_ok=True)
 __name__ = f"SuperHelper.Modules.{MODULE_NAME}"
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
+
+
+def normalise_datetime(date_string: str) -> str:
+    try:
+        return parse(date_string, dayfirst=True).strftime("%m-%d-%Y")
+    except ValueError:
+        raise ValueError("Invalid date format")
