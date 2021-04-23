@@ -8,7 +8,7 @@ except ImportError:
     print("Module 'click' missing! Please install it first.", file=sys.stderr)
     sys.exit(1)
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 Version = __version__
 
 AppName = "SuperHelper"
