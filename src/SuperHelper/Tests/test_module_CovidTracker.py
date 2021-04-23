@@ -75,4 +75,5 @@ class TestCovidTracker:
     @staticmethod
     def test_extract_source_data(get_parsed_data, get_cache_filename):
         assert len(extract_source_data(get_parsed_data, get_cache_filename)) != 0
+        assert len(extract_source_data(get_parsed_data, get_cache_filename)) != 0
         assert len(extract_source_data(get_parsed_data)) != 0
