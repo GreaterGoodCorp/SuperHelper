@@ -113,3 +113,4 @@ def cache_data(no_of_days: int = 365) -> None:
             pass
         date -= datetime.timedelta(days=1)
         date_string = date.strftime("%m-%d-%Y")
+    print()
