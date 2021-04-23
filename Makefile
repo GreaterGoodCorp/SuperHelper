@@ -1,3 +1,7 @@
+all: venv build publish dev-install test docs clean-all clean clean-cfg clean-test
+
+.PHONY: all
+
 venv:
 	python3 -m venv .venv
 	./.venv/bin/pip3 install -r requirements.txt
