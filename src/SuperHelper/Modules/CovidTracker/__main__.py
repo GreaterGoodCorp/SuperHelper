@@ -54,3 +54,26 @@ def parse_source_data(source_data: list[str]) -> list:
     buffer = io.StringIO(concat)
     csv_parsed_data = csv.reader(buffer)
     return list(csv_parsed_data)
+
+
+def extract_source_data(parsed_data: list[str], cache_filename: PathLike = None) -> dict[str, list]:
+    # Remove header
+    parsed_data.pop(0)
+    starting_index = 7
+    number_of_field = 4
+    if cache_filename is not None and Path(cache_filename).is_file():
+        with open(cache_filename) as fp:
+            return json.load(fp)
+    data = dict()
+    for entry in parsed_data:
+        entry = list(map(lambda s: "0" if s == "" else s, entry))
+        country_name = entry[3]
+        if country_name in data.keys():
+            for i in range(number_of_field):
+                data[country_name][i] += int(entry[starting_index+i])
+        else:
+            data[country_name] = list(map(int, entry[starting_index:starting_index+number_of_field]))
+    if cache_filename is not None:
+        with open(cache_filename, "w") as fp:
+            json.dump(data, fp)
+    return data
