@@ -89,3 +89,26 @@ def get_data_for_date(date_string: str):
     parsed_source_file = parse_source_data(source_file)
     cache_filename = CACHE_DIR / f"extracted-{Path(url).name.split('.')[0]}.json"
     return extract_source_data(parsed_source_file, cache_filename)
+
+
+def cache_data() -> None:
+    date = datetime.datetime.today()
+    date_string = date.strftime("%m-%d-%Y")
+    origin_date = datetime.datetime(day=22, month=12, year=2020)
+    no_of_days = (date - origin_date).days
+    while True:
+        try:
+            get_source_file(create_source_url(date_string))
+        except HTTPError:
+            date -= datetime.timedelta(days=1)
+            date_string = date.strftime("%m-%d-%Y")
+        else:
+            break
+    for i in range(no_of_days):
+        print(f"\rDownloading for {date_string}... ({i+1}/{no_of_days})", end="")
+        try:
+            get_data_for_date(date_string)
+        except HTTPError:
+            pass
+        date -= datetime.timedelta(days=1)
+        date_string = date.strftime("%m-%d-%Y")
