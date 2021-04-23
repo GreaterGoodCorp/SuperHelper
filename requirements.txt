@@ -8,3 +8,4 @@ setuptools
 pdoc3
 cryptography
 Pillow
+python-dateutil
