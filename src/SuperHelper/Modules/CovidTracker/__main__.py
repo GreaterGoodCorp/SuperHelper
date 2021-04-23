@@ -47,3 +47,10 @@ def get_source_file(url: str) -> list:
     with open(source_file_location, "w") as fp:
         fp.writelines(string_data)
     return string_data
+
+
+def parse_source_data(source_data: list[str]) -> list:
+    concat = "".join(source_data)
+    buffer = io.StringIO(concat)
+    csv_parsed_data = csv.reader(buffer)
+    return list(csv_parsed_data)
