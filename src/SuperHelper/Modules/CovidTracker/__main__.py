@@ -71,9 +71,9 @@ def extract_source_data(parsed_data: list[str], cache_filename: PathLike = None)
         country_name = entry[3]
         if country_name in data.keys():
             for i in range(number_of_field):
-                data[country_name][i] += int(entry[starting_index+i])
+                data[country_name][i] += int(entry[starting_index + i])
         else:
-            data[country_name] = list(map(int, entry[starting_index:starting_index+number_of_field]))
+            data[country_name] = list(map(int, entry[starting_index:starting_index + number_of_field]))
     if cache_filename is not None:
         with open(cache_filename, "w") as fp:
             json.dump(data, fp)
