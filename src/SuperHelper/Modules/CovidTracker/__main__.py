@@ -1,6 +1,8 @@
 import csv
+import datetime
 import io
 import json
+from urllib.error import HTTPError
 from urllib.request import urlopen
 from pathlib import Path
 import re
@@ -78,3 +80,12 @@ def extract_source_data(parsed_data: list[str], cache_filename: PathLike = None)
         with open(cache_filename, "w") as fp:
             json.dump(data, fp)
     return data
+
+
+def get_data_for_date(date_string: str):
+    date_string = normalise_datetime(date_string)
+    url = create_source_url(date_string)
+    source_file = get_source_file(url)
+    parsed_source_file = parse_source_data(source_file)
+    cache_filename = CACHE_DIR / f"extracted-{Path(url).name.split('.')[0]}.json"
+    return extract_source_data(parsed_source_file, cache_filename)
