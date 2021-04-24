@@ -111,7 +111,7 @@ def get_country_data(country: str, start_date: datetime.datetime = None, end_dat
     if start_date is None or start_date < origin_date:
         start_date = origin_date
     result = dict()
-    for i in range((end_date-start_date).days+1):
+    for i in range((end_date - start_date).days + 1):
         date_string = (start_date + datetime.timedelta(days=i)).strftime("%m-%d-%Y")
         data = get_data_for_date(date_string)
         country_data = data.get(country, None)
@@ -126,7 +126,7 @@ def cache_data(no_of_days: int = 365, force: bool = False) -> None:
     if (date - origin_date).days < no_of_days:
         no_of_days = (date - origin_date).days
     for i in range(no_of_days):
-        print(f"\rDownloading for {date_string}... ({i+1}/{no_of_days})", end="")
+        print(f"\rDownloading for {date_string}... ({i + 1}/{no_of_days})", end="")
         try:
             get_data_for_date(date_string, force)
         except HTTPError:
