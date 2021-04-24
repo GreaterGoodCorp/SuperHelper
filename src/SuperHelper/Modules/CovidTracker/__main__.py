@@ -37,6 +37,7 @@ __all__ = [
     "get_data_for_date",
     "cache_data",
     "main",
+    "CACHE_DIR",
 ]
 
 
