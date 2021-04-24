@@ -54,6 +54,16 @@ def get_source_file(url: str, force: bool = False) -> list:
     return string_data
 
 
+latest_date = datetime.datetime.today()
+while True:
+    try:
+        get_source_file(create_source_url(latest_date.strftime("%m-%d-%Y")))
+    except HTTPError:
+        latest_date -= datetime.timedelta(days=1)
+    else:
+        break
+
+
 def parse_source_data(source_data: list[str]) -> list:
     concat = "".join(source_data)
     buffer = io.StringIO(concat)
