@@ -138,3 +138,17 @@ def cache_data(no_of_days: int = 365, force: bool = False) -> None:
         date -= datetime.timedelta(days=1)
         date_string = date.strftime("%m-%d-%Y")
     print()
+
+
+def validate_date(value, *_, **__):
+    try:
+        if value == "latest":
+            return latest_date.strftime("%m-%d-%Y")
+        else:
+            d = normalise_datetime(value)
+            if datetime.datetime.strptime(d, "%m-%d-%Y") > latest_date:
+                logger.warning(f"Date for date '{d}' is not available. Using the latest data...")
+                return latest_date.strftime("%m-%d-%Y")
+            return d
+    except ValueError:
+        raise click.BadParameter("Invalid date format")
