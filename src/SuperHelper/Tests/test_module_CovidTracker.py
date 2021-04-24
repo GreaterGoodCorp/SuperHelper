@@ -1,6 +1,3 @@
-import datetime
-from urllib.error import HTTPError
-
 import pytest
 
 from SuperHelper.Tests import *
