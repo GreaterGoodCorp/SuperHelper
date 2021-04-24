@@ -9,3 +9,5 @@ pdoc3
 cryptography
 Pillow
 python-dateutil
+numpy
+matplotlib
