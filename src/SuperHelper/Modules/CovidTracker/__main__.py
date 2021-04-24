@@ -2,6 +2,7 @@ import csv
 import datetime
 import io
 import json
+from copy import deepcopy
 from urllib.error import HTTPError
 from urllib.request import urlopen
 from pathlib import Path
@@ -120,19 +121,10 @@ def get_country_data(country: str, start_date: datetime.datetime = None, end_dat
 
 
 def cache_data(no_of_days: int = 365, force: bool = False) -> None:
-    date = datetime.datetime.today()
+    date = deepcopy(latest_date)
     date_string = date.strftime("%m-%d-%Y")
-    origin_date = datetime.datetime(day=3, month=12, year=2020)
     if (date - origin_date).days < no_of_days:
         no_of_days = (date - origin_date).days
-    while True:
-        try:
-            get_source_file(create_source_url(date_string))
-        except HTTPError:
-            date -= datetime.timedelta(days=1)
-            date_string = date.strftime("%m-%d-%Y")
-        else:
-            break
     for i in range(no_of_days):
         print(f"\rDownloading for {date_string}... ({i+1}/{no_of_days})", end="")
         try:
