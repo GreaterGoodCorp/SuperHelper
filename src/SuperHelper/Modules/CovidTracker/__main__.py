@@ -36,6 +36,7 @@ __all__ = [
     "get_country_data",
     "get_data_for_date",
     "cache_data",
+    "main",
 ]
 
 
