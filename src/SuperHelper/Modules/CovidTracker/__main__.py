@@ -95,7 +95,8 @@ def extract_source_data(parsed_data: list[str], cache_file: PathLike = None, for
 
 
 def get_data_for_date(date_string: str, force: bool = False):
-    date_string = normalise_datetime(date_string)
+    if not re.match(r"^(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])-20\d\d$", date_string):
+        raise ValueError("Invalid date format, must be MM-DD-YYY! Try using normalise_datetime()!")
     url = create_source_url(date_string)
     source_file = get_source_file(url, force)
     parsed_source_file = parse_source_data(source_file)
