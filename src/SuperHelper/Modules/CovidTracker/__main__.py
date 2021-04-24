@@ -22,6 +22,8 @@ __name__ = f"SuperHelper.Modules.{MODULE_NAME}"
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
+origin_date = datetime.datetime(day=2, month=12, year=2020)
+
 
 def normalise_datetime(date_string: str) -> str:
     try:
