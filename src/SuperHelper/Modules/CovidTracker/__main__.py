@@ -39,10 +39,10 @@ def create_source_url(date_string: str) -> str:
     return gh_branch_url + source_path + file_name
 
 
-def get_source_file(url: str) -> list:
+def get_source_file(url: str, force: bool = False) -> list:
     filename = Path(url).name
     source_file_location = MODULE_DIR / "Cache" / filename
-    if source_file_location.is_file():
+    if not force and source_file_location.is_file():
         with open(source_file_location) as fp:
             return fp.readlines()
     raw_data = list(urlopen(url))
@@ -59,13 +59,13 @@ def parse_source_data(source_data: list[str]) -> list:
     return list(csv_parsed_data)
 
 
-def extract_source_data(parsed_data: list[str], cache_filename: PathLike = None) -> dict[str, list]:
+def extract_source_data(parsed_data: list[str], cache_file: PathLike = None, force: bool = False) -> dict[str, list]:
     # Remove header
     parsed_data.pop(0)
     starting_index = 7
     number_of_field = 4
-    if cache_filename is not None and Path(cache_filename).is_file():
-        with open(cache_filename) as fp:
+    if not force and cache_file is not None and Path(cache_file).is_file():
+        with open(cache_file) as fp:
             return json.load(fp)
     data = dict()
     for entry in parsed_data:
@@ -76,22 +76,22 @@ def extract_source_data(parsed_data: list[str], cache_filename: PathLike = None)
                 data[country_name][i] += int(entry[starting_index + i])
         else:
             data[country_name] = list(map(int, entry[starting_index:starting_index + number_of_field]))
-    if cache_filename is not None:
-        with open(cache_filename, "w") as fp:
+    if cache_file is not None:
+        with open(cache_file, "w") as fp:
             json.dump(data, fp)
     return data
 
 
-def get_data_for_date(date_string: str):
+def get_data_for_date(date_string: str, force: bool = False):
     date_string = normalise_datetime(date_string)
     url = create_source_url(date_string)
-    source_file = get_source_file(url)
+    source_file = get_source_file(url, force)
     parsed_source_file = parse_source_data(source_file)
     cache_filename = CACHE_DIR / f"extracted-{Path(url).name.split('.')[0]}.json"
-    return extract_source_data(parsed_source_file, cache_filename)
+    return extract_source_data(parsed_source_file, cache_filename, force)
 
 
-def cache_data(no_of_days: int = 365) -> None:
+def cache_data(no_of_days: int = 365, force: bool = False) -> None:
     date = datetime.datetime.today()
     date_string = date.strftime("%m-%d-%Y")
     origin_date = datetime.datetime(day=3, month=12, year=2020)
@@ -108,7 +108,7 @@ def cache_data(no_of_days: int = 365) -> None:
     for i in range(no_of_days):
         print(f"\rDownloading for {date_string}... ({i+1}/{no_of_days})", end="")
         try:
-            get_data_for_date(date_string)
+            get_data_for_date(date_string, force)
         except HTTPError:
             pass
         date -= datetime.timedelta(days=1)
