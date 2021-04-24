@@ -80,4 +80,4 @@ class TestCovidTracker:
 
     @staticmethod
     def test_cache_data():
-        assert cache_data(1) is None
+        assert cache_data(1, True) is None
