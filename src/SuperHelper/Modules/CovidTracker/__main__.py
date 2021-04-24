@@ -104,6 +104,21 @@ def get_data_for_date(date_string: str, force: bool = False):
     return extract_source_data(parsed_source_file, cache_filename, force)
 
 
+def get_country_data(country: str, start_date: datetime.datetime = None, end_date: datetime.datetime = None):
+    if end_date is None or end_date > latest_date:
+        end_date = latest_date
+    if start_date is None or start_date < origin_date:
+        start_date = origin_date
+    result = dict()
+    for i in range((end_date-start_date).days+1):
+        date_string = (start_date + datetime.timedelta(days=i)).strftime("%m-%d-%Y")
+        data = get_data_for_date(date_string)
+        country_data = data.get(country, None)
+        if country_data is not None:
+            result[date_string] = country_data
+    return result
+
+
 def cache_data(no_of_days: int = 365, force: bool = False) -> None:
     date = datetime.datetime.today()
     date_string = date.strftime("%m-%d-%Y")
