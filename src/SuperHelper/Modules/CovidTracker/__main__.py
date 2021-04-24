@@ -119,6 +119,8 @@ def get_country_data(country: str, start_date: datetime.datetime = None, end_dat
         country_data = data.get(country, None)
         if country_data is not None:
             result[date_string] = country_data
+        else:
+            raise ValueError(country)
     return result
 
 
