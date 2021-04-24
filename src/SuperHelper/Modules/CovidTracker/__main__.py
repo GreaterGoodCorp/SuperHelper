@@ -152,3 +152,28 @@ def validate_date(value, *_, **__):
             return d
     except ValueError:
         raise click.BadParameter("Invalid date format")
+
+
+@click.group("covid")
+def main():
+    """Shows and plots COVID-19 data."""
+    pass
+
+
+@main.command("tally")
+@click.option("-d", "--date", default="latest", help="The date of the tally.", type=validate_date)
+@click.argument("countries", nargs=-1, type=str, required=True)
+def tally(date, countries):
+    """Shows COVID-19 tally for countries."""
+    click.echo(f"Selected date (MM-DD-YYYY) is {date}")
+    date_obj = datetime.datetime.strptime(date, "%m-%d-%Y")
+    data = []
+    for ct in countries:
+        try:
+            data.append(get_country_data(ct, date_obj, date_obj)[date])
+        except ValueError as ex:
+            raise click.BadParameter(f"Country '{ex.args[0]}' is not found!")
+    click.echo(f"{'Country':<15} {'Confirmed':<15} {'Death':<15} {'Recovered':<15} {'Active':<15}")
+    for ct, d in zip(countries, data):
+        click.echo(f"{ct:<15} {d[0]:<15} {d[1]:<15} {d[2]:<15} {d[3]:<15}")
+    sys.exit(0)
