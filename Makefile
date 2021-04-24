@@ -1,6 +1,4 @@
-all: venv build publish dev-install test docs clean-all clean clean-cfg clean-test
-
-.PHONY: all
+.PHONY: venv build publish dev-install test docs clean-all clean clean-cfg clean-test
 
 venv:
 	python3 -m venv .venv
