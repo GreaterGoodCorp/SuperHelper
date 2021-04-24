@@ -27,6 +27,17 @@ logger.setLevel(logging.DEBUG)
 
 origin_date = datetime.datetime(day=2, month=12, year=2020)
 
+__all__ = [
+    "normalise_datetime",
+    "create_source_url",
+    "get_source_file",
+    "parse_source_data",
+    "extract_source_data",
+    "get_country_data",
+    "get_data_for_date",
+    "cache_data",
+]
+
 
 def normalise_datetime(date_string: str) -> str:
     try:
