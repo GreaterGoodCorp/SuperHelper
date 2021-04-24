@@ -7,6 +7,15 @@ from SuperHelper.Modules.CovidTracker.__main__ import *
 class TestCovidTracker:
     @staticmethod
     @pytest.fixture()
+    def setup():
+        run("add CovidTracker")
+
+    @staticmethod
+    def test_validate_setup(setup):
+        assert "CovidTracker" in run("list").output
+
+    @staticmethod
+    @pytest.fixture()
     def get_valid_date():
         return (datetime.datetime.today() + datetime.timedelta(days=-2)).strftime("%m-%d-%Y")
 
