@@ -18,6 +18,7 @@ test:
 	export SUPER_HELPER_APP_DIR=./.test_dir && pytest --cov
 
 docs:
+	rm -rf docs
 	pdoc --html --config show_source_code=False -fo docs/ src/SuperHelper
 
 clean-all: clean clean-cfg clean-test
