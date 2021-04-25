@@ -9,7 +9,17 @@ except ImportError:
     sys.exit(1)
 
 
-def set_debug_mode(mode: bool = False):
+def set_debug_mode(mode: bool = False) -> None:
+    """Sets debug mode.
+
+    This function should only be called by Core CLI.
+
+    Args:
+        mode (bool): Whether to set debug mode.
+
+    Returns:
+        None
+    """
     global DEBUG
     DEBUG = mode
 
