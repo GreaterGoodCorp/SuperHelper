@@ -250,6 +250,17 @@ def validate_date(value, *_, **__):
         raise click.BadParameter("Invalid date format!")
 
 
+def validate_number_of_days(value, *_, **__):
+    try:
+        val = int(value)
+        if val > (latest_date - origin_date).days:
+            logger.warning(f"Number of days exceed the origin date. Using the maximum number of days...")
+            return (latest_date - origin_date).days
+        return val
+    except ValueError:
+        raise click.BadParameter("Invalid value, must be an integer!")
+
+
 @click.group("covid")
 def main():
     """Shows and plots COVID-19 data."""
