@@ -93,6 +93,11 @@ class TestCovidTracker:
         assert cache_data(1, True) is None
 
     @staticmethod
+    def test_cache():
+        assert run("covid cache -f 2").exit_code == 0
+        assert run("covid cache 2").exit_code == 0
+
+    @staticmethod
     def test_tally():
         assert run("covid tally Singapore").exit_code == 0
         assert run("covid tally singapore").exit_code == 2
