@@ -24,7 +24,7 @@ def set_debug_mode(mode: bool = False) -> None:
     DEBUG = mode
 
 
-__version__ = "1.1.1"
+__version__ = "1.1.2"
 Version = __version__
 
 AppName = "SuperHelper"
