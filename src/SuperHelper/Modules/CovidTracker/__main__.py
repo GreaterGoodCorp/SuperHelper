@@ -279,7 +279,7 @@ def main():
 
 
 @main.command("tally")
-@click.option("-d", "--date", default="latest", help="The date of the tally.", type=validate_date)
+@click.option("-d", "--date", default="latest", help="The date of the tally.", type=validate_date, show_default=True)
 @click.argument("countries", nargs=-1, type=str, required=True)
 def tally(date, countries):
     """Shows COVID-19 tally for countries."""
