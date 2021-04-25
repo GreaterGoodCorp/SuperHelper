@@ -40,7 +40,6 @@ __all__ = [
     "cache_data",
     "main",
     "CACHE_DIR",
-    "split_int",
 ]
 
 
@@ -260,16 +259,6 @@ def validate_number_of_days(value, *_, **__):
         return val
     except ValueError:
         raise click.BadParameter("Invalid value, must be an integer!")
-
-
-def split_int(n: int) -> (int, int):
-    """Splits an integer into 2 factors so that their difference is smallest."""
-    n = n if n % 2 else n + 1
-    a = int(np.sqrt(n))
-    while not n % a:
-        a += 1
-    b = int(n / a)
-    return a, b
 
 
 @click.group("covid")
