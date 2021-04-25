@@ -39,6 +39,10 @@ uninstall the pre-release and install this new version, **DO NOT** use `pip upgr
 
 - Include `req.json` of built-in modules on packaging
 
+**1.1.2**:
+
+- Fixed a bug that caused logging messages to be printed twice when DEBUG mode is enabled
+
 #### Non-functional changes
 
 - Added a more comprehensive HTML `docs`
