@@ -18,7 +18,7 @@ Python (`python3.6` and above) with `pip` installed.
 For most end-users, the latest version of the application can be installed by running:
 
 ```bash
-pip3 install SuperHelper==1.0.0
+pip3 install SuperHelper
 ```
 
 > Notes:
