@@ -11,17 +11,17 @@ except ImportError:
     print("Module 'click' missing! Please install it first.", file=sys.stderr)
     sys.exit(1)
 
-from SuperHelper import AppDir, AppName, Version
+import SuperHelper
 from SuperHelper.Core.Utils import setup_core_logger
 
-CONFIG_FILENAME = f"{AppName}.cfg"
+CONFIG_FILENAME = f"{SuperHelper.AppName}.cfg"
 """Name of the config file."""
-CONFIG_PATH = AppDir / CONFIG_FILENAME
+CONFIG_PATH = SuperHelper.AppDir / CONFIG_FILENAME
 """Path to the config file."""
 
-LOGGING_FILENAME = f"{AppName}.log"
+LOGGING_FILENAME = f"{SuperHelper.AppName}.log"
 """Name of the logging file."""
-LOGGING_PATH = AppDir / LOGGING_FILENAME
+LOGGING_PATH = SuperHelper.AppDir / LOGGING_FILENAME
 """Path to the logging file."""
 
 version_message = f"%(prog)s-%(version)s {platform.platform(terse=True)} Python-{platform.python_version()}"
@@ -38,7 +38,7 @@ __all__ = [
 
 # Program entry point
 @click.group()
-@click.version_option(Version, prog_name=AppName, message=version_message)
+@click.version_option(SuperHelper.Version, prog_name=SuperHelper.AppName, message=version_message)
 @click.option("--debug", help="Enable debug mode", default=False, is_flag=True)
 def cli(debug) -> None:
     """Executes SuperHelper tools."""
