@@ -140,7 +140,7 @@ def activate_app(config: dict[str, ...]) -> None:
             sys.exit(1)
     entries: typing.List[str] = [config["BL_SECTION_START"]]
     for domain in config["BL_DOMAINS"]:
-        logger.info(f"Adding entry {domain}", "Done")
+        logger.info(f"Adding entry {domain} -> Done")
         entries.append(f"127.0.0.1   {domain}")
         entries.append(f"127.0.0.1   www.{domain}")
     entries.append(config["BL_SECTION_END"])
@@ -151,7 +151,7 @@ def activate_app(config: dict[str, ...]) -> None:
         flush_dns()
         click.echo("FocusEnabler is enabled!")
     except OSError:
-        logger.exception("Unable to write to host file")
+        logger.exception("Writing to host file -> Failed")
         sys.exit(1)
     sys.exit(0)
 
@@ -182,7 +182,7 @@ def deactivate_app(config: dict[str, ...]) -> None:
             fp.write(content)
         click.echo("FocusEnabler is disabled!")
     except OSError:
-        logger.exception("Writing to host file", "Failed", content_colour="red", fp=sys.stderr)
+        logger.exception("Writing to host file -> Failed")
         sys.exit(1)
     sys.exit(0)
 
