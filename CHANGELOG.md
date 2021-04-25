@@ -31,6 +31,7 @@ uninstall the pre-release and install this new version, **DO NOT** use `pip upgr
 #### New features
 
 - Added a new built-in module: `CovidTracker`
+- Added global debugging mode
 
 #### Bug fixes
 
@@ -38,7 +39,7 @@ uninstall the pre-release and install this new version, **DO NOT** use `pip upgr
 
 #### Non-functional changes
 
-*None*
+- Added a more comprehensive HTML `docs`
 
 #### Notes
 
