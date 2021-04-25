@@ -93,11 +93,6 @@ class TestCovidTracker:
         assert cache_data(1, True) is None
 
     @staticmethod
-    def test_split_int():
-        assert split_int(6) == (2, 3)
-        assert split_int(2400) == (48, 50)
-
-    @staticmethod
     def test_tally():
         assert run("covid tally Singapore").exit_code == 0
         assert run("covid tally singapore").exit_code == 2
