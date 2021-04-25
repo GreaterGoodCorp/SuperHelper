@@ -42,5 +42,3 @@ __all__ = [
     "set_debug_mode",
     "DEBUG",
 ]
-
-__pdoc__ = {"SuperHelper.Tests": False}
