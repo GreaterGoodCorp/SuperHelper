@@ -34,6 +34,8 @@ setup(
     ],
     package_dir={"": "src"},
     packages=find_packages(where="src", exclude=("SuperHelper.Tests",)),
+    package_data={"": ["*.json"]},
+    include_package_data=True,
     entry_points={
         "console_scripts": ["helper = SuperHelper.Core:main_entry"],
     },
