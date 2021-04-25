@@ -267,7 +267,11 @@ def tally(date, countries):
             data.append(get_country_data(ct, date_obj, date_obj)[date])
         except ValueError as ex:
             raise click.BadParameter(f"Country '{ex.args[0]}' is not found!")
-    click.echo(f"{'Country':<15} {'Confirmed':<15} {'Death':<15} {'Recovered':<15} {'Active':<15}")
+    header = f"| {'Country':^15} | {'Confirmed':^15} | {'Death':^15} | {'Recovered':^15} | {'Active':^15} |"
+    click.echo("-" * len(header))
+    click.echo(header)
+    click.echo("-" * len(header))
     for ct, d in zip(countries, data):
-        click.echo(f"{ct:<15} {d[0]:<15} {d[1]:<15} {d[2]:<15} {d[3]:<15}")
+        click.echo(f"| {ct:^15} | {d[0]:^15} | {d[1]:^15} | {d[2]:^15} | {d[3]:^15} |")
+        click.echo("-" * len(header))
     sys.exit(0)
