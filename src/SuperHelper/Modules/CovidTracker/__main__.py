@@ -299,3 +299,48 @@ def tally(date, countries):
         click.echo(f"| {ct:^15} | {d[0]:^15} | {d[1]:^15} | {d[2]:^15} | {d[3]:^15} |")
         click.echo("-" * len(header))
     sys.exit(0)
+
+
+@main.command("plot")
+@click.option("-e", "--end", default="latest", help="The end date of the tally.",
+              type=validate_date, show_default=True)
+@click.option("-n", "--number-of-days", default=90, type=validate_number_of_days,
+              help="Number of days of data to plot.", show_default=True)
+@click.option("-c", "--confirmed", default=False, is_flag=True,
+              help="Whether to plot the number of confirmed cases.", show_default=True)
+@click.option("-d", "--death", default=False, is_flag=True,
+              help="Whether to plot the number of deaths.", show_default=True)
+@click.option("-r", "--recovered", default=False, is_flag=True,
+              help="Whether to plot the number of recovered cases.", show_default=True)
+@click.option("-a", "--active", default=False, is_flag=True,
+              help="Whether to plot the number of active cases.", show_default=True)
+@click.option("-s", "--scale", default="log", type=click.Choice(["log", "linear"]))
+@click.argument("country", type=str, required=True)
+def plot(end, number_of_days, confirmed, death, recovered, active, country, scale):
+    """Plots the COVID-19 tally of countries."""
+    if not (confirmed or death or recovered or active):
+        logger.warning("At least one plot type must be enabled!")
+        sys.exit(1)
+    click.echo(f"Selected end date (MM-DD-YYYY) is {end}")
+    click.echo(f"Selected number of days is {number_of_days}")
+    x_data = np.linspace(-(number_of_days - 1), 0, number_of_days)
+    try:
+        data = get_country_data(country, parse(end) - timedelta(days=number_of_days - 1), parse(end))
+    except ValueError:
+        raise click.BadParameter(f"Country '{country}' is not found!")
+    if confirmed:
+        plt.plot(x_data, np.array([x[0] for x in data.values()]), "b-", label="Confirmed")
+    if death:
+        plt.plot(x_data, np.array([x[1] for x in data.values()]), "k-", label="Death")
+    if recovered:
+        plt.plot(x_data, np.array([x[2] for x in data.values()]), "g-", label="Recovered")
+    if active:
+        plt.plot(x_data, np.array([x[3] for x in data.values()]), "r-", label="Active")
+    plt.yscale(scale)
+    plt.title("COVID-19 tally for " + country)
+    plt.xlabel("Number of days since the latest report")
+    plt.ylabel("Number of cases")
+    plt.legend(loc="best")
+    if not DEBUG:
+        plt.show()
+    sys.exit(0)
