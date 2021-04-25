@@ -99,3 +99,13 @@ class TestCovidTracker:
 
         assert run("covid tally -d 12.02.2021 Singapore").exit_code == 0
         assert run("covid tally -d fast Singapore").exit_code == 2
+
+    @staticmethod
+    def test_plot():
+        assert run("--debug covid plot -cdra -n 2 Singapore").exit_code == 0
+        assert run("--debug covid plot -c -n 2 Singapore").exit_code == 0
+        assert run("--debug covid plot -d -n 2 Singapore").exit_code == 0
+        assert run("--debug covid plot -r -n 2 Singapore").exit_code == 0
+        assert run("--debug covid plot -a -n 2 Singapore").exit_code == 0
+        assert run("--debug covid plot -n 2 Singapore").exit_code == 1
+        assert run("--debug covid plot -cdra -n 2 singapore").exit_code == 2
