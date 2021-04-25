@@ -16,11 +16,14 @@ AppName = "SuperHelper"
 AppDir = pathlib.Path(os.getenv("SUPER_HELPER_APP_DIR", click.get_app_dir(AppName)))
 """Path to the application directory."""
 AppDir.mkdir(parents=True, exist_ok=True)
+DEBUG = False
+"""Whether the debug mode is on."""
 
 __all__ = [
     "Version",
     "AppName",
     "AppDir",
+    "DEBUG",
 ]
 
 __pdoc__ = {"SuperHelper.Tests": False}

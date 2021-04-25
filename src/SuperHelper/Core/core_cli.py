@@ -43,6 +43,7 @@ __all__ = [
 def cli(debug) -> None:
     """Executes SuperHelper tools."""
     if debug:
+        SuperHelper.DEBUG = True
         make_logger_global(True)
     pass
 
