@@ -50,3 +50,22 @@ uninstall the pre-release and install this new version, **DO NOT** use `pip upgr
 #### Notes
 
 *None*
+
+### What's new in 1.2.0?
+
+#### New features
+
+*None*
+
+#### Bug fixes
+
+- Fixed a bug that caused the help messages to be incorrectly formatted (#32)
+- Fixed a bug that caused the logger syntax error to occur (#33)
+
+#### Non-functional changes
+
+*None*
+
+#### Notes
+
+*None*
