@@ -35,7 +35,9 @@ uninstall the pre-release and install this new version, **DO NOT** use `pip upgr
 
 #### Bug fixes
 
-*None*
+**1.1.1**:
+
+- Include `req.json` of built-in modules on packaging
 
 #### Non-functional changes
 
