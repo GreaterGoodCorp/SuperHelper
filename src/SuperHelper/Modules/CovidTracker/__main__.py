@@ -252,6 +252,8 @@ def validate_date(value, *_, **__):
 
 def validate_number_of_days(value, *_, **__):
     try:
+        if value == "max":
+            return (latest_date - origin_date).days
         val = int(value)
         if val > (latest_date - origin_date).days:
             logger.warning(f"Number of days exceed the origin date. Using the maximum number of days...")
