@@ -335,3 +335,12 @@ def plot(end, number_of_days, confirmed, death, recovered, active, country, scal
     if not SuperHelper.DEBUG:
         plt.show()
     sys.exit(0)
+
+
+@main.command("cache")
+@click.option("-f", "--force", is_flag=True, default=False, help="Whether to force re-download or re-extraction.")
+@click.argument("days", default="max", type=validate_number_of_days)
+def cache(days, force):
+    """Pre-downloads and pre-extracts data to speed up further operations."""
+    cache_data(days, force)
+    sys.exit(0)
