@@ -295,7 +295,7 @@ def tally(date, countries):
 @main.command("plot")
 @click.option("-e", "--end", default="latest", help="The end date of the tally.",
               type=validate_date, show_default=True)
-@click.option("-n", "--number-of-days", default=90, type=validate_number_of_days,
+@click.option("-n", "--number-of-days", default="max", type=validate_number_of_days,
               help="Number of days of data to plot.", show_default=True)
 @click.option("-c", "--confirmed", default=False, is_flag=True,
               help="Whether to plot the number of confirmed cases.", show_default=True)
