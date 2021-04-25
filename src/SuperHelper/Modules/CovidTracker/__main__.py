@@ -15,11 +15,11 @@ import matplotlib.pyplot as plt
 from dateutil.parser import parse
 import click
 
-from SuperHelper import AppDir, DEBUG
+import SuperHelper
 from SuperHelper.Core.Utils import PathLike
 
 MODULE_NAME: str = "CovidTracker"
-MODULE_DIR = AppDir / MODULE_NAME
+MODULE_DIR = SuperHelper.AppDir / MODULE_NAME
 MODULE_DIR.mkdir(parents=True, exist_ok=True)
 CACHE_DIR = MODULE_DIR / "Cache"
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
@@ -341,6 +341,6 @@ def plot(end, number_of_days, confirmed, death, recovered, active, country, scal
     plt.xlabel("Number of days since the latest report")
     plt.ylabel("Number of cases")
     plt.legend(loc="best")
-    if not DEBUG:
+    if not SuperHelper.DEBUG:
         plt.show()
     sys.exit(0)
