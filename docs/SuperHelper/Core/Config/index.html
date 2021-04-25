@@ -22,6 +22,24 @@
 <h1 class="title">Module <code>SuperHelper.Core.Config</code></h1>
 </header>
 <section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># Configuration manager implementation
+from .config_class import Config, DefaultCoreConfig, make_config_global, pass_config
+# Configuration loader and saver
+from .app_config import load_app_config, save_app_config
+
+__all__ = [
+    &#34;Config&#34;,
+    &#34;DefaultCoreConfig&#34;,
+    &#34;make_config_global&#34;,
+    &#34;pass_config&#34;,
+    &#34;load_app_config&#34;,
+    &#34;save_app_config&#34;,
+]</code></pre>
+</details>
 </section>
 <section>
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
@@ -58,6 +76,36 @@
 <dt><code>SystemExit</code></dt>
 <dd>Config file is unreadable.</dd>
 </dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_app_config(config_path: PathLike) -&gt; None:
+    &#34;&#34;&#34;Loads the configuration of the application.
+
+    Args:
+        config_path (PathLike): The path to config file.
+
+    Returns:
+        None
+
+    Raises:
+        SystemExit: Config file is unreadable.
+    &#34;&#34;&#34;
+    TypeCheck.ensure_path_like(config_path, &#34;config_path&#34;)
+    try:
+        with open(config_path) as fp:
+            # De-serialise JSON to Python&#39;s dict and update
+            config = Config.from_dict(json.load(fp))
+            config.apply_core_patch(DefaultCoreConfig)
+            make_config_global(config)
+    except FileNotFoundError:
+        logger.warning(&#34;Config file not found! Auto-configuring...&#34;, exc_info=True)
+        make_config_global(Config())
+    except OSError:
+        logger.exception(&#34;Config loader failed due to file being unreadable!&#34;)
+        sys.exit(1)</code></pre>
+</details>
 </dd>
 <dt id="SuperHelper.Core.Config.make_config_global"><code class="name flex">
 <span>def <span class="ident">make_config_global</span></span>(<span>cfg: <a title="SuperHelper.Core.Config.Config" href="#SuperHelper.Core.Config.Config">Config</a>) ‑> NoneType</span>
@@ -71,6 +119,22 @@
 </dl>
 <h2 id="returns">Returns</h2>
 <p>None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_config_global(cfg: Config) -&gt; None:
+    &#34;&#34;&#34;Makes the configuration global.
+
+    Args:
+        cfg (Config): The `Config` instance.
+
+    Returns:
+        None
+    &#34;&#34;&#34;
+    global global_config
+    global_config = cfg</code></pre>
+</details>
 </dd>
 <dt id="SuperHelper.Core.Config.pass_config"><code class="name flex">
 <span>def <span class="ident">pass_config</span></span>(<span>core: bool = None, module_name: str = None, lock: bool = False, param_name: str = 'config') ‑> Callable</span>
@@ -99,6 +163,70 @@ decorator will capture that signal, save the config (if locked) before returning
 <dt><code>ValueError</code></dt>
 <dd>Both <code>core</code> and <code>module_name</code> are specified.</dd>
 </dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pass_config(core: bool = None, module_name: str = None, lock: bool = False, param_name: str = &#34;config&#34;) -&gt; Callable:
+    &#34;&#34;&#34;Passes the requested config to decorated functions.
+
+    The wrapped function will receive the config (as requested). When the function returns (or raises SystemExit), this
+    decorator will capture that signal, save the config (if locked) before returning (or re-raising SystemExit).
+
+    Args:
+        core (bool): Whether to request core config.
+        module_name (str): The name of the module.
+        lock (bool): Whether to lock the config, i.e allow writing to the config.
+        param_name (str): The name of the parameter that the config will be passed as.
+
+    Returns:
+        A Callable instance (the decorated function).
+
+    Raises:
+        SystemExit: Re-raises the `SystemExit()` raised by the wrapped function.
+        ValueError: Both `core` and `module_name` are specified.
+    &#34;&#34;&#34;
+
+    def decorator(f: Callable) -&gt; Callable:
+        @wraps(f)
+        def wrapper(*args, **kwargs) -&gt; ...:
+            if core is None and module_name is None:
+                return f(global_config, *args, **kwargs)
+            elif core is not None and module_name is None:
+                if lock:
+                    config = global_config.get_core_config(lock=True)
+                    kwargs[param_name] = config
+                    try:
+                        ret_val = f(*args, **kwargs)
+                        global_config.set_core_config(config)
+                        return ret_val
+                    except SystemExit:
+                        global_config.set_core_config(config)
+                        raise
+                else:
+                    kwargs[param_name] = global_config.get_core_config(lock=False)
+                    return f(*args, **kwargs)
+            elif core is None and module_name is not None:
+                if lock:
+                    config = global_config.get_module_config(module_name, lock=True)
+                    kwargs[param_name] = config
+                    try:
+                        ret_val = f(*args, **kwargs)
+                        global_config.set_module_config(module_name, config)
+                        return ret_val
+                    except SystemExit:
+                        global_config.set_module_config(module_name, config)
+                        raise
+                else:
+                    kwargs[param_name] = global_config.get_module_config(module_name, lock=lock)
+                    return f(*args, **kwargs)
+            else:
+                raise ValueError(&#34;Core and module name cannot be enabled at the same time!&#34;)
+
+        return wrapper
+
+    return decorator</code></pre>
+</details>
 </dd>
 <dt id="SuperHelper.Core.Config.save_app_config"><code class="name flex">
 <span>def <span class="ident">save_app_config</span></span>(<span>config: <a title="SuperHelper.Core.Config.config_class.Config" href="config_class.html#SuperHelper.Core.Config.config_class.Config">Config</a>, config_path: ~PathLike) ‑> NoneType</span>
@@ -119,6 +247,32 @@ decorator will capture that signal, save the config (if locked) before returning
 <dt><code>SystemExit</code></dt>
 <dd>Config file is not writable.</dd>
 </dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pass_config()
+def save_app_config(config: Config, config_path: PathLike) -&gt; None:
+    &#34;&#34;&#34;Saves the configuration of the application.
+
+    Args:
+        config (Config): The global Config instance
+        config_path (PathLike): The path to config file
+
+    Returns:
+        None
+
+    Raises:
+        SystemExit: Config file is not writable.
+    &#34;&#34;&#34;
+    TypeCheck.ensure_path_like(config_path, &#34;config_path&#34;)
+    try:
+        with open(config_path, &#34;w&#34;) as fp:
+            json.dump(config.__dict__(), fp)
+    except OSError:
+        logger.exception(&#34;Config saver failed!&#34;)
+        sys.exit(1)</code></pre>
+</details>
 </dd>
 </dl>
 </section>
@@ -131,6 +285,182 @@ decorator will capture that signal, save the config (if locked) before returning
 </code></dt>
 <dd>
 <div class="desc"><p>The configuration of the application.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Config(metaclass=Singleton):
+    &#34;&#34;&#34;The configuration of the application.&#34;&#34;&#34;
+    _core_lock: bool = False
+
+    def __init__(self, core: dict[str, ...] = None, modules: dict[str, dict[str, ...]] = None) -&gt; None:
+        self._Core: dict[str, ...] = core if core is not None else DefaultCoreConfig
+        self._Modules: dict[str, ...] = modules if modules is not None else dict()
+        return
+
+    def get_core_config(self, lock: bool = True) -&gt; dict[str, ...]:
+        &#34;&#34;&#34;Gets the configuration of Core CLI.
+
+        This function is intended for internal use only, used for the decorator `pass_config`.
+
+        Args:
+            lock (bool): Whether to lock the config or not.
+
+        Returns:
+            A dictionary mapping keys to corresponding values of the core config. Each entry is represented by a
+            key-value pair of the dictionary. For example:
+
+            ```
+            {&#34;DEBUG&#34;: ..., &#34;INSTALLED_MODULES&#34;: [...]}
+            ```
+
+            The keys are always strings, and the values can be of any JSON-serializable type.
+
+        Raises:
+            RuntimeError: The core config is locked by another call.
+        &#34;&#34;&#34;
+        TypeCheck.ensure_bool(lock, &#34;lock&#34;)
+        if Config._core_lock:
+            raise RuntimeError(&#34;Core config is already retrieved!&#34;)
+        if lock:
+            # Lock core config
+            Config._core_lock = True
+        return copy.deepcopy(self._Core)
+
+    def set_core_config(self, config: dict[str, ...]) -&gt; None:
+        &#34;&#34;&#34;Sets the configuration of Core CLI.
+
+        This function is intended for internal use only, used for the decorator `pass_config`.
+
+        Args:
+            config (dict[str, ...]): A dictionary with string keys of the core configuration.
+
+        Returns:
+            None
+
+        Raises:
+            RuntimeError: The last retrieval of the core config was not locked, hence it is read-only.
+        &#34;&#34;&#34;
+        # Release lock core config
+        if not Config._core_lock:
+            raise RuntimeError(&#34;No lock was acquired! Write access is disabled!&#34;)
+        Config._core_lock = False
+        self._Core = copy.deepcopy(config)
+        return
+
+    def apply_core_patch(self, config: dict[str, ...]) -&gt; None:
+        &#34;&#34;&#34;Applies a new patch to core configuration.
+
+        This function should only be used by Core CLI.
+
+        Args:
+            config (dict[str, ...]): The patch of the configuration.
+
+        Returns:
+            None
+
+        Raises:
+            RuntimeError: An error has occurred in `self.get_core_config()`
+        &#34;&#34;&#34;
+        # Secure core config
+        core_config = self.get_core_config()
+        # Apply patch
+        config = copy.deepcopy(config)
+        config.update(core_config)
+        # Release core config
+        self.set_core_config(core_config)
+
+    def get_module_config(self, module_name: str, lock: bool = True) -&gt; dict[str, ...]:
+        &#34;&#34;&#34;Gets the configuration of the specified module.
+
+        This function is intended for internal use only, used for the decorator `pass_config`.
+
+        Args:
+            module_name (str): The name of the module that the config belongs to.
+            lock (bool): Whether to lock the config or not.
+
+        Returns:
+            A dictionary mapping keys to corresponding values of the module config. Each entry is represented by a
+            key-value pair of the dictionary. For example:
+
+            ```
+            {&#34;DEBUG&#34;: ..., &#34;INSTALLED_MODULES&#34;: [...]}
+            ```
+
+            The keys are always strings, and the values can be of any JSON-serializable type.
+
+        Raises:
+            RuntimeError: The module config is locked by another call.
+        &#34;&#34;&#34;
+        lock_name = f&#34;{module_name}_lock&#34;
+        if getattr(self, lock_name, False):
+            raise RuntimeError(f&#34;{module_name} config is already retrieved!&#34;)
+        if lock:
+            # Lock module config
+            setattr(self, lock_name, True)
+        if module_name not in self._Modules.keys():
+            # Make placeholder
+            self._Modules[module_name] = dict()
+        return copy.deepcopy(self._Modules[module_name])
+
+    def set_module_config(self, module_name: str, config: dict[str, ...]) -&gt; None:
+        &#34;&#34;&#34;Sets the module configuration.
+
+        This function is intended for internal use only, used for the decorator `pass_config`.
+
+        Args:
+            module_name (str): The name of the module that the config belongs to.
+            config (dict[str, ...]): A dictionary with string keys of the core configuration.
+
+        Returns:
+            None
+
+        Raises:
+            RuntimeError: The last retrieval of the module config was not locked, hence it is read-only.
+        &#34;&#34;&#34;
+        # Release lock module config
+        lock_name = f&#34;{module_name}_lock&#34;
+        is_locked = not getattr(self, lock_name, False)
+        is_set = module_name in config.keys()
+        if is_locked and not is_set:
+            raise RuntimeError(&#34;No lock was acquired! Write access is disabled!&#34;)
+        setattr(self, lock_name, False)
+        self._Modules[module_name] = copy.deepcopy(config)
+        return
+
+    def apply_module_patch(self, module_name: str, config: dict[str, ...]) -&gt; None:
+        &#34;&#34;&#34;Applies a new patch to the module configuration.
+
+        Args:
+            module_name (str): The name of the module to apply patch to.
+            config (dict[str, ...]): The patch of the configuration.
+
+        Returns:
+            None
+        &#34;&#34;&#34;
+        try:
+            # Secure module config
+            module_config = self.get_module_config(module_name)
+            # Apply patch
+            config = copy.deepcopy(config)
+            config.update(module_config)
+            # Release module config
+            self.set_module_config(module_name, config)
+        except RuntimeError:
+            logger.exception(f&#34;Cannot secure module &#39;{module_name}&#39; config&#34;)
+            raise
+
+    def __dict__(self) -&gt; dict[str, dict[str, ...]]:
+        return {
+            &#34;Core&#34;: self._Core,
+            &#34;Modules&#34;: self._Modules,
+        }
+
+    @staticmethod
+    def from_dict(config: dict[str]) -&gt; Config:
+        if &#34;Core&#34; in config.keys() and &#34;Modules&#34; in config.keys():
+            return Config(core=config[&#34;Core&#34;], modules=config[&#34;Modules&#34;])</code></pre>
+</details>
 <h3>Static methods</h3>
 <dl>
 <dt id="SuperHelper.Core.Config.Config.from_dict"><code class="name flex">
@@ -138,6 +468,15 @@ decorator will capture that signal, save the config (if locked) before returning
 </code></dt>
 <dd>
 <div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def from_dict(config: dict[str]) -&gt; Config:
+    if &#34;Core&#34; in config.keys() and &#34;Modules&#34; in config.keys():
+        return Config(core=config[&#34;Core&#34;], modules=config[&#34;Modules&#34;])</code></pre>
+</details>
 </dd>
 </dl>
 <h3>Methods</h3>
@@ -160,6 +499,32 @@ decorator will capture that signal, save the config (if locked) before returning
 <dt><code>RuntimeError</code></dt>
 <dd>An error has occurred in <code>self.get_core_config()</code></dd>
 </dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def apply_core_patch(self, config: dict[str, ...]) -&gt; None:
+    &#34;&#34;&#34;Applies a new patch to core configuration.
+
+    This function should only be used by Core CLI.
+
+    Args:
+        config (dict[str, ...]): The patch of the configuration.
+
+    Returns:
+        None
+
+    Raises:
+        RuntimeError: An error has occurred in `self.get_core_config()`
+    &#34;&#34;&#34;
+    # Secure core config
+    core_config = self.get_core_config()
+    # Apply patch
+    config = copy.deepcopy(config)
+    config.update(core_config)
+    # Release core config
+    self.set_core_config(core_config)</code></pre>
+</details>
 </dd>
 <dt id="SuperHelper.Core.Config.Config.apply_module_patch"><code class="name flex">
 <span>def <span class="ident">apply_module_patch</span></span>(<span>self, module_name: str, config: dict[str, ...]) ‑> NoneType</span>
@@ -175,6 +540,32 @@ decorator will capture that signal, save the config (if locked) before returning
 </dl>
 <h2 id="returns">Returns</h2>
 <p>None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def apply_module_patch(self, module_name: str, config: dict[str, ...]) -&gt; None:
+    &#34;&#34;&#34;Applies a new patch to the module configuration.
+
+    Args:
+        module_name (str): The name of the module to apply patch to.
+        config (dict[str, ...]): The patch of the configuration.
+
+    Returns:
+        None
+    &#34;&#34;&#34;
+    try:
+        # Secure module config
+        module_config = self.get_module_config(module_name)
+        # Apply patch
+        config = copy.deepcopy(config)
+        config.update(module_config)
+        # Release module config
+        self.set_module_config(module_name, config)
+    except RuntimeError:
+        logger.exception(f&#34;Cannot secure module &#39;{module_name}&#39; config&#34;)
+        raise</code></pre>
+</details>
 </dd>
 <dt id="SuperHelper.Core.Config.Config.get_core_config"><code class="name flex">
 <span>def <span class="ident">get_core_config</span></span>(<span>self, lock: bool = True) ‑> dict</span>
@@ -198,6 +589,39 @@ key-value pair of the dictionary. For example:</p>
 <dt><code>RuntimeError</code></dt>
 <dd>The core config is locked by another call.</dd>
 </dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_core_config(self, lock: bool = True) -&gt; dict[str, ...]:
+    &#34;&#34;&#34;Gets the configuration of Core CLI.
+
+    This function is intended for internal use only, used for the decorator `pass_config`.
+
+    Args:
+        lock (bool): Whether to lock the config or not.
+
+    Returns:
+        A dictionary mapping keys to corresponding values of the core config. Each entry is represented by a
+        key-value pair of the dictionary. For example:
+
+        ```
+        {&#34;DEBUG&#34;: ..., &#34;INSTALLED_MODULES&#34;: [...]}
+        ```
+
+        The keys are always strings, and the values can be of any JSON-serializable type.
+
+    Raises:
+        RuntimeError: The core config is locked by another call.
+    &#34;&#34;&#34;
+    TypeCheck.ensure_bool(lock, &#34;lock&#34;)
+    if Config._core_lock:
+        raise RuntimeError(&#34;Core config is already retrieved!&#34;)
+    if lock:
+        # Lock core config
+        Config._core_lock = True
+    return copy.deepcopy(self._Core)</code></pre>
+</details>
 </dd>
 <dt id="SuperHelper.Core.Config.Config.get_module_config"><code class="name flex">
 <span>def <span class="ident">get_module_config</span></span>(<span>self, module_name: str, lock: bool = True) ‑> dict</span>
@@ -223,6 +647,43 @@ key-value pair of the dictionary. For example:</p>
 <dt><code>RuntimeError</code></dt>
 <dd>The module config is locked by another call.</dd>
 </dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_module_config(self, module_name: str, lock: bool = True) -&gt; dict[str, ...]:
+    &#34;&#34;&#34;Gets the configuration of the specified module.
+
+    This function is intended for internal use only, used for the decorator `pass_config`.
+
+    Args:
+        module_name (str): The name of the module that the config belongs to.
+        lock (bool): Whether to lock the config or not.
+
+    Returns:
+        A dictionary mapping keys to corresponding values of the module config. Each entry is represented by a
+        key-value pair of the dictionary. For example:
+
+        ```
+        {&#34;DEBUG&#34;: ..., &#34;INSTALLED_MODULES&#34;: [...]}
+        ```
+
+        The keys are always strings, and the values can be of any JSON-serializable type.
+
+    Raises:
+        RuntimeError: The module config is locked by another call.
+    &#34;&#34;&#34;
+    lock_name = f&#34;{module_name}_lock&#34;
+    if getattr(self, lock_name, False):
+        raise RuntimeError(f&#34;{module_name} config is already retrieved!&#34;)
+    if lock:
+        # Lock module config
+        setattr(self, lock_name, True)
+    if module_name not in self._Modules.keys():
+        # Make placeholder
+        self._Modules[module_name] = dict()
+    return copy.deepcopy(self._Modules[module_name])</code></pre>
+</details>
 </dd>
 <dt id="SuperHelper.Core.Config.Config.set_core_config"><code class="name flex">
 <span>def <span class="ident">set_core_config</span></span>(<span>self, config: dict[str, ...]) ‑> NoneType</span>
@@ -242,6 +703,31 @@ key-value pair of the dictionary. For example:</p>
 <dt><code>RuntimeError</code></dt>
 <dd>The last retrieval of the core config was not locked, hence it is read-only.</dd>
 </dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_core_config(self, config: dict[str, ...]) -&gt; None:
+    &#34;&#34;&#34;Sets the configuration of Core CLI.
+
+    This function is intended for internal use only, used for the decorator `pass_config`.
+
+    Args:
+        config (dict[str, ...]): A dictionary with string keys of the core configuration.
+
+    Returns:
+        None
+
+    Raises:
+        RuntimeError: The last retrieval of the core config was not locked, hence it is read-only.
+    &#34;&#34;&#34;
+    # Release lock core config
+    if not Config._core_lock:
+        raise RuntimeError(&#34;No lock was acquired! Write access is disabled!&#34;)
+    Config._core_lock = False
+    self._Core = copy.deepcopy(config)
+    return</code></pre>
+</details>
 </dd>
 <dt id="SuperHelper.Core.Config.Config.set_module_config"><code class="name flex">
 <span>def <span class="ident">set_module_config</span></span>(<span>self, module_name: str, config: dict[str, ...]) ‑> NoneType</span>
@@ -263,6 +749,35 @@ key-value pair of the dictionary. For example:</p>
 <dt><code>RuntimeError</code></dt>
 <dd>The last retrieval of the module config was not locked, hence it is read-only.</dd>
 </dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_module_config(self, module_name: str, config: dict[str, ...]) -&gt; None:
+    &#34;&#34;&#34;Sets the module configuration.
+
+    This function is intended for internal use only, used for the decorator `pass_config`.
+
+    Args:
+        module_name (str): The name of the module that the config belongs to.
+        config (dict[str, ...]): A dictionary with string keys of the core configuration.
+
+    Returns:
+        None
+
+    Raises:
+        RuntimeError: The last retrieval of the module config was not locked, hence it is read-only.
+    &#34;&#34;&#34;
+    # Release lock module config
+    lock_name = f&#34;{module_name}_lock&#34;
+    is_locked = not getattr(self, lock_name, False)
+    is_set = module_name in config.keys()
+    if is_locked and not is_set:
+        raise RuntimeError(&#34;No lock was acquired! Write access is disabled!&#34;)
+    setattr(self, lock_name, False)
+    self._Modules[module_name] = copy.deepcopy(config)
+    return</code></pre>
+</details>
 </dd>
 </dl>
 </dd>

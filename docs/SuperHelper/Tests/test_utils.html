@@ -1,0 +1,1624 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>SuperHelper.Tests.test_utils API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>SuperHelper.Tests.test_utils</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import sys
+
+import pytest
+
+from SuperHelper.Core.Utils import BitOps, Cryptographer, FileOps, FP, TypeCheck
+
+
+class TestBitOps:
+    @staticmethod
+    @pytest.fixture()
+    def a():
+        return 0b10101010
+
+    @staticmethod
+    def test_is_bit_set(a):
+        assert BitOps.is_bit_set(a, 1)
+        assert BitOps.is_bit_set(a, 3)
+        assert not BitOps.is_bit_set(a, 2)
+        assert not BitOps.is_bit_set(a, 16)
+
+    @staticmethod
+    def test_set_bit(a):
+        assert BitOps.set_bit(a, 1) == a
+        assert BitOps.set_bit(a, 0) == 0b10101011
+        assert BitOps.set_bit(a, 5) == a
+        assert BitOps.set_bit(a, 4) == 0b10111010
+
+    @staticmethod
+    def test_unset_bit(a):
+        assert BitOps.unset_bit(a, 0) == a
+        assert BitOps.unset_bit(a, 1) == 0b10101000
+        assert BitOps.unset_bit(a, 4) == a
+        assert BitOps.unset_bit(a, 5) == 0b10001010
+
+
+class TestCryptographer:
+    @staticmethod
+    @pytest.fixture(scope=&#34;session&#34;)
+    def binary_salt():
+        return Cryptographer.make_salt()
+
+    @staticmethod
+    @pytest.fixture()
+    def string_salt(binary_salt):
+        return Cryptographer.encode_salt(binary_salt)
+
+    @staticmethod
+    @pytest.fixture()
+    def true_key():
+        return &#34;test_key&#34;
+
+    @staticmethod
+    @pytest.fixture()
+    def false_key():
+        return &#34;t3st_k3y&#34;
+
+    @staticmethod
+    @pytest.fixture()
+    def data():
+        return &#34;data&#34;
+
+    @staticmethod
+    @pytest.fixture()
+    def encrypter(string_salt, true_key):
+        return Cryptographer.make_encrypter(string_salt, true_key)
+
+    @staticmethod
+    @pytest.fixture()
+    def decrypter(string_salt, true_key):
+        return Cryptographer.make_decrypter(string_salt, true_key)
+
+    @staticmethod
+    @pytest.fixture()
+    def encrypted_data(encrypter, data):
+        return encrypter.encrypt(data.encode())
+
+    @staticmethod
+    @pytest.fixture()
+    def decrypted_data(decrypter, encrypted_data):
+        return decrypter.decrypt(encrypted_data)
+
+    @staticmethod
+    def test_salt_length(binary_salt):
+        assert len(binary_salt) == 16
+
+    @staticmethod
+    def test_encode_and_decode_salt(string_salt, binary_salt):
+        assert type(string_salt) == str
+        assert Cryptographer.decode_salt(string_salt) == binary_salt
+
+    @staticmethod
+    def test_salt_in_class(encrypter, decrypter, string_salt):
+        assert encrypter.get_salt_string() == decrypter.get_salt_string() == string_salt
+
+    @staticmethod
+    def test_make_kdf(binary_salt, true_key, false_key):
+        assert Cryptographer.make_kdf(binary_salt)
+        assert Cryptographer.make_kdf(binary_salt).derive(true_key.encode()) is not None
+        assert Cryptographer.make_kdf(binary_salt).derive(false_key.encode()) is not None
+
+    @staticmethod
+    def test_make_encrypter(encrypter):
+        assert encrypter is not None
+
+    @staticmethod
+    def test_encrypted_data(encrypted_data):
+        assert encrypted_data is not None
+
+    @staticmethod
+    def test_make_decrypter(decrypter):
+        assert decrypter is not None
+
+    @staticmethod
+    def test_decrypted_data(decrypted_data):
+        assert decrypted_data is not None
+
+    @staticmethod
+    def test_encrypt_with_decrypter(decrypter, data):
+        with pytest.raises(ValueError):
+            decrypter.encrypt(data.encode())
+
+    @staticmethod
+    def test_decrypt_with_encrypter(encrypter, encrypted_data):
+        with pytest.raises(ValueError):
+            encrypter.decrypt(encrypted_data)
+
+
+class TestTypeCheck:
+    @staticmethod
+    def test_ensure_custom():
+        class Test:
+            pass
+
+        test = Test()
+        assert TypeCheck.ensure_custom(Test, test) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_custom(Test, object())
+
+    @staticmethod
+    def test_ensure_bool():
+        assert TypeCheck.ensure_bool(True) is None
+        assert TypeCheck.ensure_bool(False) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_bool(0)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_bool(1)
+
+    @staticmethod
+    def test_ensure_int():
+        assert TypeCheck.ensure_int(12345) is None
+        assert TypeCheck.ensure_int(12341234123412341234) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_int(&#34;12345&#34;)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_int(12345.0)
+
+    @staticmethod
+    def test_ensure_float():
+        assert TypeCheck.ensure_float(12345.0) is None
+        assert TypeCheck.ensure_float(123412341234123445.0000000000000000001) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_float(8j)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_float(12345)
+
+    @staticmethod
+    def test_ensure_complex():
+        assert TypeCheck.ensure_complex(12 + 5j) is None
+        assert TypeCheck.ensure_complex(135453123123 + 0.00000000000000000001j) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_complex(8)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_complex(&#34;1234s&#34;)
+
+    @staticmethod
+    def test_ensure_str():
+        assert TypeCheck.ensure_str(&#34;&#34;) is None
+        assert TypeCheck.ensure_str(r&#34;1asm&#34;) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_str(8)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_str([&#34;string&#34;])
+
+    @staticmethod
+    def test_ensure_bytes():
+        assert TypeCheck.ensure_bytes(b&#34;3123&#34;) is None
+        assert TypeCheck.ensure_bytes(bytes(132423)) is None
+        assert TypeCheck.ensure_bytes(&#34;n&#34;.encode()) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_bytes(8)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_bytes([&#34;string&#34;])
+
+    @staticmethod
+    def test_ensure_bytearray():
+        assert TypeCheck.ensure_bytearray(bytearray(5)) is None
+        assert TypeCheck.ensure_bytearray(bytearray(&#34;41243&#34;, &#34;utf-8&#34;)) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_bytearray(b&#34;1234&#34;)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_bytearray([&#34;string&#34;])
+
+    @staticmethod
+    def test_ensure_list():
+        assert TypeCheck.ensure_list([]) is None
+        assert TypeCheck.ensure_list(&#34;&#34;.split()) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_list(8)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_list(&#34;string&#34;)
+
+    @staticmethod
+    def test_ensure_tuple():
+        assert TypeCheck.ensure_tuple(tuple()) is None
+        assert TypeCheck.ensure_tuple((5,)) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_tuple(8)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_tuple(&#34;string&#34;.split())
+
+    @staticmethod
+    def test_ensure_set():
+        assert TypeCheck.ensure_set(set()) is None
+        assert TypeCheck.ensure_set({1}) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_set(8)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_set(&#34;string&#34;.split())
+
+    @staticmethod
+    def test_ensure_dict():
+        assert TypeCheck.ensure_dict(dict()) is None
+        assert TypeCheck.ensure_dict({1: 5, &#34;123&#34;: -8}) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_dict({1})
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_dict(&#34;string&#34;.split())
+
+    @staticmethod
+    def test_ensure_frozenset():
+        assert TypeCheck.ensure_frozenset(frozenset(range(10))) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_frozenset({1})
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_frozenset(&#34;string&#34;.split())
+
+    @staticmethod
+    def test_ensure_generator():
+        def a():
+            yield 1
+
+        a = a()
+        assert TypeCheck.ensure_generator(a) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_generator({1})
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_generator(&#34;string&#34;.split())
+
+    @staticmethod
+    def test_ensure_memoryview():
+        assert TypeCheck.ensure_memoryview(memoryview(&#34;a&#34;.encode())) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_memoryview({1})
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_memoryview(&#34;string&#34;.split())
+
+    @staticmethod
+    def test_ensure_function():
+        assert TypeCheck.ensure_function(lambda: None) is None
+        assert TypeCheck.ensure_function(TestTypeCheck.test_ensure_dict) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_function({1})
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_function(&#34;string&#34;.split())
+
+    @staticmethod
+    def test_ensure_path_like():
+        assert TypeCheck.ensure_path_like(&#34;&#34;) is None
+        assert TypeCheck.ensure_path_like(b&#34;&#34;) is None
+        from pathlib import Path
+        assert TypeCheck.ensure_path_like(Path(&#34;hello&#34;)) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_path_like(1)
+
+    @staticmethod
+    def test_ensure_with_name():
+        name = &#34;test_name&#34;
+        with pytest.raises(TypeError, match=name):
+            TypeCheck.ensure_int(&#34;&#34;, name)
+
+
+class TestFileOps:
+    @staticmethod
+    def test_is_mine_positive():
+        assert FileOps.is_mine(&#34;LICENSE&#34;)
+
+    @staticmethod
+    def test_is_mine_negative():
+        assert not FileOps.is_mine(&#34;/etc&#34;)
+
+    @staticmethod
+    def test_is_root_positive():
+        assert FileOps.is_roots(&#34;/etc&#34;)
+
+    @staticmethod
+    def test_is_root_negative():
+        assert not FileOps.is_roots(&#34;LICENSE&#34;)
+
+    @staticmethod
+    def test_check_fp_usr():
+        assert FileOps.check_fp(&#34;LICENSE&#34;, FP.R_USR | FP.W_USR)
+        assert not FileOps.check_fp(&#34;LICENSE&#34;, FP.X_USR)
+
+    @staticmethod
+    def test_check_fp_grp():
+        assert FileOps.check_fp(&#34;LICENSE&#34;, FP.R_GRP)
+        if sys.platform == &#34;darwin&#34;:
+            assert not FileOps.check_fp(&#34;LICENSE&#34;, FP.W_GRP)
+        else:
+            assert FileOps.check_fp(&#34;LICENSE&#34;, FP.W_GRP)
+        assert not FileOps.check_fp(&#34;LICENSE&#34;, FP.X_GRP)
+
+    @staticmethod
+    def test_check_fp_oth():
+        assert FileOps.check_fp(&#34;LICENSE&#34;, FP.R_OTH)
+        assert not FileOps.check_fp(&#34;LICENSE&#34;, FP.W_OTH)
+        assert not FileOps.check_fp(&#34;LICENSE&#34;, FP.X_OTH)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="SuperHelper.Tests.test_utils.TestBitOps"><code class="flex name class">
+<span>class <span class="ident">TestBitOps</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TestBitOps:
+    @staticmethod
+    @pytest.fixture()
+    def a():
+        return 0b10101010
+
+    @staticmethod
+    def test_is_bit_set(a):
+        assert BitOps.is_bit_set(a, 1)
+        assert BitOps.is_bit_set(a, 3)
+        assert not BitOps.is_bit_set(a, 2)
+        assert not BitOps.is_bit_set(a, 16)
+
+    @staticmethod
+    def test_set_bit(a):
+        assert BitOps.set_bit(a, 1) == a
+        assert BitOps.set_bit(a, 0) == 0b10101011
+        assert BitOps.set_bit(a, 5) == a
+        assert BitOps.set_bit(a, 4) == 0b10111010
+
+    @staticmethod
+    def test_unset_bit(a):
+        assert BitOps.unset_bit(a, 0) == a
+        assert BitOps.unset_bit(a, 1) == 0b10101000
+        assert BitOps.unset_bit(a, 4) == a
+        assert BitOps.unset_bit(a, 5) == 0b10001010</code></pre>
+</details>
+<h3>Static methods</h3>
+<dl>
+<dt id="SuperHelper.Tests.test_utils.TestBitOps.a"><code class="name flex">
+<span>def <span class="ident">a</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+@pytest.fixture()
+def a():
+    return 0b10101010</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestBitOps.test_is_bit_set"><code class="name flex">
+<span>def <span class="ident">test_is_bit_set</span></span>(<span>a)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_is_bit_set(a):
+    assert BitOps.is_bit_set(a, 1)
+    assert BitOps.is_bit_set(a, 3)
+    assert not BitOps.is_bit_set(a, 2)
+    assert not BitOps.is_bit_set(a, 16)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestBitOps.test_set_bit"><code class="name flex">
+<span>def <span class="ident">test_set_bit</span></span>(<span>a)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_set_bit(a):
+    assert BitOps.set_bit(a, 1) == a
+    assert BitOps.set_bit(a, 0) == 0b10101011
+    assert BitOps.set_bit(a, 5) == a
+    assert BitOps.set_bit(a, 4) == 0b10111010</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestBitOps.test_unset_bit"><code class="name flex">
+<span>def <span class="ident">test_unset_bit</span></span>(<span>a)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_unset_bit(a):
+    assert BitOps.unset_bit(a, 0) == a
+    assert BitOps.unset_bit(a, 1) == 0b10101000
+    assert BitOps.unset_bit(a, 4) == a
+    assert BitOps.unset_bit(a, 5) == 0b10001010</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer"><code class="flex name class">
+<span>class <span class="ident">TestCryptographer</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TestCryptographer:
+    @staticmethod
+    @pytest.fixture(scope=&#34;session&#34;)
+    def binary_salt():
+        return Cryptographer.make_salt()
+
+    @staticmethod
+    @pytest.fixture()
+    def string_salt(binary_salt):
+        return Cryptographer.encode_salt(binary_salt)
+
+    @staticmethod
+    @pytest.fixture()
+    def true_key():
+        return &#34;test_key&#34;
+
+    @staticmethod
+    @pytest.fixture()
+    def false_key():
+        return &#34;t3st_k3y&#34;
+
+    @staticmethod
+    @pytest.fixture()
+    def data():
+        return &#34;data&#34;
+
+    @staticmethod
+    @pytest.fixture()
+    def encrypter(string_salt, true_key):
+        return Cryptographer.make_encrypter(string_salt, true_key)
+
+    @staticmethod
+    @pytest.fixture()
+    def decrypter(string_salt, true_key):
+        return Cryptographer.make_decrypter(string_salt, true_key)
+
+    @staticmethod
+    @pytest.fixture()
+    def encrypted_data(encrypter, data):
+        return encrypter.encrypt(data.encode())
+
+    @staticmethod
+    @pytest.fixture()
+    def decrypted_data(decrypter, encrypted_data):
+        return decrypter.decrypt(encrypted_data)
+
+    @staticmethod
+    def test_salt_length(binary_salt):
+        assert len(binary_salt) == 16
+
+    @staticmethod
+    def test_encode_and_decode_salt(string_salt, binary_salt):
+        assert type(string_salt) == str
+        assert Cryptographer.decode_salt(string_salt) == binary_salt
+
+    @staticmethod
+    def test_salt_in_class(encrypter, decrypter, string_salt):
+        assert encrypter.get_salt_string() == decrypter.get_salt_string() == string_salt
+
+    @staticmethod
+    def test_make_kdf(binary_salt, true_key, false_key):
+        assert Cryptographer.make_kdf(binary_salt)
+        assert Cryptographer.make_kdf(binary_salt).derive(true_key.encode()) is not None
+        assert Cryptographer.make_kdf(binary_salt).derive(false_key.encode()) is not None
+
+    @staticmethod
+    def test_make_encrypter(encrypter):
+        assert encrypter is not None
+
+    @staticmethod
+    def test_encrypted_data(encrypted_data):
+        assert encrypted_data is not None
+
+    @staticmethod
+    def test_make_decrypter(decrypter):
+        assert decrypter is not None
+
+    @staticmethod
+    def test_decrypted_data(decrypted_data):
+        assert decrypted_data is not None
+
+    @staticmethod
+    def test_encrypt_with_decrypter(decrypter, data):
+        with pytest.raises(ValueError):
+            decrypter.encrypt(data.encode())
+
+    @staticmethod
+    def test_decrypt_with_encrypter(encrypter, encrypted_data):
+        with pytest.raises(ValueError):
+            encrypter.decrypt(encrypted_data)</code></pre>
+</details>
+<h3>Static methods</h3>
+<dl>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.binary_salt"><code class="name flex">
+<span>def <span class="ident">binary_salt</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+@pytest.fixture(scope=&#34;session&#34;)
+def binary_salt():
+    return Cryptographer.make_salt()</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.data"><code class="name flex">
+<span>def <span class="ident">data</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+@pytest.fixture()
+def data():
+    return &#34;data&#34;</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.decrypted_data"><code class="name flex">
+<span>def <span class="ident">decrypted_data</span></span>(<span>decrypter, encrypted_data)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+@pytest.fixture()
+def decrypted_data(decrypter, encrypted_data):
+    return decrypter.decrypt(encrypted_data)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.decrypter"><code class="name flex">
+<span>def <span class="ident">decrypter</span></span>(<span>string_salt, true_key)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+@pytest.fixture()
+def decrypter(string_salt, true_key):
+    return Cryptographer.make_decrypter(string_salt, true_key)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.encrypted_data"><code class="name flex">
+<span>def <span class="ident">encrypted_data</span></span>(<span>encrypter, data)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+@pytest.fixture()
+def encrypted_data(encrypter, data):
+    return encrypter.encrypt(data.encode())</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.encrypter"><code class="name flex">
+<span>def <span class="ident">encrypter</span></span>(<span>string_salt, true_key)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+@pytest.fixture()
+def encrypter(string_salt, true_key):
+    return Cryptographer.make_encrypter(string_salt, true_key)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.false_key"><code class="name flex">
+<span>def <span class="ident">false_key</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+@pytest.fixture()
+def false_key():
+    return &#34;t3st_k3y&#34;</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.string_salt"><code class="name flex">
+<span>def <span class="ident">string_salt</span></span>(<span>binary_salt)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+@pytest.fixture()
+def string_salt(binary_salt):
+    return Cryptographer.encode_salt(binary_salt)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.test_decrypt_with_encrypter"><code class="name flex">
+<span>def <span class="ident">test_decrypt_with_encrypter</span></span>(<span>encrypter, encrypted_data)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_decrypt_with_encrypter(encrypter, encrypted_data):
+    with pytest.raises(ValueError):
+        encrypter.decrypt(encrypted_data)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.test_decrypted_data"><code class="name flex">
+<span>def <span class="ident">test_decrypted_data</span></span>(<span>decrypted_data)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_decrypted_data(decrypted_data):
+    assert decrypted_data is not None</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.test_encode_and_decode_salt"><code class="name flex">
+<span>def <span class="ident">test_encode_and_decode_salt</span></span>(<span>string_salt, binary_salt)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_encode_and_decode_salt(string_salt, binary_salt):
+    assert type(string_salt) == str
+    assert Cryptographer.decode_salt(string_salt) == binary_salt</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.test_encrypt_with_decrypter"><code class="name flex">
+<span>def <span class="ident">test_encrypt_with_decrypter</span></span>(<span>decrypter, data)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_encrypt_with_decrypter(decrypter, data):
+    with pytest.raises(ValueError):
+        decrypter.encrypt(data.encode())</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.test_encrypted_data"><code class="name flex">
+<span>def <span class="ident">test_encrypted_data</span></span>(<span>encrypted_data)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_encrypted_data(encrypted_data):
+    assert encrypted_data is not None</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.test_make_decrypter"><code class="name flex">
+<span>def <span class="ident">test_make_decrypter</span></span>(<span>decrypter)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_make_decrypter(decrypter):
+    assert decrypter is not None</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.test_make_encrypter"><code class="name flex">
+<span>def <span class="ident">test_make_encrypter</span></span>(<span>encrypter)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_make_encrypter(encrypter):
+    assert encrypter is not None</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.test_make_kdf"><code class="name flex">
+<span>def <span class="ident">test_make_kdf</span></span>(<span>binary_salt, true_key, false_key)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_make_kdf(binary_salt, true_key, false_key):
+    assert Cryptographer.make_kdf(binary_salt)
+    assert Cryptographer.make_kdf(binary_salt).derive(true_key.encode()) is not None
+    assert Cryptographer.make_kdf(binary_salt).derive(false_key.encode()) is not None</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.test_salt_in_class"><code class="name flex">
+<span>def <span class="ident">test_salt_in_class</span></span>(<span>encrypter, decrypter, string_salt)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_salt_in_class(encrypter, decrypter, string_salt):
+    assert encrypter.get_salt_string() == decrypter.get_salt_string() == string_salt</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.test_salt_length"><code class="name flex">
+<span>def <span class="ident">test_salt_length</span></span>(<span>binary_salt)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_salt_length(binary_salt):
+    assert len(binary_salt) == 16</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestCryptographer.true_key"><code class="name flex">
+<span>def <span class="ident">true_key</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+@pytest.fixture()
+def true_key():
+    return &#34;test_key&#34;</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestFileOps"><code class="flex name class">
+<span>class <span class="ident">TestFileOps</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TestFileOps:
+    @staticmethod
+    def test_is_mine_positive():
+        assert FileOps.is_mine(&#34;LICENSE&#34;)
+
+    @staticmethod
+    def test_is_mine_negative():
+        assert not FileOps.is_mine(&#34;/etc&#34;)
+
+    @staticmethod
+    def test_is_root_positive():
+        assert FileOps.is_roots(&#34;/etc&#34;)
+
+    @staticmethod
+    def test_is_root_negative():
+        assert not FileOps.is_roots(&#34;LICENSE&#34;)
+
+    @staticmethod
+    def test_check_fp_usr():
+        assert FileOps.check_fp(&#34;LICENSE&#34;, FP.R_USR | FP.W_USR)
+        assert not FileOps.check_fp(&#34;LICENSE&#34;, FP.X_USR)
+
+    @staticmethod
+    def test_check_fp_grp():
+        assert FileOps.check_fp(&#34;LICENSE&#34;, FP.R_GRP)
+        if sys.platform == &#34;darwin&#34;:
+            assert not FileOps.check_fp(&#34;LICENSE&#34;, FP.W_GRP)
+        else:
+            assert FileOps.check_fp(&#34;LICENSE&#34;, FP.W_GRP)
+        assert not FileOps.check_fp(&#34;LICENSE&#34;, FP.X_GRP)
+
+    @staticmethod
+    def test_check_fp_oth():
+        assert FileOps.check_fp(&#34;LICENSE&#34;, FP.R_OTH)
+        assert not FileOps.check_fp(&#34;LICENSE&#34;, FP.W_OTH)
+        assert not FileOps.check_fp(&#34;LICENSE&#34;, FP.X_OTH)</code></pre>
+</details>
+<h3>Static methods</h3>
+<dl>
+<dt id="SuperHelper.Tests.test_utils.TestFileOps.test_check_fp_grp"><code class="name flex">
+<span>def <span class="ident">test_check_fp_grp</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_check_fp_grp():
+    assert FileOps.check_fp(&#34;LICENSE&#34;, FP.R_GRP)
+    if sys.platform == &#34;darwin&#34;:
+        assert not FileOps.check_fp(&#34;LICENSE&#34;, FP.W_GRP)
+    else:
+        assert FileOps.check_fp(&#34;LICENSE&#34;, FP.W_GRP)
+    assert not FileOps.check_fp(&#34;LICENSE&#34;, FP.X_GRP)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestFileOps.test_check_fp_oth"><code class="name flex">
+<span>def <span class="ident">test_check_fp_oth</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_check_fp_oth():
+    assert FileOps.check_fp(&#34;LICENSE&#34;, FP.R_OTH)
+    assert not FileOps.check_fp(&#34;LICENSE&#34;, FP.W_OTH)
+    assert not FileOps.check_fp(&#34;LICENSE&#34;, FP.X_OTH)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestFileOps.test_check_fp_usr"><code class="name flex">
+<span>def <span class="ident">test_check_fp_usr</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_check_fp_usr():
+    assert FileOps.check_fp(&#34;LICENSE&#34;, FP.R_USR | FP.W_USR)
+    assert not FileOps.check_fp(&#34;LICENSE&#34;, FP.X_USR)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestFileOps.test_is_mine_negative"><code class="name flex">
+<span>def <span class="ident">test_is_mine_negative</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_is_mine_negative():
+    assert not FileOps.is_mine(&#34;/etc&#34;)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestFileOps.test_is_mine_positive"><code class="name flex">
+<span>def <span class="ident">test_is_mine_positive</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_is_mine_positive():
+    assert FileOps.is_mine(&#34;LICENSE&#34;)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestFileOps.test_is_root_negative"><code class="name flex">
+<span>def <span class="ident">test_is_root_negative</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_is_root_negative():
+    assert not FileOps.is_roots(&#34;LICENSE&#34;)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestFileOps.test_is_root_positive"><code class="name flex">
+<span>def <span class="ident">test_is_root_positive</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_is_root_positive():
+    assert FileOps.is_roots(&#34;/etc&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck"><code class="flex name class">
+<span>class <span class="ident">TestTypeCheck</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TestTypeCheck:
+    @staticmethod
+    def test_ensure_custom():
+        class Test:
+            pass
+
+        test = Test()
+        assert TypeCheck.ensure_custom(Test, test) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_custom(Test, object())
+
+    @staticmethod
+    def test_ensure_bool():
+        assert TypeCheck.ensure_bool(True) is None
+        assert TypeCheck.ensure_bool(False) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_bool(0)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_bool(1)
+
+    @staticmethod
+    def test_ensure_int():
+        assert TypeCheck.ensure_int(12345) is None
+        assert TypeCheck.ensure_int(12341234123412341234) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_int(&#34;12345&#34;)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_int(12345.0)
+
+    @staticmethod
+    def test_ensure_float():
+        assert TypeCheck.ensure_float(12345.0) is None
+        assert TypeCheck.ensure_float(123412341234123445.0000000000000000001) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_float(8j)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_float(12345)
+
+    @staticmethod
+    def test_ensure_complex():
+        assert TypeCheck.ensure_complex(12 + 5j) is None
+        assert TypeCheck.ensure_complex(135453123123 + 0.00000000000000000001j) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_complex(8)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_complex(&#34;1234s&#34;)
+
+    @staticmethod
+    def test_ensure_str():
+        assert TypeCheck.ensure_str(&#34;&#34;) is None
+        assert TypeCheck.ensure_str(r&#34;1asm&#34;) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_str(8)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_str([&#34;string&#34;])
+
+    @staticmethod
+    def test_ensure_bytes():
+        assert TypeCheck.ensure_bytes(b&#34;3123&#34;) is None
+        assert TypeCheck.ensure_bytes(bytes(132423)) is None
+        assert TypeCheck.ensure_bytes(&#34;n&#34;.encode()) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_bytes(8)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_bytes([&#34;string&#34;])
+
+    @staticmethod
+    def test_ensure_bytearray():
+        assert TypeCheck.ensure_bytearray(bytearray(5)) is None
+        assert TypeCheck.ensure_bytearray(bytearray(&#34;41243&#34;, &#34;utf-8&#34;)) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_bytearray(b&#34;1234&#34;)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_bytearray([&#34;string&#34;])
+
+    @staticmethod
+    def test_ensure_list():
+        assert TypeCheck.ensure_list([]) is None
+        assert TypeCheck.ensure_list(&#34;&#34;.split()) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_list(8)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_list(&#34;string&#34;)
+
+    @staticmethod
+    def test_ensure_tuple():
+        assert TypeCheck.ensure_tuple(tuple()) is None
+        assert TypeCheck.ensure_tuple((5,)) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_tuple(8)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_tuple(&#34;string&#34;.split())
+
+    @staticmethod
+    def test_ensure_set():
+        assert TypeCheck.ensure_set(set()) is None
+        assert TypeCheck.ensure_set({1}) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_set(8)
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_set(&#34;string&#34;.split())
+
+    @staticmethod
+    def test_ensure_dict():
+        assert TypeCheck.ensure_dict(dict()) is None
+        assert TypeCheck.ensure_dict({1: 5, &#34;123&#34;: -8}) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_dict({1})
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_dict(&#34;string&#34;.split())
+
+    @staticmethod
+    def test_ensure_frozenset():
+        assert TypeCheck.ensure_frozenset(frozenset(range(10))) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_frozenset({1})
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_frozenset(&#34;string&#34;.split())
+
+    @staticmethod
+    def test_ensure_generator():
+        def a():
+            yield 1
+
+        a = a()
+        assert TypeCheck.ensure_generator(a) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_generator({1})
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_generator(&#34;string&#34;.split())
+
+    @staticmethod
+    def test_ensure_memoryview():
+        assert TypeCheck.ensure_memoryview(memoryview(&#34;a&#34;.encode())) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_memoryview({1})
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_memoryview(&#34;string&#34;.split())
+
+    @staticmethod
+    def test_ensure_function():
+        assert TypeCheck.ensure_function(lambda: None) is None
+        assert TypeCheck.ensure_function(TestTypeCheck.test_ensure_dict) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_function({1})
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_function(&#34;string&#34;.split())
+
+    @staticmethod
+    def test_ensure_path_like():
+        assert TypeCheck.ensure_path_like(&#34;&#34;) is None
+        assert TypeCheck.ensure_path_like(b&#34;&#34;) is None
+        from pathlib import Path
+        assert TypeCheck.ensure_path_like(Path(&#34;hello&#34;)) is None
+        with pytest.raises(TypeError):
+            TypeCheck.ensure_path_like(1)
+
+    @staticmethod
+    def test_ensure_with_name():
+        name = &#34;test_name&#34;
+        with pytest.raises(TypeError, match=name):
+            TypeCheck.ensure_int(&#34;&#34;, name)</code></pre>
+</details>
+<h3>Static methods</h3>
+<dl>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_bool"><code class="name flex">
+<span>def <span class="ident">test_ensure_bool</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_bool():
+    assert TypeCheck.ensure_bool(True) is None
+    assert TypeCheck.ensure_bool(False) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_bool(0)
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_bool(1)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_bytearray"><code class="name flex">
+<span>def <span class="ident">test_ensure_bytearray</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_bytearray():
+    assert TypeCheck.ensure_bytearray(bytearray(5)) is None
+    assert TypeCheck.ensure_bytearray(bytearray(&#34;41243&#34;, &#34;utf-8&#34;)) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_bytearray(b&#34;1234&#34;)
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_bytearray([&#34;string&#34;])</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_bytes"><code class="name flex">
+<span>def <span class="ident">test_ensure_bytes</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_bytes():
+    assert TypeCheck.ensure_bytes(b&#34;3123&#34;) is None
+    assert TypeCheck.ensure_bytes(bytes(132423)) is None
+    assert TypeCheck.ensure_bytes(&#34;n&#34;.encode()) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_bytes(8)
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_bytes([&#34;string&#34;])</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_complex"><code class="name flex">
+<span>def <span class="ident">test_ensure_complex</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_complex():
+    assert TypeCheck.ensure_complex(12 + 5j) is None
+    assert TypeCheck.ensure_complex(135453123123 + 0.00000000000000000001j) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_complex(8)
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_complex(&#34;1234s&#34;)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_custom"><code class="name flex">
+<span>def <span class="ident">test_ensure_custom</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_custom():
+    class Test:
+        pass
+
+    test = Test()
+    assert TypeCheck.ensure_custom(Test, test) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_custom(Test, object())</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_dict"><code class="name flex">
+<span>def <span class="ident">test_ensure_dict</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_dict():
+    assert TypeCheck.ensure_dict(dict()) is None
+    assert TypeCheck.ensure_dict({1: 5, &#34;123&#34;: -8}) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_dict({1})
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_dict(&#34;string&#34;.split())</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_float"><code class="name flex">
+<span>def <span class="ident">test_ensure_float</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_float():
+    assert TypeCheck.ensure_float(12345.0) is None
+    assert TypeCheck.ensure_float(123412341234123445.0000000000000000001) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_float(8j)
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_float(12345)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_frozenset"><code class="name flex">
+<span>def <span class="ident">test_ensure_frozenset</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_frozenset():
+    assert TypeCheck.ensure_frozenset(frozenset(range(10))) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_frozenset({1})
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_frozenset(&#34;string&#34;.split())</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_function"><code class="name flex">
+<span>def <span class="ident">test_ensure_function</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_function():
+    assert TypeCheck.ensure_function(lambda: None) is None
+    assert TypeCheck.ensure_function(TestTypeCheck.test_ensure_dict) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_function({1})
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_function(&#34;string&#34;.split())</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_generator"><code class="name flex">
+<span>def <span class="ident">test_ensure_generator</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_generator():
+    def a():
+        yield 1
+
+    a = a()
+    assert TypeCheck.ensure_generator(a) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_generator({1})
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_generator(&#34;string&#34;.split())</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_int"><code class="name flex">
+<span>def <span class="ident">test_ensure_int</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_int():
+    assert TypeCheck.ensure_int(12345) is None
+    assert TypeCheck.ensure_int(12341234123412341234) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_int(&#34;12345&#34;)
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_int(12345.0)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_list"><code class="name flex">
+<span>def <span class="ident">test_ensure_list</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_list():
+    assert TypeCheck.ensure_list([]) is None
+    assert TypeCheck.ensure_list(&#34;&#34;.split()) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_list(8)
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_list(&#34;string&#34;)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_memoryview"><code class="name flex">
+<span>def <span class="ident">test_ensure_memoryview</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_memoryview():
+    assert TypeCheck.ensure_memoryview(memoryview(&#34;a&#34;.encode())) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_memoryview({1})
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_memoryview(&#34;string&#34;.split())</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_path_like"><code class="name flex">
+<span>def <span class="ident">test_ensure_path_like</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_path_like():
+    assert TypeCheck.ensure_path_like(&#34;&#34;) is None
+    assert TypeCheck.ensure_path_like(b&#34;&#34;) is None
+    from pathlib import Path
+    assert TypeCheck.ensure_path_like(Path(&#34;hello&#34;)) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_path_like(1)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_set"><code class="name flex">
+<span>def <span class="ident">test_ensure_set</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_set():
+    assert TypeCheck.ensure_set(set()) is None
+    assert TypeCheck.ensure_set({1}) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_set(8)
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_set(&#34;string&#34;.split())</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_str"><code class="name flex">
+<span>def <span class="ident">test_ensure_str</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_str():
+    assert TypeCheck.ensure_str(&#34;&#34;) is None
+    assert TypeCheck.ensure_str(r&#34;1asm&#34;) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_str(8)
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_str([&#34;string&#34;])</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_tuple"><code class="name flex">
+<span>def <span class="ident">test_ensure_tuple</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_tuple():
+    assert TypeCheck.ensure_tuple(tuple()) is None
+    assert TypeCheck.ensure_tuple((5,)) is None
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_tuple(8)
+    with pytest.raises(TypeError):
+        TypeCheck.ensure_tuple(&#34;string&#34;.split())</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_with_name"><code class="name flex">
+<span>def <span class="ident">test_ensure_with_name</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_ensure_with_name():
+    name = &#34;test_name&#34;
+    with pytest.raises(TypeError, match=name):
+        TypeCheck.ensure_int(&#34;&#34;, name)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="SuperHelper.Tests" href="index.html">SuperHelper.Tests</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="SuperHelper.Tests.test_utils.TestBitOps" href="#SuperHelper.Tests.test_utils.TestBitOps">TestBitOps</a></code></h4>
+<ul class="">
+<li><code><a title="SuperHelper.Tests.test_utils.TestBitOps.a" href="#SuperHelper.Tests.test_utils.TestBitOps.a">a</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestBitOps.test_is_bit_set" href="#SuperHelper.Tests.test_utils.TestBitOps.test_is_bit_set">test_is_bit_set</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestBitOps.test_set_bit" href="#SuperHelper.Tests.test_utils.TestBitOps.test_set_bit">test_set_bit</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestBitOps.test_unset_bit" href="#SuperHelper.Tests.test_utils.TestBitOps.test_unset_bit">test_unset_bit</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="SuperHelper.Tests.test_utils.TestCryptographer" href="#SuperHelper.Tests.test_utils.TestCryptographer">TestCryptographer</a></code></h4>
+<ul class="">
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.binary_salt" href="#SuperHelper.Tests.test_utils.TestCryptographer.binary_salt">binary_salt</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.data" href="#SuperHelper.Tests.test_utils.TestCryptographer.data">data</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.decrypted_data" href="#SuperHelper.Tests.test_utils.TestCryptographer.decrypted_data">decrypted_data</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.decrypter" href="#SuperHelper.Tests.test_utils.TestCryptographer.decrypter">decrypter</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.encrypted_data" href="#SuperHelper.Tests.test_utils.TestCryptographer.encrypted_data">encrypted_data</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.encrypter" href="#SuperHelper.Tests.test_utils.TestCryptographer.encrypter">encrypter</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.false_key" href="#SuperHelper.Tests.test_utils.TestCryptographer.false_key">false_key</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.string_salt" href="#SuperHelper.Tests.test_utils.TestCryptographer.string_salt">string_salt</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.test_decrypt_with_encrypter" href="#SuperHelper.Tests.test_utils.TestCryptographer.test_decrypt_with_encrypter">test_decrypt_with_encrypter</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.test_decrypted_data" href="#SuperHelper.Tests.test_utils.TestCryptographer.test_decrypted_data">test_decrypted_data</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.test_encode_and_decode_salt" href="#SuperHelper.Tests.test_utils.TestCryptographer.test_encode_and_decode_salt">test_encode_and_decode_salt</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.test_encrypt_with_decrypter" href="#SuperHelper.Tests.test_utils.TestCryptographer.test_encrypt_with_decrypter">test_encrypt_with_decrypter</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.test_encrypted_data" href="#SuperHelper.Tests.test_utils.TestCryptographer.test_encrypted_data">test_encrypted_data</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.test_make_decrypter" href="#SuperHelper.Tests.test_utils.TestCryptographer.test_make_decrypter">test_make_decrypter</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.test_make_encrypter" href="#SuperHelper.Tests.test_utils.TestCryptographer.test_make_encrypter">test_make_encrypter</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.test_make_kdf" href="#SuperHelper.Tests.test_utils.TestCryptographer.test_make_kdf">test_make_kdf</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.test_salt_in_class" href="#SuperHelper.Tests.test_utils.TestCryptographer.test_salt_in_class">test_salt_in_class</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.test_salt_length" href="#SuperHelper.Tests.test_utils.TestCryptographer.test_salt_length">test_salt_length</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestCryptographer.true_key" href="#SuperHelper.Tests.test_utils.TestCryptographer.true_key">true_key</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="SuperHelper.Tests.test_utils.TestFileOps" href="#SuperHelper.Tests.test_utils.TestFileOps">TestFileOps</a></code></h4>
+<ul class="">
+<li><code><a title="SuperHelper.Tests.test_utils.TestFileOps.test_check_fp_grp" href="#SuperHelper.Tests.test_utils.TestFileOps.test_check_fp_grp">test_check_fp_grp</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestFileOps.test_check_fp_oth" href="#SuperHelper.Tests.test_utils.TestFileOps.test_check_fp_oth">test_check_fp_oth</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestFileOps.test_check_fp_usr" href="#SuperHelper.Tests.test_utils.TestFileOps.test_check_fp_usr">test_check_fp_usr</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestFileOps.test_is_mine_negative" href="#SuperHelper.Tests.test_utils.TestFileOps.test_is_mine_negative">test_is_mine_negative</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestFileOps.test_is_mine_positive" href="#SuperHelper.Tests.test_utils.TestFileOps.test_is_mine_positive">test_is_mine_positive</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestFileOps.test_is_root_negative" href="#SuperHelper.Tests.test_utils.TestFileOps.test_is_root_negative">test_is_root_negative</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestFileOps.test_is_root_positive" href="#SuperHelper.Tests.test_utils.TestFileOps.test_is_root_positive">test_is_root_positive</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck" href="#SuperHelper.Tests.test_utils.TestTypeCheck">TestTypeCheck</a></code></h4>
+<ul class="">
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_bool" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_bool">test_ensure_bool</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_bytearray" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_bytearray">test_ensure_bytearray</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_bytes" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_bytes">test_ensure_bytes</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_complex" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_complex">test_ensure_complex</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_custom" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_custom">test_ensure_custom</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_dict" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_dict">test_ensure_dict</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_float" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_float">test_ensure_float</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_frozenset" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_frozenset">test_ensure_frozenset</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_function" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_function">test_ensure_function</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_generator" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_generator">test_ensure_generator</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_int" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_int">test_ensure_int</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_list" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_list">test_ensure_list</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_memoryview" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_memoryview">test_ensure_memoryview</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_path_like" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_path_like">test_ensure_path_like</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_set" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_set">test_ensure_set</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_str" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_str">test_ensure_str</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_tuple" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_tuple">test_ensure_tuple</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_with_name" href="#SuperHelper.Tests.test_utils.TestTypeCheck.test_ensure_with_name">test_ensure_with_name</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

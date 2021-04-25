@@ -22,6 +22,62 @@
 <h1 class="title">Module <code>SuperHelper.Core.Utils.bit_ops</code></h1>
 </header>
 <section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># This module defines the BitOps class, a utility class for bitwise operations.
+__all__ = [&#34;BitOps&#34;]
+
+
+class BitOps:
+    &#34;&#34;&#34;A utility class for bitwise operations.&#34;&#34;&#34;
+
+    @staticmethod
+    def is_bit_set(i: int, pos: int) -&gt; bool:
+        &#34;&#34;&#34;Checks if the `pos`-th bit of the integer `i` is set.
+
+        Args:
+            i (int): The integer to check.
+            pos (int): The zero-indexed position of the bit (from LSB) to check.
+
+        Returns:
+            True if the specified bit is set, otherwise False
+        &#34;&#34;&#34;
+        return bool(i &amp; (1 &lt;&lt; pos))
+
+    @staticmethod
+    def set_bit(i: int, pos: int) -&gt; int:
+        &#34;&#34;&#34;Sets the the `pos`-th bit of the integer `i`.
+
+        Args:
+            i (int): The integer to modify.
+            pos (int): The zero-indexed position of the bit (from LSB) to set.
+
+        Returns:
+            The integer with the specified bit set.
+        &#34;&#34;&#34;
+        if BitOps.is_bit_set(i, pos):
+            return i
+        else:
+            return i + (1 &lt;&lt; pos)
+
+    @staticmethod
+    def unset_bit(i: int, pos: int) -&gt; int:
+        &#34;&#34;&#34;Unsets the the `pos`-th bit of the integer `i`.
+
+        Args:
+            i (int): The integer to modify.
+            pos (int): The zero-indexed position of the bit (from LSB) to unset.
+
+        Returns:
+            The integer with the specified bit unset.
+        &#34;&#34;&#34;
+        if not BitOps.is_bit_set(i, pos):
+            return i
+        else:
+            return i - (1 &lt;&lt; pos)</code></pre>
+</details>
 </section>
 <section>
 </section>
@@ -37,6 +93,58 @@
 </code></dt>
 <dd>
 <div class="desc"><p>A utility class for bitwise operations.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BitOps:
+    &#34;&#34;&#34;A utility class for bitwise operations.&#34;&#34;&#34;
+
+    @staticmethod
+    def is_bit_set(i: int, pos: int) -&gt; bool:
+        &#34;&#34;&#34;Checks if the `pos`-th bit of the integer `i` is set.
+
+        Args:
+            i (int): The integer to check.
+            pos (int): The zero-indexed position of the bit (from LSB) to check.
+
+        Returns:
+            True if the specified bit is set, otherwise False
+        &#34;&#34;&#34;
+        return bool(i &amp; (1 &lt;&lt; pos))
+
+    @staticmethod
+    def set_bit(i: int, pos: int) -&gt; int:
+        &#34;&#34;&#34;Sets the the `pos`-th bit of the integer `i`.
+
+        Args:
+            i (int): The integer to modify.
+            pos (int): The zero-indexed position of the bit (from LSB) to set.
+
+        Returns:
+            The integer with the specified bit set.
+        &#34;&#34;&#34;
+        if BitOps.is_bit_set(i, pos):
+            return i
+        else:
+            return i + (1 &lt;&lt; pos)
+
+    @staticmethod
+    def unset_bit(i: int, pos: int) -&gt; int:
+        &#34;&#34;&#34;Unsets the the `pos`-th bit of the integer `i`.
+
+        Args:
+            i (int): The integer to modify.
+            pos (int): The zero-indexed position of the bit (from LSB) to unset.
+
+        Returns:
+            The integer with the specified bit unset.
+        &#34;&#34;&#34;
+        if not BitOps.is_bit_set(i, pos):
+            return i
+        else:
+            return i - (1 &lt;&lt; pos)</code></pre>
+</details>
 <h3>Static methods</h3>
 <dl>
 <dt id="SuperHelper.Core.Utils.bit_ops.BitOps.is_bit_set"><code class="name flex">
@@ -53,6 +161,23 @@
 </dl>
 <h2 id="returns">Returns</h2>
 <p>True if the specified bit is set, otherwise False</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_bit_set(i: int, pos: int) -&gt; bool:
+    &#34;&#34;&#34;Checks if the `pos`-th bit of the integer `i` is set.
+
+    Args:
+        i (int): The integer to check.
+        pos (int): The zero-indexed position of the bit (from LSB) to check.
+
+    Returns:
+        True if the specified bit is set, otherwise False
+    &#34;&#34;&#34;
+    return bool(i &amp; (1 &lt;&lt; pos))</code></pre>
+</details>
 </dd>
 <dt id="SuperHelper.Core.Utils.bit_ops.BitOps.set_bit"><code class="name flex">
 <span>def <span class="ident">set_bit</span></span>(<span>i: int, pos: int) ‑> int</span>
@@ -68,6 +193,26 @@
 </dl>
 <h2 id="returns">Returns</h2>
 <p>The integer with the specified bit set.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def set_bit(i: int, pos: int) -&gt; int:
+    &#34;&#34;&#34;Sets the the `pos`-th bit of the integer `i`.
+
+    Args:
+        i (int): The integer to modify.
+        pos (int): The zero-indexed position of the bit (from LSB) to set.
+
+    Returns:
+        The integer with the specified bit set.
+    &#34;&#34;&#34;
+    if BitOps.is_bit_set(i, pos):
+        return i
+    else:
+        return i + (1 &lt;&lt; pos)</code></pre>
+</details>
 </dd>
 <dt id="SuperHelper.Core.Utils.bit_ops.BitOps.unset_bit"><code class="name flex">
 <span>def <span class="ident">unset_bit</span></span>(<span>i: int, pos: int) ‑> int</span>
@@ -83,6 +228,26 @@
 </dl>
 <h2 id="returns">Returns</h2>
 <p>The integer with the specified bit unset.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def unset_bit(i: int, pos: int) -&gt; int:
+    &#34;&#34;&#34;Unsets the the `pos`-th bit of the integer `i`.
+
+    Args:
+        i (int): The integer to modify.
+        pos (int): The zero-indexed position of the bit (from LSB) to unset.
+
+    Returns:
+        The integer with the specified bit unset.
+    &#34;&#34;&#34;
+    if not BitOps.is_bit_set(i, pos):
+        return i
+    else:
+        return i - (1 &lt;&lt; pos)</code></pre>
+</details>
 </dd>
 </dl>
 </dd>

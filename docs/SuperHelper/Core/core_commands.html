@@ -22,6 +22,168 @@
 <h1 class="title">Module <code>SuperHelper.Core.core_commands</code></h1>
 </header>
 <section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># This module defines Core CLI utilities and functionalities
+import copy
+import importlib.util
+import logging
+import pathlib
+import pkgutil
+import sys
+import json
+from typing import Callable
+
+import click
+
+from SuperHelper.Core.Config import pass_config
+
+logger = logging.getLogger(&#34;SuperHelper.Core.Utils&#34;)
+logger.setLevel(logging.DEBUG)
+
+__all__ = [
+    &#34;load_core_commands&#34;,
+]
+
+
+def load_core_commands() -&gt; list[tuple[Callable, str]]:
+    &#34;&#34;&#34;Loads the Core CLI commands.
+
+    Returns:
+        A list of a 2-tuple elements, where the first index is the `click.command` object, and the second index is the
+        technical name of the command. For example:
+
+        ```
+        [(add_modules, &#34;core_add&#34;), ...]
+        ```
+
+        The first index can be added to a `click.group`, i.e the `cli` function.
+    &#34;&#34;&#34;
+    return [
+        (add_modules, &#34;core_add&#34;),
+        (remove_modules, &#34;core_remove&#34;),
+        (list_modules, &#34;core_list&#34;),
+    ]
+
+
+def add_individual_module(mod_list: list[str], qualified_name: str) -&gt; None:
+    &#34;&#34;&#34;Validates the specified module and its dependencies then adds to module list.
+
+    Args:
+        mod_list (list[str]): A list of modules to add to.
+        qualified_name (str): The import name of the module.
+
+    Returns:
+        None
+
+    Raises:
+        ModuleNotFoundError: The module or its dependencies are not found.
+    &#34;&#34;&#34;
+    if importlib.util.find_spec(qualified_name) is not None:
+        err = False
+        package = pkgutil.get_loader(qualified_name)
+        req_file = pathlib.Path(package.get_filename()).parent / &#34;req.json&#34;
+        if req_file.exists():
+            with open(req_file) as fp:
+                requirements = json.load(fp)
+            for req in requirements:
+                req_loader = pkgutil.get_loader(req)
+                if req_loader is None:
+                    logger.error(f&#34;Missing dependency: {req}&#34;)
+                    err = True
+        else:
+            logger.debug(f&#34;Requirement file for &#39;{qualified_name}&#39; not found. Assuming no additional dependency...&#34;)
+        if err:
+            logger.error(&#34;Please install the above package(s) before installing this module!&#34;)
+            raise ModuleNotFoundError
+        elif qualified_name not in mod_list:
+            mod_list.append(qualified_name)
+    else:
+        raise ModuleNotFoundError(name=qualified_name)
+
+
+@click.command(&#34;add&#34;)
+@click.argument(&#34;modules&#34;, nargs=-1)
+@pass_config(core=True, lock=True)
+def add_modules(config: dict[str, ...], modules: list[str]) -&gt; None:
+    &#34;&#34;&#34;Adds new modules into SuperHelper.&#34;&#34;&#34;
+    module_prefix = &#34;SuperHelper.Modules.{}&#34;
+    # Deep-copy the list to avoid modifying it in place
+    all_modules = copy.deepcopy(config[&#34;INSTALLED_MODULES&#34;])
+    for module in modules:
+        # Append the module prefix to module name
+        module_fullname = module_prefix.format(module)
+        try:
+            add_individual_module(all_modules, module_fullname)
+        except ModuleNotFoundError as ex:
+            if ex.name == module_fullname:
+                logger.exception(f&#34;Module {module} not found!\nReverting...&#34;)
+            else:
+                logger.exception(&#34;Reverting...&#34;)
+            break
+    else:
+        # Save the config if and only if there are no errors and exit with 0.
+        config[&#34;INSTALLED_MODULES&#34;] = all_modules
+        sys.exit(0)
+    # Otherwise, if there are errors, exit with a non-zero code, i.e. 1.
+    sys.exit(1)
+
+
+@click.command(&#34;remove&#34;)
+@click.argument(&#34;modules&#34;, nargs=-1)
+@pass_config(core=True, lock=True)
+def remove_modules(config: dict[str, ...], modules: list[str]) -&gt; None:
+    &#34;&#34;&#34;Removes existing modules from SuperHelper.&#34;&#34;&#34;
+    module_prefix = &#34;SuperHelper.Modules.{}&#34;
+    # Deep-copy the list to avoid modifying it in place
+    all_modules = copy.deepcopy(config[&#34;INSTALLED_MODULES&#34;])
+    for module in modules:
+        # Append the module prefix to module name
+        module_fullname = module_prefix.format(module)
+        # Check if the module is already added, if so, then remove
+        if module_fullname in all_modules:
+            all_modules.remove(module_fullname)
+        # Check if there are repeated modules, if so, ignore the repeated one
+        elif module_fullname in config[&#34;INSTALLED_MODULES&#34;]:
+            continue
+        # If the module is not found, i.e. not added, cancel the operations
+        else:
+            logger.warning(f&#34;Module {module} not found!\nReverting...&#34;)
+            break
+    else:
+        # Save the config if and only if there are no errors and exit with 0
+        config[&#34;INSTALLED_MODULES&#34;] = all_modules
+        sys.exit(0)
+    # Otherwise, if there are errors, exit with a non-zero code, i.e. 1
+    sys.exit(1)
+
+
+@click.command(&#34;list&#34;)
+@click.option(&#34;-a&#34;, &#34;--all&#34;, &#34;list_all&#34;, help=&#34;Include uninstalled modules&#34;, is_flag=True)
+@pass_config(core=True, lock=False)
+def list_modules(config: dict[str, ...], list_all: bool) -&gt; None:
+    &#34;&#34;&#34;Lists installed modules&#34;&#34;&#34;
+    import SuperHelper.Modules as Package
+    prefix = Package.__name__ + &#34;.&#34;
+    count = 0
+    # Iterate over all installed modules found in SuperHelper.Modules
+    for _, module_name, _ in pkgutil.iter_modules(Package.__path__, prefix):
+        # If the module is added, print it as installed
+        short_module_name = module_name.split(&#34;.&#34;)[-1]
+        if module_name in config[&#34;INSTALLED_MODULES&#34;]:
+            click.echo(f&#34;(Installed) {short_module_name}&#34;)
+            count += 1
+        elif list_all:
+            # Otherwise, if --all is specified, print it as not installed
+            click.echo(short_module_name)
+    # If --all is not specified and there are no installed modules, also report to the user
+    if count == 0 and not list_all:
+        click.echo(&#34;No installed modules found!&#34;)
+    # Then exit with 0
+    sys.exit(0)</code></pre>
+</details>
 </section>
 <section>
 </section>
@@ -41,6 +203,29 @@ technical name of the command. For example:</p>
 <pre><code>[(add_modules, &quot;core_add&quot;), ...]
 </code></pre>
 <p>The first index can be added to a <code>click.group</code>, i.e the <code>cli</code> function.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_core_commands() -&gt; list[tuple[Callable, str]]:
+    &#34;&#34;&#34;Loads the Core CLI commands.
+
+    Returns:
+        A list of a 2-tuple elements, where the first index is the `click.command` object, and the second index is the
+        technical name of the command. For example:
+
+        ```
+        [(add_modules, &#34;core_add&#34;), ...]
+        ```
+
+        The first index can be added to a `click.group`, i.e the `cli` function.
+    &#34;&#34;&#34;
+    return [
+        (add_modules, &#34;core_add&#34;),
+        (remove_modules, &#34;core_remove&#34;),
+        (list_modules, &#34;core_list&#34;),
+    ]</code></pre>
+</details>
 </dd>
 </dl>
 </section>
