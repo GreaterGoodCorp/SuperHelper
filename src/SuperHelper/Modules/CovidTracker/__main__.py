@@ -10,10 +10,12 @@ from pathlib import Path
 import re
 import logging
 
+import numpy as np
+import matplotlib.pyplot as plt
 from dateutil.parser import parse
 import click
 
-from SuperHelper import AppDir
+from SuperHelper import AppDir, DEBUG
 from SuperHelper.Core.Utils import PathLike
 
 MODULE_NAME: str = "CovidTracker"
