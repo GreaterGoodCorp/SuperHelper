@@ -42,9 +42,8 @@ __all__ = [
 @click.option("--debug", help="Enable debug mode", default=False, is_flag=True)
 def cli(debug) -> None:
     """Executes SuperHelper tools."""
-    if debug:
-        SuperHelper.DEBUG = True
-        make_logger_global(True)
+    SuperHelper.set_debug_mode(debug)
+    make_logger_global(debug)
     pass
 
 
