@@ -247,7 +247,7 @@ def validate_date(value, *_, **__):
                 return latest_date.strftime("%m-%d-%Y")
             return d
     except ValueError:
-        raise click.BadParameter("Invalid date format")
+        raise click.BadParameter("Invalid date format!")
 
 
 @click.group("covid")
