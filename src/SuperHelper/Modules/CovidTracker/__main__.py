@@ -226,14 +226,14 @@ def cache_data(no_of_days: int = 365, force: bool = False) -> None:
     if (date - origin_date).days < no_of_days:
         no_of_days = (date - origin_date).days
     for i in range(no_of_days):
-        print(f"\rDownloading for {date_string}... ({i + 1}/{no_of_days})", end="")
+        click.echo(f"\rDownloading for {date_string}... ({i + 1}/{no_of_days})", nl=False)
         try:
             get_data_for_date(date_string, force)
         except HTTPError:
             pass
         date -= timedelta(days=1)
         date_string = date.strftime("%m-%d-%Y")
-    print()
+    click.echo()
 
 
 def validate_date(value, *_, **__):
