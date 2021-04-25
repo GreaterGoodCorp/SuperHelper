@@ -19,7 +19,7 @@ test:
 
 docs:
 	rm -rf docs
-	pdoc --html --config show_source_code=False -fo docs/ src/SuperHelper
+	pdoc --html -fo docs/ src/SuperHelper
 
 clean-all: clean clean-cfg clean-test
 
