@@ -136,7 +136,7 @@ def remove_modules(config: dict[str, ...], modules: list[str]) -> None:
 @click.option("-a", "--all", "list_all", help="Include uninstalled modules", is_flag=True)
 @pass_config(core=True, lock=False)
 def list_modules(config: dict[str, ...], list_all: bool) -> None:
-    """Lists installed modules"""
+    """Lists installed modules."""
     import SuperHelper.Modules as Package
     prefix = Package.__name__ + "."
     count = 0

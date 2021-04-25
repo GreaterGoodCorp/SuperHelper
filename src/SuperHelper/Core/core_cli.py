@@ -39,7 +39,7 @@ __all__ = [
 # Program entry point
 @click.group()
 @click.version_option(SuperHelper.Version, prog_name=SuperHelper.AppName, message=version_message)
-@click.option("--debug", help="Enable debug mode", default=False, is_flag=True)
+@click.option("--debug", help="Enable debug mode.", default=False, is_flag=True)
 def cli(debug) -> None:
     """Executes SuperHelper tools."""
     SuperHelper.set_debug_mode(debug)
