@@ -22,6 +22,55 @@
 <h1 class="title">Package <code>SuperHelper</code></h1>
 </header>
 <section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import pathlib
+import os
+import sys
+
+try:
+    import click
+except ImportError:
+    print(&#34;Module &#39;click&#39; missing! Please install it first.&#34;, file=sys.stderr)
+    sys.exit(1)
+
+
+def set_debug_mode(mode: bool = False) -&gt; None:
+    &#34;&#34;&#34;Sets debug mode.
+
+    This function should only be called by Core CLI.
+
+    Args:
+        mode (bool): Whether to set debug mode.
+
+    Returns:
+        None
+    &#34;&#34;&#34;
+    global DEBUG
+    DEBUG = mode
+
+
+__version__ = &#34;1.1.0&#34;
+Version = __version__
+
+AppName = &#34;SuperHelper&#34;
+&#34;&#34;&#34;Name of the application.&#34;&#34;&#34;
+AppDir = pathlib.Path(os.getenv(&#34;SUPER_HELPER_APP_DIR&#34;, click.get_app_dir(AppName)))
+&#34;&#34;&#34;Path to the application directory.&#34;&#34;&#34;
+AppDir.mkdir(parents=True, exist_ok=True)
+DEBUG = False
+&#34;&#34;&#34;Whether the debug mode is on.&#34;&#34;&#34;
+
+__all__ = [
+    &#34;Version&#34;,
+    &#34;AppName&#34;,
+    &#34;AppDir&#34;,
+    &#34;set_debug_mode&#34;,
+    &#34;DEBUG&#34;,
+]</code></pre>
+</details>
 </section>
 <section>
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
@@ -31,6 +80,10 @@
 <div class="desc"></div>
 </dd>
 <dt><code class="name"><a title="SuperHelper.Modules" href="Modules/index.html">SuperHelper.Modules</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="SuperHelper.Tests" href="Tests/index.html">SuperHelper.Tests</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -47,9 +100,48 @@
 <dd>
 <div class="desc"><p>Name of the application.</p></div>
 </dd>
+<dt id="SuperHelper.DEBUG"><code class="name">var <span class="ident">DEBUG</span></code></dt>
+<dd>
+<div class="desc"><p>Whether the debug mode is on.</p></div>
+</dd>
 </dl>
 </section>
 <section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="SuperHelper.set_debug_mode"><code class="name flex">
+<span>def <span class="ident">set_debug_mode</span></span>(<span>mode: bool = False) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets debug mode.</p>
+<p>This function should only be called by Core CLI.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>mode</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to set debug mode.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_debug_mode(mode: bool = False) -&gt; None:
+    &#34;&#34;&#34;Sets debug mode.
+
+    This function should only be called by Core CLI.
+
+    Args:
+        mode (bool): Whether to set debug mode.
+
+    Returns:
+        None
+    &#34;&#34;&#34;
+    global DEBUG
+    DEBUG = mode</code></pre>
+</details>
+</dd>
+</dl>
 </section>
 <section>
 </section>
@@ -64,12 +156,19 @@
 <ul>
 <li><code><a title="SuperHelper.Core" href="Core/index.html">SuperHelper.Core</a></code></li>
 <li><code><a title="SuperHelper.Modules" href="Modules/index.html">SuperHelper.Modules</a></code></li>
+<li><code><a title="SuperHelper.Tests" href="Tests/index.html">SuperHelper.Tests</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-variables">Global variables</a></h3>
 <ul class="">
 <li><code><a title="SuperHelper.AppDir" href="#SuperHelper.AppDir">AppDir</a></code></li>
 <li><code><a title="SuperHelper.AppName" href="#SuperHelper.AppName">AppName</a></code></li>
+<li><code><a title="SuperHelper.DEBUG" href="#SuperHelper.DEBUG">DEBUG</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="SuperHelper.set_debug_mode" href="#SuperHelper.set_debug_mode">set_debug_mode</a></code></li>
 </ul>
 </li>
 </ul>
