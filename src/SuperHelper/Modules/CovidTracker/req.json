@@ -1,5 +1,5 @@
 [
     "dateutil",
     "numpy",
-    "matplotlib",
+    "matplotlib"
 ]
