@@ -121,6 +121,11 @@ class TestCovidTracker:
         assert cache_data(1, True) is None
 
     @staticmethod
+    def test_cache():
+        assert run(&#34;covid cache -f 2&#34;).exit_code == 0
+        assert run(&#34;covid cache 2&#34;).exit_code == 0
+
+    @staticmethod
     def test_tally():
         assert run(&#34;covid tally Singapore&#34;).exit_code == 0
         assert run(&#34;covid tally singapore&#34;).exit_code == 2
@@ -240,6 +245,11 @@ class TestCovidTracker:
     @staticmethod
     def test_cache_data():
         assert cache_data(1, True) is None
+
+    @staticmethod
+    def test_cache():
+        assert run(&#34;covid cache -f 2&#34;).exit_code == 0
+        assert run(&#34;covid cache 2&#34;).exit_code == 0
 
     @staticmethod
     def test_tally():
@@ -379,6 +389,21 @@ def get_valid_url(get_valid_date):
 @pytest.fixture()
 def setup():
     run(&#34;add CovidTracker&#34;)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.test_cache"><code class="name flex">
+<span>def <span class="ident">test_cache</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_cache():
+    assert run(&#34;covid cache -f 2&#34;).exit_code == 0
+    assert run(&#34;covid cache 2&#34;).exit_code == 0</code></pre>
 </details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.test_cache_data"><code class="name flex">
@@ -561,6 +586,7 @@ def test_validate_setup(setup):
 <li><code><a title="SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.get_valid_date" href="#SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.get_valid_date">get_valid_date</a></code></li>
 <li><code><a title="SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.get_valid_url" href="#SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.get_valid_url">get_valid_url</a></code></li>
 <li><code><a title="SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.setup" href="#SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.setup">setup</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.test_cache" href="#SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.test_cache">test_cache</a></code></li>
 <li><code><a title="SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.test_cache_data" href="#SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.test_cache_data">test_cache_data</a></code></li>
 <li><code><a title="SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.test_create_source_url" href="#SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.test_create_source_url">test_create_source_url</a></code></li>
 <li><code><a title="SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.test_extract_source_data" href="#SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.test_extract_source_data">test_extract_source_data</a></code></li>
