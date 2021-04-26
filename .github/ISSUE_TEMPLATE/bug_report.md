@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help me improve
+about: Create a report to help me fix a bug
 title: "[Bug report] "
 labels: bug
 assignees: MunchDev
