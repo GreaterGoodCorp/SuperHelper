@@ -237,7 +237,7 @@ def cache_data(no_of_days: int = 365, force: bool = False) -> None:
 
 
 def get_new_changes(country: str, date: datetime) -> list:
-    yesterday, today = get_country_data(country, date-timedelta(days=1), date).values()
+    yesterday, today = get_country_data(country, date - timedelta(days=1), date).values()
     yesterday = np.array(yesterday)
     today = np.array(today)
     return today - yesterday
