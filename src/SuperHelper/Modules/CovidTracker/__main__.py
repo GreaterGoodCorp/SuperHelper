@@ -236,6 +236,13 @@ def cache_data(no_of_days: int = 365, force: bool = False) -> None:
     click.echo()
 
 
+def get_new_changes(country: str, date: datetime) -> list:
+    yesterday, today = get_country_data(country, date-timedelta(days=1), date).values()
+    yesterday = np.array(yesterday)
+    today = np.array(today)
+    return today - yesterday
+
+
 def validate_date(value, *_, **__):
     try:
         if value == "latest":
@@ -271,23 +278,31 @@ def main():
 
 @main.command("tally")
 @click.option("-d", "--date", default="latest", help="The date of the tally.", type=validate_date, show_default=True)
+@click.option("--no-change", default=False, help="Disable printing out daily changes.", is_flag=True, show_default=True)
 @click.argument("countries", nargs=-1, type=str, required=True)
-def tally(date, countries):
+def tally(date, no_change, countries):
     """Shows COVID-19 tally for countries."""
     click.echo(f"Selected date (MM-DD-YYYY) is {date}")
     date_obj = datetime.strptime(date, "%m-%d-%Y")
     data = []
+    changes = []
     for ct in countries:
         try:
             data.append(get_country_data(ct, date_obj, date_obj)[date])
+            if not no_change:
+                changes.append(get_new_changes(ct, date_obj))
         except ValueError as ex:
             raise click.BadParameter(f"Country '{ex.args[0]}' is not found!")
+    changes += [0] * (len(countries) - len(changes))
     header = f"| {'Country':^15} | {'Confirmed':^15} | {'Death':^15} | {'Recovered':^15} | {'Active':^15} |"
     click.echo("-" * len(header))
     click.echo(header)
     click.echo("-" * len(header))
-    for ct, d in zip(countries, data):
+    for ct, d, ch in zip(countries, data, changes):
         click.echo(f"| {ct:^15} | {d[0]:^15} | {d[1]:^15} | {d[2]:^15} | {d[3]:^15} |")
+        if not no_change:
+            ch = list(map(lambda n: f"({n if n < 0 else '+' + str(n)})", ch))
+            click.echo(f"| {'':^15} | {ch[0]:^15} | {ch[1]:^15} | {ch[2]:^15} | {ch[3]:^15} |")
         click.echo("-" * len(header))
     sys.exit(0)
 
