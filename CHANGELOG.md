@@ -55,7 +55,7 @@ uninstall the pre-release and install this new version, **DO NOT** use `pip upgr
 
 #### New features
 
-*None*
+- Added daily changes when run `covid tally` (#35)
 
 #### Bug fixes
 
