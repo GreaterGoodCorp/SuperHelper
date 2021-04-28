@@ -94,12 +94,13 @@ class TestCovidTracker:
 
     @staticmethod
     def test_cache():
-        assert run("covid cache -f 2").exit_code == 0
-        assert run("covid cache 2").exit_code == 0
+        assert run("covid cache -f 1").exit_code == 0
+        assert run("covid cache 1").exit_code == 0
 
     @staticmethod
     def test_tally():
         assert run("covid tally Singapore").exit_code == 0
+        assert run("covid tally --no-change Singapore").exit_code == 0
         assert run("covid tally singapore").exit_code == 2
 
         assert run("covid tally -d 12.02.2021 Singapore").exit_code == 0
@@ -107,10 +108,10 @@ class TestCovidTracker:
 
     @staticmethod
     def test_plot():
-        assert run("--debug covid plot -cdra -n 2 Singapore").exit_code == 0
-        assert run("--debug covid plot -c -n 2 Singapore").exit_code == 0
-        assert run("--debug covid plot -d -n 2 Singapore").exit_code == 0
-        assert run("--debug covid plot -r -n 2 Singapore").exit_code == 0
-        assert run("--debug covid plot -a -n 2 Singapore").exit_code == 0
-        assert run("--debug covid plot -n 2 Singapore").exit_code == 1
-        assert run("--debug covid plot -cdra -n 2 singapore").exit_code == 2
+        assert run("--debug covid plot -cdra -n 1 Singapore").exit_code == 0
+        assert run("--debug covid plot -c -n 1 Singapore").exit_code == 0
+        assert run("--debug covid plot -d -n 1 Singapore").exit_code == 0
+        assert run("--debug covid plot -r -n 1 Singapore").exit_code == 0
+        assert run("--debug covid plot -a -n 1 Singapore").exit_code == 0
+        assert run("--debug covid plot -n 1 Singapore").exit_code == 1
+        assert run("--debug covid plot -cdra -n 1 singapore").exit_code == 2
