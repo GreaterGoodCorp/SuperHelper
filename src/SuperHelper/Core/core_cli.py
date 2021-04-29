@@ -79,10 +79,10 @@ def load_core_commands():
         try:
             cli.add_command(core_module[0])
         except Exception or BaseException:
-            logger.exception(f"Unable to load core module {core_module[1]}")
+            logger.exception(f"Unable to load core command {core_module[1]}")
             sys.exit(1)
         else:
-            logger.debug(f"Loaded core module {core_module[1]}")
+            logger.debug(f"Loaded core command {core_module[1]}")
 
 
 def load_added_modules():

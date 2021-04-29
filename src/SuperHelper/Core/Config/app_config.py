@@ -38,7 +38,7 @@ def load_app_config(config_path: PathLike) -> None:
         logger.warning("Config file not found! Auto-configuring...", exc_info=True)
         make_config_global(Config())
     except OSError:
-        logger.exception("Config loader failed due to file being unreadable!")
+        logger.exception("Unable to load config file due to unknown reason(s)!")
         sys.exit(1)
 
 
@@ -61,5 +61,5 @@ def save_app_config(config: Config, config_path: PathLike) -> None:
         with open(config_path, "w") as fp:
             json.dump(config.__dict__(), fp)
     except OSError:
-        logger.exception("Config saver failed!")
+        logger.exception("Unable to save config file due to unknown reason(s)!")
         sys.exit(1)

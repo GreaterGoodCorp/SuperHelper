@@ -4,7 +4,6 @@ from __future__ import annotations
 import base64
 import os
 import hashlib
-import logging
 
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
@@ -12,9 +11,6 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.fernet import Fernet, InvalidToken
 
 from SuperHelper.Core.Utils import TypeCheck
-
-logger = logging.getLogger("SuperHelper.Core.Utils")
-logger.setLevel(logging.DEBUG)
 
 __all__ = [
     "Cryptographer",

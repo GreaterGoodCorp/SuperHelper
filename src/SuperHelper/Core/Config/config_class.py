@@ -31,7 +31,6 @@ class Singleton(type):
         if cls not in cls._instances:
             logger.debug("Initialising config")
             cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        logger.debug("Retrieving config singleton")
         return cls._instances[cls]
 
 
@@ -67,7 +66,7 @@ class Config(metaclass=Singleton):
         """
         TypeCheck.ensure_bool(lock, "lock")
         if Config._core_lock:
-            raise RuntimeError("Core config is already retrieved!")
+            raise RuntimeError("Core config is locked, read access is not allowed!")
         if lock:
             # Lock core config
             Config._core_lock = True
@@ -89,7 +88,7 @@ class Config(metaclass=Singleton):
         """
         # Release lock core config
         if not Config._core_lock:
-            raise RuntimeError("No lock was acquired! Write access is disabled!")
+            raise RuntimeError("Core config is unlocked, write access is not allowed!")
         Config._core_lock = False
         self._Core = copy.deepcopy(config)
         return
@@ -140,7 +139,7 @@ class Config(metaclass=Singleton):
         """
         lock_name = f"{module_name}_lock"
         if getattr(self, lock_name, False):
-            raise RuntimeError(f"{module_name} config is already retrieved!")
+            raise RuntimeError(f"'{module_name}' config is locked, read access is not allowed!")
         if lock:
             # Lock module config
             setattr(self, lock_name, True)
@@ -169,7 +168,7 @@ class Config(metaclass=Singleton):
         is_locked = not getattr(self, lock_name, False)
         is_set = module_name in config.keys()
         if is_locked and not is_set:
-            raise RuntimeError("No lock was acquired! Write access is disabled!")
+            raise RuntimeError(f"'{module_name}' config is unlocked, write access is not allowed!")
         setattr(self, lock_name, False)
         self._Modules[module_name] = copy.deepcopy(config)
         return
@@ -184,17 +183,13 @@ class Config(metaclass=Singleton):
         Returns:
             None
         """
-        try:
-            # Secure module config
-            module_config = self.get_module_config(module_name)
-            # Apply patch
-            config = copy.deepcopy(config)
-            config.update(module_config)
-            # Release module config
-            self.set_module_config(module_name, config)
-        except RuntimeError:
-            logger.exception(f"Cannot secure module '{module_name}' config")
-            raise
+        # Secure module config
+        module_config = self.get_module_config(module_name)
+        # Apply patch
+        config = copy.deepcopy(config)
+        config.update(module_config)
+        # Release module config
+        self.set_module_config(module_name, config)
 
     def __dict__(self) -> dict[str, dict[str, ...]]:
         return {

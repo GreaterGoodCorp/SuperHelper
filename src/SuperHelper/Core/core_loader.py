@@ -35,7 +35,7 @@ def load_added_modules(config: dict[str, ...]) -> list[tuple[click.Command, str]
             module = importlib.import_module(module_name)
             module_entries.append((module.main, module_name))
         except ImportError:
-            logger.exception(f"Cannot import module '{module_name}'!")
+            logger.exception(f"Unable to import module '{module_name}'!")
         except AttributeError:
-            logger.exception(f"Module '{module_name}' does not have main()!")
+            logger.exception(f"Unable to look up 'main()' for module '{module_name}'")
     return module_entries

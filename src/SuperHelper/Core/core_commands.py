@@ -66,7 +66,7 @@ def add_individual_module(mod_list: list[str], qualified_name: str) -> None:
                     logger.error(f"Missing dependency: {req}")
                     err = True
         else:
-            logger.debug(f"Requirement file for '{qualified_name}' not found. Assuming no additional dependency...")
+            logger.info(f"Requirement file for '{qualified_name}' not found. Assuming no additional dependency...")
         if err:
             logger.error("Please install the above package(s) before installing this module!")
             raise ModuleNotFoundError
@@ -122,7 +122,7 @@ def remove_modules(config: dict[str, ...], modules: list[str]) -> None:
             continue
         # If the module is not found, i.e. not added, cancel the operations
         else:
-            logger.warning(f"Module {module} not found!\nReverting...")
+            logger.error(f"Module {module} not found!\nReverting...")
             break
     else:
         # Save the config if and only if there are no errors and exit with 0
