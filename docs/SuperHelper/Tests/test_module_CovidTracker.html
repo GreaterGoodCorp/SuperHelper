@@ -122,12 +122,13 @@ class TestCovidTracker:
 
     @staticmethod
     def test_cache():
-        assert run(&#34;covid cache -f 2&#34;).exit_code == 0
-        assert run(&#34;covid cache 2&#34;).exit_code == 0
+        assert run(&#34;covid cache -f 1&#34;).exit_code == 0
+        assert run(&#34;covid cache 1&#34;).exit_code == 0
 
     @staticmethod
     def test_tally():
         assert run(&#34;covid tally Singapore&#34;).exit_code == 0
+        assert run(&#34;covid tally --no-change Singapore&#34;).exit_code == 0
         assert run(&#34;covid tally singapore&#34;).exit_code == 2
 
         assert run(&#34;covid tally -d 12.02.2021 Singapore&#34;).exit_code == 0
@@ -135,13 +136,13 @@ class TestCovidTracker:
 
     @staticmethod
     def test_plot():
-        assert run(&#34;--debug covid plot -cdra -n 2 Singapore&#34;).exit_code == 0
-        assert run(&#34;--debug covid plot -c -n 2 Singapore&#34;).exit_code == 0
-        assert run(&#34;--debug covid plot -d -n 2 Singapore&#34;).exit_code == 0
-        assert run(&#34;--debug covid plot -r -n 2 Singapore&#34;).exit_code == 0
-        assert run(&#34;--debug covid plot -a -n 2 Singapore&#34;).exit_code == 0
-        assert run(&#34;--debug covid plot -n 2 Singapore&#34;).exit_code == 1
-        assert run(&#34;--debug covid plot -cdra -n 2 singapore&#34;).exit_code == 2</code></pre>
+        assert run(&#34;--debug covid plot -cdra -n 1 Singapore&#34;).exit_code == 0
+        assert run(&#34;--debug covid plot -c -n 1 Singapore&#34;).exit_code == 0
+        assert run(&#34;--debug covid plot -d -n 1 Singapore&#34;).exit_code == 0
+        assert run(&#34;--debug covid plot -r -n 1 Singapore&#34;).exit_code == 0
+        assert run(&#34;--debug covid plot -a -n 1 Singapore&#34;).exit_code == 0
+        assert run(&#34;--debug covid plot -n 1 Singapore&#34;).exit_code == 1
+        assert run(&#34;--debug covid plot -cdra -n 1 singapore&#34;).exit_code == 2</code></pre>
 </details>
 </section>
 <section>
@@ -248,12 +249,13 @@ class TestCovidTracker:
 
     @staticmethod
     def test_cache():
-        assert run(&#34;covid cache -f 2&#34;).exit_code == 0
-        assert run(&#34;covid cache 2&#34;).exit_code == 0
+        assert run(&#34;covid cache -f 1&#34;).exit_code == 0
+        assert run(&#34;covid cache 1&#34;).exit_code == 0
 
     @staticmethod
     def test_tally():
         assert run(&#34;covid tally Singapore&#34;).exit_code == 0
+        assert run(&#34;covid tally --no-change Singapore&#34;).exit_code == 0
         assert run(&#34;covid tally singapore&#34;).exit_code == 2
 
         assert run(&#34;covid tally -d 12.02.2021 Singapore&#34;).exit_code == 0
@@ -261,13 +263,13 @@ class TestCovidTracker:
 
     @staticmethod
     def test_plot():
-        assert run(&#34;--debug covid plot -cdra -n 2 Singapore&#34;).exit_code == 0
-        assert run(&#34;--debug covid plot -c -n 2 Singapore&#34;).exit_code == 0
-        assert run(&#34;--debug covid plot -d -n 2 Singapore&#34;).exit_code == 0
-        assert run(&#34;--debug covid plot -r -n 2 Singapore&#34;).exit_code == 0
-        assert run(&#34;--debug covid plot -a -n 2 Singapore&#34;).exit_code == 0
-        assert run(&#34;--debug covid plot -n 2 Singapore&#34;).exit_code == 1
-        assert run(&#34;--debug covid plot -cdra -n 2 singapore&#34;).exit_code == 2</code></pre>
+        assert run(&#34;--debug covid plot -cdra -n 1 Singapore&#34;).exit_code == 0
+        assert run(&#34;--debug covid plot -c -n 1 Singapore&#34;).exit_code == 0
+        assert run(&#34;--debug covid plot -d -n 1 Singapore&#34;).exit_code == 0
+        assert run(&#34;--debug covid plot -r -n 1 Singapore&#34;).exit_code == 0
+        assert run(&#34;--debug covid plot -a -n 1 Singapore&#34;).exit_code == 0
+        assert run(&#34;--debug covid plot -n 1 Singapore&#34;).exit_code == 1
+        assert run(&#34;--debug covid plot -cdra -n 1 singapore&#34;).exit_code == 2</code></pre>
 </details>
 <h3>Static methods</h3>
 <dl>
@@ -402,8 +404,8 @@ def setup():
 </summary>
 <pre><code class="python">@staticmethod
 def test_cache():
-    assert run(&#34;covid cache -f 2&#34;).exit_code == 0
-    assert run(&#34;covid cache 2&#34;).exit_code == 0</code></pre>
+    assert run(&#34;covid cache -f 1&#34;).exit_code == 0
+    assert run(&#34;covid cache 1&#34;).exit_code == 0</code></pre>
 </details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.test_cache_data"><code class="name flex">
@@ -516,13 +518,13 @@ def test_parse_source_file(get_raw_data):
 </summary>
 <pre><code class="python">@staticmethod
 def test_plot():
-    assert run(&#34;--debug covid plot -cdra -n 2 Singapore&#34;).exit_code == 0
-    assert run(&#34;--debug covid plot -c -n 2 Singapore&#34;).exit_code == 0
-    assert run(&#34;--debug covid plot -d -n 2 Singapore&#34;).exit_code == 0
-    assert run(&#34;--debug covid plot -r -n 2 Singapore&#34;).exit_code == 0
-    assert run(&#34;--debug covid plot -a -n 2 Singapore&#34;).exit_code == 0
-    assert run(&#34;--debug covid plot -n 2 Singapore&#34;).exit_code == 1
-    assert run(&#34;--debug covid plot -cdra -n 2 singapore&#34;).exit_code == 2</code></pre>
+    assert run(&#34;--debug covid plot -cdra -n 1 Singapore&#34;).exit_code == 0
+    assert run(&#34;--debug covid plot -c -n 1 Singapore&#34;).exit_code == 0
+    assert run(&#34;--debug covid plot -d -n 1 Singapore&#34;).exit_code == 0
+    assert run(&#34;--debug covid plot -r -n 1 Singapore&#34;).exit_code == 0
+    assert run(&#34;--debug covid plot -a -n 1 Singapore&#34;).exit_code == 0
+    assert run(&#34;--debug covid plot -n 1 Singapore&#34;).exit_code == 1
+    assert run(&#34;--debug covid plot -cdra -n 1 singapore&#34;).exit_code == 2</code></pre>
 </details>
 </dd>
 <dt id="SuperHelper.Tests.test_module_CovidTracker.TestCovidTracker.test_tally"><code class="name flex">
@@ -537,6 +539,7 @@ def test_plot():
 <pre><code class="python">@staticmethod
 def test_tally():
     assert run(&#34;covid tally Singapore&#34;).exit_code == 0
+    assert run(&#34;covid tally --no-change Singapore&#34;).exit_code == 0
     assert run(&#34;covid tally singapore&#34;).exit_code == 2
 
     assert run(&#34;covid tally -d 12.02.2021 Singapore&#34;).exit_code == 0

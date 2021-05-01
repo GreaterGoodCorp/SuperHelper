@@ -63,9 +63,9 @@ def load_added_modules(config: dict[str, ...]) -&gt; list[tuple[click.Command, s
             module = importlib.import_module(module_name)
             module_entries.append((module.main, module_name))
         except ImportError:
-            logger.exception(f&#34;Cannot import module &#39;{module_name}&#39;!&#34;)
+            logger.exception(f&#34;Unable to import module &#39;{module_name}&#39;!&#34;)
         except AttributeError:
-            logger.exception(f&#34;Module &#39;{module_name}&#39; does not have main()!&#34;)
+            logger.exception(f&#34;Unable to look up &#39;main()&#39; for module &#39;{module_name}&#39;&#34;)
     return module_entries</code></pre>
 </details>
 </section>
@@ -112,9 +112,9 @@ def load_added_modules(config: dict[str, ...]) -&gt; list[tuple[click.Command, s
             module = importlib.import_module(module_name)
             module_entries.append((module.main, module_name))
         except ImportError:
-            logger.exception(f&#34;Cannot import module &#39;{module_name}&#39;!&#34;)
+            logger.exception(f&#34;Unable to import module &#39;{module_name}&#39;!&#34;)
         except AttributeError:
-            logger.exception(f&#34;Module &#39;{module_name}&#39; does not have main()!&#34;)
+            logger.exception(f&#34;Unable to look up &#39;main()&#39; for module &#39;{module_name}&#39;&#34;)
     return module_entries</code></pre>
 </details>
 </dd>

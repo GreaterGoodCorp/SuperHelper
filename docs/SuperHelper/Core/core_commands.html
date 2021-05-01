@@ -94,7 +94,7 @@ def add_individual_module(mod_list: list[str], qualified_name: str) -&gt; None:
                     logger.error(f&#34;Missing dependency: {req}&#34;)
                     err = True
         else:
-            logger.debug(f&#34;Requirement file for &#39;{qualified_name}&#39; not found. Assuming no additional dependency...&#34;)
+            logger.info(f&#34;Requirement file for &#39;{qualified_name}&#39; not found. Assuming no additional dependency...&#34;)
         if err:
             logger.error(&#34;Please install the above package(s) before installing this module!&#34;)
             raise ModuleNotFoundError
@@ -150,7 +150,7 @@ def remove_modules(config: dict[str, ...], modules: list[str]) -&gt; None:
             continue
         # If the module is not found, i.e. not added, cancel the operations
         else:
-            logger.warning(f&#34;Module {module} not found!\nReverting...&#34;)
+            logger.error(f&#34;Module {module} not found!\nReverting...&#34;)
             break
     else:
         # Save the config if and only if there are no errors and exit with 0
@@ -164,7 +164,7 @@ def remove_modules(config: dict[str, ...], modules: list[str]) -&gt; None:
 @click.option(&#34;-a&#34;, &#34;--all&#34;, &#34;list_all&#34;, help=&#34;Include uninstalled modules&#34;, is_flag=True)
 @pass_config(core=True, lock=False)
 def list_modules(config: dict[str, ...], list_all: bool) -&gt; None:
-    &#34;&#34;&#34;Lists installed modules&#34;&#34;&#34;
+    &#34;&#34;&#34;Lists installed modules.&#34;&#34;&#34;
     import SuperHelper.Modules as Package
     prefix = Package.__name__ + &#34;.&#34;
     count = 0

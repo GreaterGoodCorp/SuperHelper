@@ -103,7 +103,7 @@ __all__ = [
         logger.warning(&#34;Config file not found! Auto-configuring...&#34;, exc_info=True)
         make_config_global(Config())
     except OSError:
-        logger.exception(&#34;Config loader failed due to file being unreadable!&#34;)
+        logger.exception(&#34;Unable to load config file due to unknown reason(s)!&#34;)
         sys.exit(1)</code></pre>
 </details>
 </dd>
@@ -270,7 +270,7 @@ def save_app_config(config: Config, config_path: PathLike) -&gt; None:
         with open(config_path, &#34;w&#34;) as fp:
             json.dump(config.__dict__(), fp)
     except OSError:
-        logger.exception(&#34;Config saver failed!&#34;)
+        logger.exception(&#34;Unable to save config file due to unknown reason(s)!&#34;)
         sys.exit(1)</code></pre>
 </details>
 </dd>
@@ -321,7 +321,7 @@ def save_app_config(config: Config, config_path: PathLike) -&gt; None:
         &#34;&#34;&#34;
         TypeCheck.ensure_bool(lock, &#34;lock&#34;)
         if Config._core_lock:
-            raise RuntimeError(&#34;Core config is already retrieved!&#34;)
+            raise RuntimeError(&#34;Core config is locked, read access is not allowed!&#34;)
         if lock:
             # Lock core config
             Config._core_lock = True
@@ -343,7 +343,7 @@ def save_app_config(config: Config, config_path: PathLike) -&gt; None:
         &#34;&#34;&#34;
         # Release lock core config
         if not Config._core_lock:
-            raise RuntimeError(&#34;No lock was acquired! Write access is disabled!&#34;)
+            raise RuntimeError(&#34;Core config is unlocked, write access is not allowed!&#34;)
         Config._core_lock = False
         self._Core = copy.deepcopy(config)
         return
@@ -394,7 +394,7 @@ def save_app_config(config: Config, config_path: PathLike) -&gt; None:
         &#34;&#34;&#34;
         lock_name = f&#34;{module_name}_lock&#34;
         if getattr(self, lock_name, False):
-            raise RuntimeError(f&#34;{module_name} config is already retrieved!&#34;)
+            raise RuntimeError(f&#34;&#39;{module_name}&#39; config is locked, read access is not allowed!&#34;)
         if lock:
             # Lock module config
             setattr(self, lock_name, True)
@@ -423,7 +423,7 @@ def save_app_config(config: Config, config_path: PathLike) -&gt; None:
         is_locked = not getattr(self, lock_name, False)
         is_set = module_name in config.keys()
         if is_locked and not is_set:
-            raise RuntimeError(&#34;No lock was acquired! Write access is disabled!&#34;)
+            raise RuntimeError(f&#34;&#39;{module_name}&#39; config is unlocked, write access is not allowed!&#34;)
         setattr(self, lock_name, False)
         self._Modules[module_name] = copy.deepcopy(config)
         return
@@ -438,17 +438,13 @@ def save_app_config(config: Config, config_path: PathLike) -&gt; None:
         Returns:
             None
         &#34;&#34;&#34;
-        try:
-            # Secure module config
-            module_config = self.get_module_config(module_name)
-            # Apply patch
-            config = copy.deepcopy(config)
-            config.update(module_config)
-            # Release module config
-            self.set_module_config(module_name, config)
-        except RuntimeError:
-            logger.exception(f&#34;Cannot secure module &#39;{module_name}&#39; config&#34;)
-            raise
+        # Secure module config
+        module_config = self.get_module_config(module_name)
+        # Apply patch
+        config = copy.deepcopy(config)
+        config.update(module_config)
+        # Release module config
+        self.set_module_config(module_name, config)
 
     def __dict__(self) -&gt; dict[str, dict[str, ...]]:
         return {
@@ -554,17 +550,13 @@ def from_dict(config: dict[str]) -&gt; Config:
     Returns:
         None
     &#34;&#34;&#34;
-    try:
-        # Secure module config
-        module_config = self.get_module_config(module_name)
-        # Apply patch
-        config = copy.deepcopy(config)
-        config.update(module_config)
-        # Release module config
-        self.set_module_config(module_name, config)
-    except RuntimeError:
-        logger.exception(f&#34;Cannot secure module &#39;{module_name}&#39; config&#34;)
-        raise</code></pre>
+    # Secure module config
+    module_config = self.get_module_config(module_name)
+    # Apply patch
+    config = copy.deepcopy(config)
+    config.update(module_config)
+    # Release module config
+    self.set_module_config(module_name, config)</code></pre>
 </details>
 </dd>
 <dt id="SuperHelper.Core.Config.Config.get_core_config"><code class="name flex">
@@ -616,7 +608,7 @@ key-value pair of the dictionary. For example:</p>
     &#34;&#34;&#34;
     TypeCheck.ensure_bool(lock, &#34;lock&#34;)
     if Config._core_lock:
-        raise RuntimeError(&#34;Core config is already retrieved!&#34;)
+        raise RuntimeError(&#34;Core config is locked, read access is not allowed!&#34;)
     if lock:
         # Lock core config
         Config._core_lock = True
@@ -675,7 +667,7 @@ key-value pair of the dictionary. For example:</p>
     &#34;&#34;&#34;
     lock_name = f&#34;{module_name}_lock&#34;
     if getattr(self, lock_name, False):
-        raise RuntimeError(f&#34;{module_name} config is already retrieved!&#34;)
+        raise RuntimeError(f&#34;&#39;{module_name}&#39; config is locked, read access is not allowed!&#34;)
     if lock:
         # Lock module config
         setattr(self, lock_name, True)
@@ -723,7 +715,7 @@ key-value pair of the dictionary. For example:</p>
     &#34;&#34;&#34;
     # Release lock core config
     if not Config._core_lock:
-        raise RuntimeError(&#34;No lock was acquired! Write access is disabled!&#34;)
+        raise RuntimeError(&#34;Core config is unlocked, write access is not allowed!&#34;)
     Config._core_lock = False
     self._Core = copy.deepcopy(config)
     return</code></pre>
@@ -773,7 +765,7 @@ key-value pair of the dictionary. For example:</p>
     is_locked = not getattr(self, lock_name, False)
     is_set = module_name in config.keys()
     if is_locked and not is_set:
-        raise RuntimeError(&#34;No lock was acquired! Write access is disabled!&#34;)
+        raise RuntimeError(f&#34;&#39;{module_name}&#39; config is unlocked, write access is not allowed!&#34;)
     setattr(self, lock_name, False)
     self._Modules[module_name] = copy.deepcopy(config)
     return</code></pre>
