@@ -294,15 +294,15 @@ def tally(date, no_change, countries):
         except ValueError as ex:
             raise click.BadParameter(f"Country '{ex.args[0]}' is not found!")
     changes += [0] * (len(countries) - len(changes))
-    header = f"| {'Country':^15} | {'Confirmed':^15} | {'Death':^15} | {'Recovered':^15} | {'Active':^15} |"
+    header = f"| {'Country':^12} | {'Confirmed':^12} | {'Death':^12} | {'Recovered':^12} | {'Active':^12} |"
     click.echo("-" * len(header))
     click.echo(header)
     click.echo("-" * len(header))
     for ct, d, ch in zip(countries, data, changes):
-        click.echo(f"| {ct:^15} | {d[0]:^15} | {d[1]:^15} | {d[2]:^15} | {d[3]:^15} |")
+        click.echo(f"| {ct:^12} | {d[0]:^12} | {d[1]:^12} | {d[2]:^12} | {d[3]:^12} |")
         if not no_change:
             ch = list(map(lambda n: f"({n if n < 0 else '+' + str(n)})", ch))
-            click.echo(f"| {'':^15} | {ch[0]:^15} | {ch[1]:^15} | {ch[2]:^15} | {ch[3]:^15} |")
+            click.echo(f"| {'':^12} | {ch[0]:^12} | {ch[1]:^12} | {ch[2]:^12} | {ch[3]:^12} |")
         click.echo("-" * len(header))
     sys.exit(0)
 
