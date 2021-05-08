@@ -70,6 +70,16 @@ def initialise_changelog(path: PathLike):
     return 0
 
 
+def initialise_requirements(path: PathLike):
+    try:
+        with open(path / "requirements.txt") as fp:
+            fp.write(BaseRequirements)
+    except OSError:
+        logger.exception(f"Unable to write requirements to {str(path / 'requirements.txt')}")
+        return 1
+    return 0
+
+
 @click.group("py")
 def main():
     """Python project tools."""
@@ -81,8 +91,9 @@ def main():
 @click.option("--no-license", default=False, is_flag=True, help="Do not attach a license.")
 @click.option("--no-readme", default=False, is_flag=True, help="Do not create a README file.")
 @click.option("--no-changelog", default=False, is_flag=True, help="Do not create a CHANGELOG file.")
+@click.option("--no-requirements", default=False, is_flag=True, help="Do not create a requirements.txt file.")
 @click.argument("name", required=True)
-def init(author, no_license, no_readme, no_changelog, name):
+def init(author, no_license, no_readme, no_changelog, no_requirements, name):
     """Initialises a new python project."""
     path = initialise_project_folder(name)
     if author is None:
@@ -94,5 +105,7 @@ def init(author, no_license, no_readme, no_changelog, name):
         initialise_readme(path, name, desc)
     if not no_changelog:
         initialise_changelog(path)
+    if not no_requirements:
+        initialise_requirements(path)
     initialise_git(path)
     sys.exit(0)
