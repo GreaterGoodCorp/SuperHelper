@@ -129,5 +129,6 @@ def init(author, no_license, no_readme, no_changelog, no_requirements, no_makefi
         initialise_requirements(path)
     if not no_makefile:
         initialise_makefile(path)
-    initialise_git(path)
+    email = click.prompt("Enter author's email: ")
+    initialise_git(path, author, email)
     sys.exit(0)
