@@ -76,7 +76,7 @@ def initialise_makefile(path: PathLike):
     return 0
 
 
-def initialise_git(path: PathLike):
+def initialise_git(path: PathLike, name: str, email: str):
     # Initialise git repo at 'path'
     repo = git.Repo.init(path)
     # Write .gitignore
@@ -86,6 +86,12 @@ def initialise_git(path: PathLike):
     except OSError:
         logger.exception(f"Unable to write .gitignore to {str(path / '.gitignore')}")
         return 1
+    # Create an Author
+    p = git.Actor(name, email)
+    # Make an initial commit
+    index = repo.index
+    index.add(["."])
+    index.commit("Initial commit", author=p, committer=p)
     return 0
 
 
