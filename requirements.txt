@@ -4,10 +4,10 @@ twine
 pytest
 setuptools
 pytest-cov
-setuptools
 pdoc3
 cryptography
 Pillow
 python-dateutil
 numpy
 matplotlib
+GitPython
