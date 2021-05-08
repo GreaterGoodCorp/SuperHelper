@@ -1,5 +1,6 @@
 import logging
 import sys
+import datetime
 from pathlib import Path
 from subprocess import Popen
 
@@ -20,6 +21,17 @@ def initialise_project_folder(name: str) -> PathLike:
     path = Path(name).absolute()
     path.mkdir(exist_ok=True, parents=True)
     return path
+
+
+def initialise_license(path: PathLike, name: str):
+    year = datetime.datetime.today().year
+    try:
+        with open(path / "LICENSE") as fp:
+            fp.write(BaseLicense.format(year, name))
+    except OSError:
+        logger.exception(f"Unable to write LICENSE to {str(path / 'LICENSE')}")
+        return 1
+    return 0
 
 
 def initialise_git(path: PathLike):
