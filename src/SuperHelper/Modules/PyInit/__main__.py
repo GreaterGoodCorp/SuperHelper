@@ -1,4 +1,5 @@
 import logging
+import shutil
 import sys
 import datetime
 from pathlib import Path
@@ -140,6 +141,24 @@ def main():
 @click.argument("name", required=True)
 def init(author, email, no_license, no_readme, no_changelog, no_requirements, no_makefile, no_travis, no_codecov, name):
     """Initialises a new python project."""
+    def wrapper():
+        ret = 0
+        if not no_license:
+            ret += initialise_license(path, author)
+        if not no_readme:
+            desc = click.prompt("Enter a short description for the project: ")
+            ret += initialise_readme(path, name, desc)
+        if not no_changelog:
+            ret += initialise_changelog(path)
+        if not no_requirements:
+            ret += initialise_requirements(path)
+        if not no_makefile:
+            ret += initialise_makefile(path)
+        if not no_travis:
+            ret += initialise_travis(path)
+        if not no_codecov:
+            ret += initialise_codecov(path)
+        return ret == 0
     try:
         path = initialise_project_folder(name)
     except OSError:
@@ -149,20 +168,10 @@ def init(author, email, no_license, no_readme, no_changelog, no_requirements, no
         author = click.prompt("Enter author's name: ")
     if email is None:
         email = click.prompt("Enter author's email: ")
-    if not no_license:
-        initialise_license(path, author)
-    if not no_readme:
-        desc = click.prompt("Enter a short description for the project: ")
-        initialise_readme(path, name, desc)
-    if not no_changelog:
-        initialise_changelog(path)
-    if not no_requirements:
-        initialise_requirements(path)
-    if not no_makefile:
-        initialise_makefile(path)
-    if not no_travis:
-        initialise_travis(path)
-    if not no_codecov:
-        initialise_codecov(path)
+    ret_val = wrapper()
+    if ret_val:
+        if path.exists():
+            shutil.rmtree(path)
+        sys.exit(ret_val)
     initialise_git(path, author, email)
     sys.exit(0)
