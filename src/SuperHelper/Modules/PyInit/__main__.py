@@ -19,7 +19,9 @@ logger.setLevel(logging.DEBUG)
 
 def initialise_project_folder(name: str) -> PathLike:
     path = Path(name).absolute()
-    path.mkdir(exist_ok=True, parents=True)
+    if path.exists():
+        raise OSError("Folder already exists!")
+    path.mkdir(parents=True)
     return path
 
 
