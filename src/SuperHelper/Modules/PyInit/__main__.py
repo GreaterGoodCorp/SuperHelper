@@ -129,6 +129,7 @@ def main():
 
 @main.command()
 @click.option("--author", help="Name of the author.")
+@click.option("--email", help="Email of the author.")
 @click.option("--no-license", default=False, is_flag=True, help="Do not attach a license.")
 @click.option("--no-readme", default=False, is_flag=True, help="Do not create a README file.")
 @click.option("--no-changelog", default=False, is_flag=True, help="Do not create a CHANGELOG file.")
@@ -137,7 +138,7 @@ def main():
 @click.option("--no-travis", default=False, is_flag=True, help="Do not create a .travis.yml file.")
 @click.option("--no-codecov", default=False, is_flag=True, help="Do not create code coverage config file.")
 @click.argument("name", required=True)
-def init(author, no_license, no_readme, no_changelog, no_requirements, no_makefile, no_travis, no_codecov, name):
+def init(author, email, no_license, no_readme, no_changelog, no_requirements, no_makefile, no_travis, no_codecov, name):
     """Initialises a new python project."""
     try:
         path = initialise_project_folder(name)
@@ -146,6 +147,8 @@ def init(author, no_license, no_readme, no_changelog, no_requirements, no_makefi
         sys.exit(1)
     if author is None:
         author = click.prompt("Enter author's name: ")
+    if email is None:
+        email = click.prompt("Enter author's email: ")
     if not no_license:
         initialise_license(path, author)
     if not no_readme:
@@ -161,6 +164,5 @@ def init(author, no_license, no_readme, no_changelog, no_requirements, no_makefi
         initialise_travis(path)
     if not no_codecov:
         initialise_codecov(path)
-    email = click.prompt("Enter author's email: ")
     initialise_git(path, author, email)
     sys.exit(0)
