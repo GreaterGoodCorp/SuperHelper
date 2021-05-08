@@ -113,11 +113,11 @@ def init(author, no_license, no_readme, no_changelog, no_requirements, no_makefi
     """Initialises a new python project."""
     path = initialise_project_folder(name)
     if author is None:
-        author = click.prompt("Enter the name of the author: ")
+        author = click.prompt("Enter author's name: ")
     if not no_license:
         initialise_license(path, author)
     if not no_readme:
-        desc = click.prompt("Enter a short description: ")
+        desc = click.prompt("Enter a short description for the project: ")
         initialise_readme(path, name, desc)
     if not no_changelog:
         initialise_changelog(path)
