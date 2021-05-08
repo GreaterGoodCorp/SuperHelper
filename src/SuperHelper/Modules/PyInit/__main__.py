@@ -165,9 +165,9 @@ def init(author, email, no_license, no_readme, no_changelog, no_requirements, no
         logger.exception("Folder already exists!")
         sys.exit(1)
     if author is None:
-        author = click.prompt("Enter author's name: ")
+        author = click.prompt("Enter author's name")
     if email is None:
-        email = click.prompt("Enter author's email: ")
+        email = click.prompt("Enter author's email")
     ret_val = wrapper()
     if ret_val:
         if path.exists():
