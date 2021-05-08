@@ -220,7 +220,7 @@ with open("README.md") as fp:
     long_desc = fp.read()
 
 setup(
-    name="SuperHelper",
+    name="{}",
     version="0.0.0",
     author="",
     author_email="",
