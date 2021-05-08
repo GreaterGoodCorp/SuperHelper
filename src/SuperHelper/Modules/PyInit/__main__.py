@@ -158,7 +158,7 @@ def init(author, email, no_license, no_readme, no_changelog, no_requirements, no
             ret += initialise_travis(path)
         if not no_codecov:
             ret += initialise_codecov(path)
-        return ret == 0
+        return ret != 0
     try:
         path = initialise_project_folder(name)
     except OSError:
