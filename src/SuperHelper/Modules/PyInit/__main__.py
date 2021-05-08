@@ -6,6 +6,7 @@ import click
 
 from SuperHelper import AppDir
 from SuperHelper.Core.Utils import PathLike
+from SuperHelper.Modules.PyInit.__meta__ import *
 
 ModuleName = "PyInit"
 ModuleDir = AppDir / ModuleName
