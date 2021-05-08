@@ -8,7 +8,6 @@ exclude_lines =
     if self.debug:
     if debug:
     pragma: no cover
-    if __name__ == .__main__.:
 ignore_errors = True
 """
 
