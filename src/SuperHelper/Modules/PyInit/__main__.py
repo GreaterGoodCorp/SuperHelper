@@ -80,7 +80,7 @@ def initialise_makefile(path: PathLike):
 def initialise_travis(path: PathLike):
     try:
         with open(path / ".travis.yml", "w") as fp:
-            fp.write(BaseMakefile)
+            fp.write(BaseTravisConfig)
     except OSError:
         logger.exception(f"Unable to write TravisCI config to {str(path / '.travis.yml')}")
         return 1
