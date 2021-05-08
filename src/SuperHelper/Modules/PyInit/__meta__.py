@@ -222,9 +222,9 @@ with open("README.md") as fp:
 setup(
     name="{}",
     version="0.0.0",
-    author="",
-    author_email="",
-    description="",
+    author="{}",
+    author_email="{}",
+    description="{},
     long_description=long_desc,
     long_description_content_type="text/markdown",
     url="",
