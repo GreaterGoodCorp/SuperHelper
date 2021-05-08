@@ -4,7 +4,6 @@ twine
 pytest
 setuptools
 pytest-cov
-setuptools
 pdoc3
 cryptography
 Pillow
