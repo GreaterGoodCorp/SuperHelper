@@ -10,3 +10,4 @@ Pillow
 python-dateutil
 numpy
 matplotlib
+GitPython
