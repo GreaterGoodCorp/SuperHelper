@@ -76,6 +76,16 @@ def initialise_makefile(path: PathLike):
     return 0
 
 
+def initialise_travis(path: PathLike):
+    try:
+        with open(path / ".travis.yml") as fp:
+            fp.write(BaseMakefile)
+    except OSError:
+        logger.exception(f"Unable to write TravisCI config to {str(path / '.travis.yml')}")
+        return 1
+    return 0
+
+
 def initialise_git(path: PathLike, name: str, email: str):
     # Initialise git repo at 'path'
     repo = git.Repo.init(path)
@@ -108,8 +118,9 @@ def main():
 @click.option("--no-changelog", default=False, is_flag=True, help="Do not create a CHANGELOG file.")
 @click.option("--no-requirements", default=False, is_flag=True, help="Do not create a requirements.txt file.")
 @click.option("--no-makefile", default=False, is_flag=True, help="Do not create a Makefile.")
+@click.option("--no-travis", default=False, is_flag=True, help="Do not create a .travis.yml file.")
 @click.argument("name", required=True)
-def init(author, no_license, no_readme, no_changelog, no_requirements, no_makefile, name):
+def init(author, no_license, no_readme, no_changelog, no_requirements, no_makefile, no_travis, name):
     """Initialises a new python project."""
     try:
         path = initialise_project_folder(name)
@@ -129,6 +140,8 @@ def init(author, no_license, no_readme, no_changelog, no_requirements, no_makefi
         initialise_requirements(path)
     if not no_makefile:
         initialise_makefile(path)
+    if not no_travis:
+        initialise_travis(path)
     email = click.prompt("Enter author's email: ")
     initialise_git(path, author, email)
     sys.exit(0)
