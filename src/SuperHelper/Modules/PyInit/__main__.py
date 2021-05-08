@@ -2,9 +2,9 @@ import logging
 import sys
 import datetime
 from pathlib import Path
-from subprocess import Popen
 
 import click
+import git
 
 from SuperHelper import AppDir
 from SuperHelper.Core.Utils import PathLike
@@ -78,10 +78,7 @@ def initialise_makefile(path: PathLike):
 
 def initialise_git(path: PathLike):
     # Initialise git repo at 'path'
-    p = Popen(["git", "init", str(path)], stdout=None)
-    if p.returncode != 0:
-        logger.error("Unable to initialise git repo\n" + p.stderr.read().decode("utf-8"))
-        return p.returncode
+    repo = git.Repo.init(path)
     # Write .gitignore
     try:
         with open(path / ".gitignore") as fp:
