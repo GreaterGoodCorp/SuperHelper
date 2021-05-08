@@ -83,6 +83,6 @@ def init(author, no_license, no_readme, no_changelog, name):
         desc = click.prompt("Enter a short description: ")
         initialise_readme(path, name, desc)
     if not no_changelog:
-        initialise_readme()
+        pass
     initialise_git(path)
     sys.exit(0)
