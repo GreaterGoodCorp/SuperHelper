@@ -67,9 +67,22 @@ def main():
 
 
 @main.command()
+@click.option("--author", help="Name of the author.")
+@click.option("--no-license", default=False, is_flag=True, help="Do not attach a license.")
+@click.option("--no-readme", default=False, is_flag=True, help="Do not create a README file.")
+@click.option("--no-changelog", default=False, is_flag=True, help="Do not create a CHANGELOG file.")
 @click.argument("name", required=True)
-def init(name):
+def init(author, no_license, no_readme, no_changelog, name):
     """Initialises a new python project."""
     path = initialise_project_folder(name)
+    if author is None:
+        author = click.prompt("Enter the name of the author: ")
+    if not no_license:
+        initialise_license(path, author)
+    if not no_readme:
+        desc = click.prompt("Enter a short description: ")
+        initialise_readme(path, name, desc)
+    if not no_changelog:
+        initialise_readme()
     initialise_git(path)
     sys.exit(0)
