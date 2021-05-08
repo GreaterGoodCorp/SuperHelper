@@ -80,6 +80,16 @@ def initialise_requirements(path: PathLike):
     return 0
 
 
+def initialise_makefile(path: PathLike):
+    try:
+        with open(path / "Makefile") as fp:
+            fp.write(BaseMakefile)
+    except OSError:
+        logger.exception(f"Unable to write make recipes to {str(path / 'Makefile')}")
+        return 1
+    return 0
+
+
 @click.group("py")
 def main():
     """Python project tools."""
@@ -92,8 +102,9 @@ def main():
 @click.option("--no-readme", default=False, is_flag=True, help="Do not create a README file.")
 @click.option("--no-changelog", default=False, is_flag=True, help="Do not create a CHANGELOG file.")
 @click.option("--no-requirements", default=False, is_flag=True, help="Do not create a requirements.txt file.")
+@click.option("--no-makefile", default=False, is_flag=True, help="Do not create a Makefile.")
 @click.argument("name", required=True)
-def init(author, no_license, no_readme, no_changelog, no_requirements, name):
+def init(author, no_license, no_readme, no_changelog, no_requirements, no_makefile, name):
     """Initialises a new python project."""
     path = initialise_project_folder(name)
     if author is None:
@@ -107,5 +118,7 @@ def init(author, no_license, no_readme, no_changelog, no_requirements, name):
         initialise_changelog(path)
     if not no_requirements:
         initialise_requirements(path)
+    if not no_makefile:
+        initialise_makefile(path)
     initialise_git(path)
     sys.exit(0)
