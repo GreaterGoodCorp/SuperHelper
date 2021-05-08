@@ -1,3 +1,4 @@
+import logging
 import sys
 from pathlib import Path
 from subprocess import Popen
@@ -9,7 +10,10 @@ from SuperHelper.Core.Utils import PathLike
 from SuperHelper.Modules.PyInit.__meta__ import *
 
 ModuleName = "PyInit"
+__name__ = f"SuperHelper.Modules.{ModuleName}"
 ModuleDir = AppDir / ModuleName
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 
 def initialise_project_folder(name: str) -> PathLike:
