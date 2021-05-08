@@ -86,6 +86,22 @@ def initialise_travis(path: PathLike):
     return 0
 
 
+def initialise_codecov(path: PathLike):
+    try:
+        with open(path / ".coveragerc") as fp:
+            fp.write(BaseCoverageConfig)
+    except OSError:
+        logger.exception(f"Unable to write coverage config to {str(path / '.coveragerc')}")
+        return 1
+    try:
+        with open(path / "codecov.yml") as fp:
+            fp.write(BaseCodecovConfig)
+    except OSError:
+        logger.exception(f"Unable to write CodeCov config to {str(path / 'codecov.yml')}")
+        return 1
+    return 0
+
+
 def initialise_git(path: PathLike, name: str, email: str):
     # Initialise git repo at 'path'
     repo = git.Repo.init(path)
@@ -119,8 +135,9 @@ def main():
 @click.option("--no-requirements", default=False, is_flag=True, help="Do not create a requirements.txt file.")
 @click.option("--no-makefile", default=False, is_flag=True, help="Do not create a Makefile.")
 @click.option("--no-travis", default=False, is_flag=True, help="Do not create a .travis.yml file.")
+@click.option("--no-codecov", default=False, is_flag=True, help="Do not create code coverage config file.")
 @click.argument("name", required=True)
-def init(author, no_license, no_readme, no_changelog, no_requirements, no_makefile, no_travis, name):
+def init(author, no_license, no_readme, no_changelog, no_requirements, no_makefile, no_travis, no_codecov, name):
     """Initialises a new python project."""
     try:
         path = initialise_project_folder(name)
@@ -142,6 +159,8 @@ def init(author, no_license, no_readme, no_changelog, no_requirements, no_makefi
         initialise_makefile(path)
     if not no_travis:
         initialise_travis(path)
+    if not no_codecov:
+        initialise_codecov(path)
     email = click.prompt("Enter author's email: ")
     initialise_git(path, author, email)
     sys.exit(0)
