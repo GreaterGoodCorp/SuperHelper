@@ -23,13 +23,19 @@ def initialise_project_folder(name: str) -> PathLike:
 
 
 def initialise_git(path: PathLike):
-    # Get CWD
-    cwd = Path(path).absolute()
-    cwd.mkdir(exist_ok=True, parents=True)
     # Initialise git repo at 'path'
-    Popen(["git", "init", str(cwd)], stdout=None)
-    #
-    pass
+    p = Popen(["git", "init", str(path)], stdout=None)
+    if p.returncode != 0:
+        logger.error("Unable to initialise git repo\n" + p.stderr.read().decode("utf-8"))
+        return p.returncode
+    # Write .gitignore
+    try:
+        with open(path / ".gitignore") as fp:
+            fp.write(BaseGitIgnore)
+    except OSError:
+        logger.exception(f"Unable to write .gitignore to {str(path / '.gitignore')}")
+        return 1
+    return 0
 
 
 @click.group("py")
