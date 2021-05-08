@@ -111,7 +111,11 @@ def main():
 @click.argument("name", required=True)
 def init(author, no_license, no_readme, no_changelog, no_requirements, no_makefile, name):
     """Initialises a new python project."""
-    path = initialise_project_folder(name)
+    try:
+        path = initialise_project_folder(name)
+    except OSError:
+        logger.exception("Folder already exists!")
+        sys.exit(1)
     if author is None:
         author = click.prompt("Enter author's name: ")
     if not no_license:
