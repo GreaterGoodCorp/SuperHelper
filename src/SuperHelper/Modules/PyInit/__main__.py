@@ -44,22 +44,6 @@ def initialise_readme(path: PathLike, name: str, desc: str):
     return 0
 
 
-def initialise_git(path: PathLike):
-    # Initialise git repo at 'path'
-    p = Popen(["git", "init", str(path)], stdout=None)
-    if p.returncode != 0:
-        logger.error("Unable to initialise git repo\n" + p.stderr.read().decode("utf-8"))
-        return p.returncode
-    # Write .gitignore
-    try:
-        with open(path / ".gitignore") as fp:
-            fp.write(BaseGitIgnore)
-    except OSError:
-        logger.exception(f"Unable to write .gitignore to {str(path / '.gitignore')}")
-        return 1
-    return 0
-
-
 def initialise_changelog(path: PathLike):
     try:
         with open(path / "CHANGELOG.md"):
@@ -86,6 +70,22 @@ def initialise_makefile(path: PathLike):
             fp.write(BaseMakefile)
     except OSError:
         logger.exception(f"Unable to write make recipes to {str(path / 'Makefile')}")
+        return 1
+    return 0
+
+
+def initialise_git(path: PathLike):
+    # Initialise git repo at 'path'
+    p = Popen(["git", "init", str(path)], stdout=None)
+    if p.returncode != 0:
+        logger.error("Unable to initialise git repo\n" + p.stderr.read().decode("utf-8"))
+        return p.returncode
+    # Write .gitignore
+    try:
+        with open(path / ".gitignore") as fp:
+            fp.write(BaseGitIgnore)
+    except OSError:
+        logger.exception(f"Unable to write .gitignore to {str(path / '.gitignore')}")
         return 1
     return 0
 
