@@ -60,6 +60,16 @@ def initialise_git(path: PathLike):
     return 0
 
 
+def initialise_changelog(path: PathLike):
+    try:
+        with open(path / "CHANGELOG.md"):
+            pass
+    except OSError:
+        logger.exception(f"Unable to create file {str(path / 'CHANGELOG.md')}")
+        return 1
+    return 0
+
+
 @click.group("py")
 def main():
     """Python project tools."""
@@ -83,6 +93,6 @@ def init(author, no_license, no_readme, no_changelog, name):
         desc = click.prompt("Enter a short description: ")
         initialise_readme(path, name, desc)
     if not no_changelog:
-        pass
+        initialise_changelog(path)
     initialise_git(path)
     sys.exit(0)
