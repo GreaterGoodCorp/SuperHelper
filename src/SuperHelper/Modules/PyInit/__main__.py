@@ -17,7 +17,9 @@ logger.setLevel(logging.DEBUG)
 
 
 def initialise_project_folder(name: str) -> PathLike:
-    return Path(name).absolute()
+    path = Path(name).absolute()
+    path.mkdir(exist_ok=True, parents=True)
+    return path
 
 
 def initialise_git(path: PathLike):
