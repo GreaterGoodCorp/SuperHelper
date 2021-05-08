@@ -29,7 +29,7 @@ def initialise_project_folder(name: str) -> PathLike:
 def initialise_license(path: PathLike, name: str):
     year = datetime.datetime.today().year
     try:
-        with open(path / "LICENSE") as fp:
+        with open(path / "LICENSE", "w") as fp:
             fp.write(BaseLicense.format(year, name))
     except OSError:
         logger.exception(f"Unable to write LICENSE to {str(path / 'LICENSE')}")
@@ -39,7 +39,7 @@ def initialise_license(path: PathLike, name: str):
 
 def initialise_readme(path: PathLike, name: str, desc: str):
     try:
-        with open(path / "README.md") as fp:
+        with open(path / "README.md", "w") as fp:
             fp.write(BaseLicense.format(name, desc))
     except OSError:
         logger.exception(f"Unable to write README.md to {str(path / 'README.md')}")
@@ -49,7 +49,7 @@ def initialise_readme(path: PathLike, name: str, desc: str):
 
 def initialise_changelog(path: PathLike):
     try:
-        with open(path / "CHANGELOG.md"):
+        with open(path / "CHANGELOG.md", "w"):
             pass
     except OSError:
         logger.exception(f"Unable to create file {str(path / 'CHANGELOG.md')}")
@@ -59,7 +59,7 @@ def initialise_changelog(path: PathLike):
 
 def initialise_requirements(path: PathLike):
     try:
-        with open(path / "requirements.txt") as fp:
+        with open(path / "requirements.txt", "w") as fp:
             fp.write(BaseRequirements)
     except OSError:
         logger.exception(f"Unable to write requirements to {str(path / 'requirements.txt')}")
@@ -69,7 +69,7 @@ def initialise_requirements(path: PathLike):
 
 def initialise_makefile(path: PathLike):
     try:
-        with open(path / "Makefile") as fp:
+        with open(path / "Makefile", "w") as fp:
             fp.write(BaseMakefile)
     except OSError:
         logger.exception(f"Unable to write make recipes to {str(path / 'Makefile')}")
@@ -79,7 +79,7 @@ def initialise_makefile(path: PathLike):
 
 def initialise_travis(path: PathLike):
     try:
-        with open(path / ".travis.yml") as fp:
+        with open(path / ".travis.yml", "w") as fp:
             fp.write(BaseMakefile)
     except OSError:
         logger.exception(f"Unable to write TravisCI config to {str(path / '.travis.yml')}")
@@ -89,13 +89,13 @@ def initialise_travis(path: PathLike):
 
 def initialise_codecov(path: PathLike):
     try:
-        with open(path / ".coveragerc") as fp:
+        with open(path / ".coveragerc", "w") as fp:
             fp.write(BaseCoverageConfig)
     except OSError:
         logger.exception(f"Unable to write coverage config to {str(path / '.coveragerc')}")
         return 1
     try:
-        with open(path / "codecov.yml") as fp:
+        with open(path / "codecov.yml", "w") as fp:
             fp.write(BaseCodecovConfig)
     except OSError:
         logger.exception(f"Unable to write CodeCov config to {str(path / 'codecov.yml')}")
@@ -108,7 +108,7 @@ def initialise_git(path: PathLike, name: str, email: str):
     repo = git.Repo.init(path)
     # Write .gitignore
     try:
-        with open(path / ".gitignore") as fp:
+        with open(path / ".gitignore", "w") as fp:
             fp.write(BaseGitIgnore)
     except OSError:
         logger.exception(f"Unable to write .gitignore to {str(path / '.gitignore')}")
@@ -146,7 +146,7 @@ def init(author, email, no_license, no_readme, no_changelog, no_requirements, no
         if not no_license:
             ret += initialise_license(path, author)
         if not no_readme:
-            desc = click.prompt("Enter a short description for the project: ")
+            desc = click.prompt("Enter a short description for the project")
             ret += initialise_readme(path, name, desc)
         if not no_changelog:
             ret += initialise_changelog(path)
