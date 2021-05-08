@@ -34,6 +34,16 @@ def initialise_license(path: PathLike, name: str):
     return 0
 
 
+def initialise_readme(path: PathLike, name: str, desc: str):
+    try:
+        with open(path / "README.md") as fp:
+            fp.write(BaseLicense.format(name, desc))
+    except OSError:
+        logger.exception(f"Unable to write README.md to {str(path / 'README.md')}")
+        return 1
+    return 0
+
+
 def initialise_git(path: PathLike):
     # Initialise git repo at 'path'
     p = Popen(["git", "init", str(path)], stdout=None)
