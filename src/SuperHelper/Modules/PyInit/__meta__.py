@@ -11,6 +11,7 @@ exclude_lines =
 ignore_errors = True
 """[1:]
 
+# noinspection SpellCheckingInspection
 BaseGitIgnore = """
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -146,6 +147,7 @@ dmypy.json
 .idea/
 """[1:]
 
+# noinspection SpellCheckingInspection
 BaseTravisConfig = """
 os: linux
 dist: xenial
