@@ -9,7 +9,7 @@ exclude_lines =
     if debug:
     pragma: no cover
 ignore_errors = True
-"""
+"""[1:]
 
 BaseGitIgnore = """
 # Byte-compiled / optimized / DLL files
@@ -144,7 +144,7 @@ dmypy.json
 
 # PyCharm
 .idea/
-"""
+"""[1:]
 
 BaseTravisConfig = """
 os: linux
@@ -158,7 +158,7 @@ install:
   - pip3 install -r requirements.txt
 script: make test
 after_success: bash <(curl -s https://codecov.io/bash)
-"""
+"""[1:]
 
 BaseCodecovConfig = """
 codecov:
@@ -181,7 +181,7 @@ comment:
   layout: "reach,diff,flags,files,footer"
   behavior: default
   require_changes: false
-"""
+"""[1:]
 
 BaseMakefile = r"""
 venv:
@@ -203,7 +203,7 @@ test:
 clean:
 	rm -rf build/ dist/ .coverage
 	find . -type d -name __pycache__ -exec rm -r {} \*
-"""
+"""[1:]
 
 BaseRequirements = """
 wheel
@@ -211,7 +211,7 @@ twine
 pytest
 setuptools
 pytest-cov
-"""
+"""[1:]
 
 BaseSetup = """
 from setuptools import find_packages, setup
@@ -241,7 +241,7 @@ setup(
     include_package_data=True,
     python_requires=">=3.6",
 )
-"""
+"""[1:]
 
 BaseLicense = """
 MIT License
@@ -265,10 +265,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-"""
+"""[1:]
 
 BaseReadme = """
 # {}
 
 {}
-"""
+"""[1:]
