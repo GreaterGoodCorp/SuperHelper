@@ -151,6 +151,7 @@ def main():
 @click.argument("name", required=True)
 def init(author, email, description, no_license, no_readme, no_changelog, no_requirements, no_ci, no_codecov, name):
     """Initialises a new python project."""
+
     def wrapper():
         ret = 0
         if not no_license:
@@ -167,6 +168,7 @@ def init(author, email, description, no_license, no_readme, no_changelog, no_req
         if not no_codecov:
             ret += initialise_codecov(path)
         return ret != 0
+
     try:
         path = initialise_project_folder(name)
     except OSError:
