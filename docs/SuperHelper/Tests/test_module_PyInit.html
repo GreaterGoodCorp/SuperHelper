@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
-<title>SuperHelper.Modules API documentation</title>
+<title>SuperHelper.Tests.test_module_PyInit API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,42 +19,113 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>SuperHelper.Modules</code></h1>
+<h1 class="title">Module <code>SuperHelper.Tests.test_module_PyInit</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from . import *</code></pre>
+<pre><code class="python">import pytest
+
+from SuperHelper.Tests import *
+
+
+class TestPyInit:
+    @staticmethod
+    @pytest.fixture()
+    def setup():
+        run(&#34;add PyInit&#34;)
+
+    @staticmethod
+    def test_validate_setup(setup):
+        assert &#34;PyInit&#34; in run(&#34;list&#34;).output
+
+    @staticmethod
+    def test_run(test_data_dir):
+        run(f&#34;py init --name \&#34;Nguyen Thai Binh\&#34; --email bincity2003@gmail.com {str(test_data_dir / &#39;test&#39;)}&#34;)</code></pre>
 </details>
 </section>
 <section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt><code class="name"><a title="SuperHelper.Modules.CovidTracker" href="CovidTracker/index.html">SuperHelper.Modules.CovidTracker</a></code></dt>
+<dt id="SuperHelper.Tests.test_module_PyInit.TestPyInit"><code class="flex name class">
+<span>class <span class="ident">TestPyInit</span></span>
+</code></dt>
 <dd>
 <div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TestPyInit:
+    @staticmethod
+    @pytest.fixture()
+    def setup():
+        run(&#34;add PyInit&#34;)
+
+    @staticmethod
+    def test_validate_setup(setup):
+        assert &#34;PyInit&#34; in run(&#34;list&#34;).output
+
+    @staticmethod
+    def test_run(test_data_dir):
+        run(f&#34;py init --name \&#34;Nguyen Thai Binh\&#34; --email bincity2003@gmail.com {str(test_data_dir / &#39;test&#39;)}&#34;)</code></pre>
+</details>
+<h3>Static methods</h3>
+<dl>
+<dt id="SuperHelper.Tests.test_module_PyInit.TestPyInit.setup"><code class="name flex">
+<span>def <span class="ident">setup</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+@pytest.fixture()
+def setup():
+    run(&#34;add PyInit&#34;)</code></pre>
+</details>
 </dd>
-<dt><code class="name"><a title="SuperHelper.Modules.FocusEnabler" href="FocusEnabler/index.html">SuperHelper.Modules.FocusEnabler</a></code></dt>
+<dt id="SuperHelper.Tests.test_module_PyInit.TestPyInit.test_run"><code class="name flex">
+<span>def <span class="ident">test_run</span></span>(<span>test_data_dir)</span>
+</code></dt>
 <dd>
 <div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_run(test_data_dir):
+    run(f&#34;py init --name \&#34;Nguyen Thai Binh\&#34; --email bincity2003@gmail.com {str(test_data_dir / &#39;test&#39;)}&#34;)</code></pre>
+</details>
 </dd>
-<dt><code class="name"><a title="SuperHelper.Modules.PyInit" href="PyInit/index.html">SuperHelper.Modules.PyInit</a></code></dt>
+<dt id="SuperHelper.Tests.test_module_PyInit.TestPyInit.test_validate_setup"><code class="name flex">
+<span>def <span class="ident">test_validate_setup</span></span>(<span>setup)</span>
+</code></dt>
 <dd>
 <div class="desc"></div>
-</dd>
-<dt><code class="name"><a title="SuperHelper.Modules.Stenographer" href="Stenographer/index.html">SuperHelper.Modules.Stenographer</a></code></dt>
-<dd>
-<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def test_validate_setup(setup):
+    assert &#34;PyInit&#34; in run(&#34;list&#34;).output</code></pre>
+</details>
 </dd>
 </dl>
-</section>
-<section>
-</section>
-<section>
-</section>
-<section>
+</dd>
+</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -65,15 +136,19 @@
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="SuperHelper" href="../index.html">SuperHelper</a></code></li>
+<li><code><a title="SuperHelper.Tests" href="index.html">SuperHelper.Tests</a></code></li>
 </ul>
 </li>
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
-<li><code><a title="SuperHelper.Modules.CovidTracker" href="CovidTracker/index.html">SuperHelper.Modules.CovidTracker</a></code></li>
-<li><code><a title="SuperHelper.Modules.FocusEnabler" href="FocusEnabler/index.html">SuperHelper.Modules.FocusEnabler</a></code></li>
-<li><code><a title="SuperHelper.Modules.PyInit" href="PyInit/index.html">SuperHelper.Modules.PyInit</a></code></li>
-<li><code><a title="SuperHelper.Modules.Stenographer" href="Stenographer/index.html">SuperHelper.Modules.Stenographer</a></code></li>
+<li>
+<h4><code><a title="SuperHelper.Tests.test_module_PyInit.TestPyInit" href="#SuperHelper.Tests.test_module_PyInit.TestPyInit">TestPyInit</a></code></h4>
+<ul class="">
+<li><code><a title="SuperHelper.Tests.test_module_PyInit.TestPyInit.setup" href="#SuperHelper.Tests.test_module_PyInit.TestPyInit.setup">setup</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_module_PyInit.TestPyInit.test_run" href="#SuperHelper.Tests.test_module_PyInit.TestPyInit.test_run">test_run</a></code></li>
+<li><code><a title="SuperHelper.Tests.test_module_PyInit.TestPyInit.test_validate_setup" href="#SuperHelper.Tests.test_module_PyInit.TestPyInit.test_validate_setup">test_validate_setup</a></code></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
