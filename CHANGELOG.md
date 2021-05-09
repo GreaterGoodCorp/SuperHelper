@@ -69,3 +69,21 @@ uninstall the pre-release and install this new version, **DO NOT** use `pip upgr
 #### Notes
 
 *None*
+
+### What's new in 1.3.0?
+
+#### New features
+
+- Added new module `PyInit` (#37)
+
+#### Bug fixes
+
+- Fixed a bug that caused the incorrectly formatted output of `covid tally` (#36)
+
+#### Non-functional changes
+
+*None*
+
+#### Notes
+
+*None*
