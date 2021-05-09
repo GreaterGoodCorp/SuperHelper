@@ -22,7 +22,8 @@ def initialise_project_folder(name: str) -> PathLike:
     path = Path(name).absolute().resolve()
     if path.exists():
         raise OSError("Folder already exists!")
-    path.mkdir(parents=True)
+    (path / "src" / name).mkdir(parents=True)
+    open(path / "src" / name / "__init__.py", "w").close()
     return path
 
 
