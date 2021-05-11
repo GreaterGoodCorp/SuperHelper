@@ -1,4 +1,3 @@
-import logging
 import shutil
 import sys
 import datetime
@@ -7,15 +6,11 @@ from pathlib import Path
 import click
 import git
 
-from SuperHelper import AppDir
-from SuperHelper.Core.Utils import PathLike
+from SuperHelper.Core.Essentials import *
 from SuperHelper.Modules.PyInit.__meta__ import *
 
 ModuleName = "PyInit"
-__name__ = f"SuperHelper.Modules.{ModuleName}"
-ModuleDir = AppDir / ModuleName
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+__name__, logger, ModuleDir = initialise_module(ModuleName)
 
 
 def initialise_project_folder(name: str) -> PathLike:

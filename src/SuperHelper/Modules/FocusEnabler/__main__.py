@@ -5,7 +5,6 @@ import re
 import subprocess
 import sys
 import typing
-import logging
 import functools
 import copy
 from pathlib import Path
@@ -13,15 +12,13 @@ from pathlib import Path
 import click
 
 from SuperHelper.Core import Config
-from SuperHelper.Core.Config import pass_config
+from SuperHelper.Core.Essentials import *
 
-PATH_HOST = str(Path("/etc") / "hosts")
-MODULE_NAME: str = "FocusEnabler"
-pass_config_no_lock = functools.partial(pass_config, module_name=MODULE_NAME, lock=False)
-pass_config_with_lock = functools.partial(pass_config, module_name=MODULE_NAME, lock=True)
-__name__ = f"SuperHelper.Modules.{MODULE_NAME}"
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+PathHost = str(Path("/etc") / "hosts")
+ModuleName: str = "FocusEnabler"
+__name__, logger, ModuleDir = initialise_module(ModuleName)
+pass_config_no_lock = functools.partial(pass_config, module_name=ModuleName, lock=False)
+pass_config_with_lock = functools.partial(pass_config, module_name=ModuleName, lock=True)
 
 __all__ = [
     "main",
@@ -60,9 +57,9 @@ def patch_config(config: Config) -> None:
         "BL_SECTION_START": "# Added by FocusEnabler, do not modify!",
         "BL_SECTION_END": "# End of section FocusEnabler",
         "BL_DOMAINS": [],
-        "PATH_HOST": PATH_HOST,
+        "PathHost": PathHost,
     }
-    config.apply_module_patch(MODULE_NAME, cfg)
+    config.apply_module_patch(ModuleName, cfg)
 
 
 def is_root() -> bool:
@@ -131,10 +128,10 @@ def activate_app(config: dict[str, ...]) -> None:
     if not is_root():
         logger.warning("Please run this command as 'root'")
         sys.exit(1)
-    if not os.access(config["PATH_HOST"], os.W_OK):
+    if not os.access(config["PathHost"], os.W_OK):
         logger.warning("Hosts file is inaccessible!")
         sys.exit(1)
-    with open(config["PATH_HOST"]) as fp:
+    with open(config["PathHost"]) as fp:
         if config["BL_SECTION_START"] in fp.read():
             logger.warning("FocusEnabler is already activated! Deactivate first.")
             sys.exit(1)
@@ -145,7 +142,7 @@ def activate_app(config: dict[str, ...]) -> None:
         entries.append(f"127.0.0.1   www.{domain}")
     entries.append(config["BL_SECTION_END"])
     try:
-        with open(config["PATH_HOST"], "a") as fp:
+        with open(config["PathHost"], "a") as fp:
             fp.write("\n".join(entries))
         click.echo("Written to host file!")
         flush_dns()
@@ -163,11 +160,11 @@ def deactivate_app(config: dict[str, ...]) -> None:
     if not is_root():
         logger.warning("Please run this command as 'root'")
         sys.exit(1)
-    if not os.access(config["PATH_HOST"], os.W_OK):
+    if not os.access(config["PathHost"], os.W_OK):
         logger.warning("Hosts file is inaccessible!")
         sys.exit(1)
     try:
-        with open(config["PATH_HOST"]) as fp:
+        with open(config["PathHost"]) as fp:
             content = fp.read()
             original_content_len = len(content)
         content = re.sub(rf"{config['BL_SECTION_START']}(.|[\n\r\t])*{config['BL_SECTION_END']}", "", content)
@@ -178,7 +175,7 @@ def deactivate_app(config: dict[str, ...]) -> None:
         logger.exception("Unable to read host file")
         sys.exit(1)
     try:
-        with open(config["PATH_HOST"], "w") as fp:
+        with open(config["PathHost"], "w") as fp:
             fp.write(content)
         click.echo("FocusEnabler is disabled!")
     except OSError:

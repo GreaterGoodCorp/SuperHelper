@@ -17,10 +17,9 @@ import click
 from SuperHelper.Core.Essentials import *
 
 ModuleName: str = "CovidTracker"
-logger, ModuleDir = initialise_module(ModuleName)
+__name__, logger, ModuleDir = initialise_module(ModuleName)
 CacheDir = ModuleDir / "Cache"
 CacheDir.mkdir(parents=True, exist_ok=True)
-__name__ = f"SuperHelper.Modules.{ModuleName}"
 
 origin_date = dt.datetime(day=2, month=12, year=2020)
 
