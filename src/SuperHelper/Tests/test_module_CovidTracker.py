@@ -1,5 +1,4 @@
 import datetime
-from urllib.error import HTTPError
 from pathlib import Path
 
 import pytest
@@ -41,7 +40,7 @@ class TestCovidTracker:
     @staticmethod
     @pytest.fixture()
     def get_cache_filename(get_valid_url):
-        return CACHE_DIR / f"extracted-{Path(get_valid_url).name.split('.')[0]}.json"
+        return CacheDir / f"extracted-{Path(get_valid_url).name.split('.')[0]}.json"
 
     @staticmethod
     def test_normalise_datetime(get_valid_date, get_invalid_date):
