@@ -32,66 +32,66 @@
 class TestCore:
     @staticmethod
     def test_add_single():
-        assert run(&#34;add FocusEnabler&#34;).exit_code == 0
+        assert run(&#34;add PyInit&#34;).exit_code == 0
 
     @staticmethod
     def test_add_single_again():
-        assert run(&#34;add FocusEnabler&#34;).exit_code == 0
+        assert run(&#34;add PyInit&#34;).exit_code == 0
 
     @staticmethod
     def test_list_single_positive():
         result = run(&#34;list&#34;)
         assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; in result.output
+        assert &#34;PyInit&#34; in result.output
         assert &#34;Stenographer&#34; not in result.output
 
     @staticmethod
     def test_remove_single():
-        assert run(&#34;remove FocusEnabler&#34;).exit_code == 0
+        assert run(&#34;remove PyInit&#34;).exit_code == 0
 
     @staticmethod
     def test_list_single_negative():
         result = run(&#34;list&#34;)
         assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; not in result.output
+        assert &#34;PyInit&#34; not in result.output
         assert &#34;Stenographer&#34; not in result.output
 
     @staticmethod
     def test_add_multiple():
-        assert run(&#34;add FocusEnabler Stenographer&#34;).exit_code == 0
+        assert run(&#34;add PyInit Stenographer&#34;).exit_code == 0
 
     @staticmethod
     def test_list_multiple_positive():
         result = run(&#34;list&#34;)
         assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; in result.output
+        assert &#34;PyInit&#34; in result.output
         assert &#34;Stenographer&#34; in result.output
 
     @staticmethod
     def test_remove_multiple():
-        assert run(&#34;remove FocusEnabler Stenographer&#34;).exit_code == 0
+        assert run(&#34;remove PyInit Stenographer&#34;).exit_code == 0
 
     @staticmethod
     def test_list_multiple_negative():
         result = run(&#34;list&#34;)
         assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; not in result.output
+        assert &#34;PyInit&#34; not in result.output
         assert &#34;Stenographer&#34; not in result.output
 
     @staticmethod
     def test_list_all():
         result = run(&#34;list -a&#34;)
         assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; in result.output
+        assert &#34;PyInit&#34; in result.output
         assert &#34;Stenographer&#34; in result.output
 
     @staticmethod
     def test_add_same():
-        assert run(&#34;add FocusEnabler FocusEnabler&#34;).exit_code == 0
+        assert run(&#34;add PyInit PyInit&#34;).exit_code == 0
 
     @staticmethod
     def test_remove_same():
-        assert run(&#34;remove FocusEnabler FocusEnabler&#34;).exit_code == 0
+        assert run(&#34;remove PyInit PyInit&#34;).exit_code == 0
 
     @staticmethod
     def test_add_invalid():
@@ -151,66 +151,66 @@ class TestOtherUtils:
 <pre><code class="python">class TestCore:
     @staticmethod
     def test_add_single():
-        assert run(&#34;add FocusEnabler&#34;).exit_code == 0
+        assert run(&#34;add PyInit&#34;).exit_code == 0
 
     @staticmethod
     def test_add_single_again():
-        assert run(&#34;add FocusEnabler&#34;).exit_code == 0
+        assert run(&#34;add PyInit&#34;).exit_code == 0
 
     @staticmethod
     def test_list_single_positive():
         result = run(&#34;list&#34;)
         assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; in result.output
+        assert &#34;PyInit&#34; in result.output
         assert &#34;Stenographer&#34; not in result.output
 
     @staticmethod
     def test_remove_single():
-        assert run(&#34;remove FocusEnabler&#34;).exit_code == 0
+        assert run(&#34;remove PyInit&#34;).exit_code == 0
 
     @staticmethod
     def test_list_single_negative():
         result = run(&#34;list&#34;)
         assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; not in result.output
+        assert &#34;PyInit&#34; not in result.output
         assert &#34;Stenographer&#34; not in result.output
 
     @staticmethod
     def test_add_multiple():
-        assert run(&#34;add FocusEnabler Stenographer&#34;).exit_code == 0
+        assert run(&#34;add PyInit Stenographer&#34;).exit_code == 0
 
     @staticmethod
     def test_list_multiple_positive():
         result = run(&#34;list&#34;)
         assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; in result.output
+        assert &#34;PyInit&#34; in result.output
         assert &#34;Stenographer&#34; in result.output
 
     @staticmethod
     def test_remove_multiple():
-        assert run(&#34;remove FocusEnabler Stenographer&#34;).exit_code == 0
+        assert run(&#34;remove PyInit Stenographer&#34;).exit_code == 0
 
     @staticmethod
     def test_list_multiple_negative():
         result = run(&#34;list&#34;)
         assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; not in result.output
+        assert &#34;PyInit&#34; not in result.output
         assert &#34;Stenographer&#34; not in result.output
 
     @staticmethod
     def test_list_all():
         result = run(&#34;list -a&#34;)
         assert result.exit_code == 0
-        assert &#34;FocusEnabler&#34; in result.output
+        assert &#34;PyInit&#34; in result.output
         assert &#34;Stenographer&#34; in result.output
 
     @staticmethod
     def test_add_same():
-        assert run(&#34;add FocusEnabler FocusEnabler&#34;).exit_code == 0
+        assert run(&#34;add PyInit PyInit&#34;).exit_code == 0
 
     @staticmethod
     def test_remove_same():
-        assert run(&#34;remove FocusEnabler FocusEnabler&#34;).exit_code == 0
+        assert run(&#34;remove PyInit PyInit&#34;).exit_code == 0
 
     @staticmethod
     def test_add_invalid():
@@ -251,7 +251,7 @@ def test_add_invalid():
 </summary>
 <pre><code class="python">@staticmethod
 def test_add_multiple():
-    assert run(&#34;add FocusEnabler Stenographer&#34;).exit_code == 0</code></pre>
+    assert run(&#34;add PyInit Stenographer&#34;).exit_code == 0</code></pre>
 </details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_add_same"><code class="name flex">
@@ -265,7 +265,7 @@ def test_add_multiple():
 </summary>
 <pre><code class="python">@staticmethod
 def test_add_same():
-    assert run(&#34;add FocusEnabler FocusEnabler&#34;).exit_code == 0</code></pre>
+    assert run(&#34;add PyInit PyInit&#34;).exit_code == 0</code></pre>
 </details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_add_single"><code class="name flex">
@@ -279,7 +279,7 @@ def test_add_same():
 </summary>
 <pre><code class="python">@staticmethod
 def test_add_single():
-    assert run(&#34;add FocusEnabler&#34;).exit_code == 0</code></pre>
+    assert run(&#34;add PyInit&#34;).exit_code == 0</code></pre>
 </details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_add_single_again"><code class="name flex">
@@ -293,7 +293,7 @@ def test_add_single():
 </summary>
 <pre><code class="python">@staticmethod
 def test_add_single_again():
-    assert run(&#34;add FocusEnabler&#34;).exit_code == 0</code></pre>
+    assert run(&#34;add PyInit&#34;).exit_code == 0</code></pre>
 </details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_list_all"><code class="name flex">
@@ -309,7 +309,7 @@ def test_add_single_again():
 def test_list_all():
     result = run(&#34;list -a&#34;)
     assert result.exit_code == 0
-    assert &#34;FocusEnabler&#34; in result.output
+    assert &#34;PyInit&#34; in result.output
     assert &#34;Stenographer&#34; in result.output</code></pre>
 </details>
 </dd>
@@ -326,7 +326,7 @@ def test_list_all():
 def test_list_multiple_negative():
     result = run(&#34;list&#34;)
     assert result.exit_code == 0
-    assert &#34;FocusEnabler&#34; not in result.output
+    assert &#34;PyInit&#34; not in result.output
     assert &#34;Stenographer&#34; not in result.output</code></pre>
 </details>
 </dd>
@@ -343,7 +343,7 @@ def test_list_multiple_negative():
 def test_list_multiple_positive():
     result = run(&#34;list&#34;)
     assert result.exit_code == 0
-    assert &#34;FocusEnabler&#34; in result.output
+    assert &#34;PyInit&#34; in result.output
     assert &#34;Stenographer&#34; in result.output</code></pre>
 </details>
 </dd>
@@ -374,7 +374,7 @@ def test_list_negative():
 def test_list_single_negative():
     result = run(&#34;list&#34;)
     assert result.exit_code == 0
-    assert &#34;FocusEnabler&#34; not in result.output
+    assert &#34;PyInit&#34; not in result.output
     assert &#34;Stenographer&#34; not in result.output</code></pre>
 </details>
 </dd>
@@ -391,7 +391,7 @@ def test_list_single_negative():
 def test_list_single_positive():
     result = run(&#34;list&#34;)
     assert result.exit_code == 0
-    assert &#34;FocusEnabler&#34; in result.output
+    assert &#34;PyInit&#34; in result.output
     assert &#34;Stenographer&#34; not in result.output</code></pre>
 </details>
 </dd>
@@ -420,7 +420,7 @@ def test_remove_invalid():
 </summary>
 <pre><code class="python">@staticmethod
 def test_remove_multiple():
-    assert run(&#34;remove FocusEnabler Stenographer&#34;).exit_code == 0</code></pre>
+    assert run(&#34;remove PyInit Stenographer&#34;).exit_code == 0</code></pre>
 </details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_remove_same"><code class="name flex">
@@ -434,7 +434,7 @@ def test_remove_multiple():
 </summary>
 <pre><code class="python">@staticmethod
 def test_remove_same():
-    assert run(&#34;remove FocusEnabler FocusEnabler&#34;).exit_code == 0</code></pre>
+    assert run(&#34;remove PyInit PyInit&#34;).exit_code == 0</code></pre>
 </details>
 </dd>
 <dt id="SuperHelper.Tests.test_core_command.TestCore.test_remove_single"><code class="name flex">
@@ -448,7 +448,7 @@ def test_remove_same():
 </summary>
 <pre><code class="python">@staticmethod
 def test_remove_single():
-    assert run(&#34;remove FocusEnabler&#34;).exit_code == 0</code></pre>
+    assert run(&#34;remove PyInit&#34;).exit_code == 0</code></pre>
 </details>
 </dd>
 </dl>

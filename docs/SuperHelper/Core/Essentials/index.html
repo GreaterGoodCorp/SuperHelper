@@ -1,0 +1,2622 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>SuperHelper.Core.Essentials API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>SuperHelper.Core.Essentials</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># This subpackage allows a one-off import statement of most frequently used functions for all modules
+import logging
+
+from SuperHelper import AppDir, DEBUG
+from SuperHelper.Core.Utils.type_hinting import PathLike
+from SuperHelper.Core.Utils.type_ensure import TypeCheck
+from SuperHelper.Core.Utils.logger import get_logger
+from SuperHelper.Core.Utils.bit_ops import BitOps
+from SuperHelper.Core.Utils.file_ops import FileOps, FP
+from SuperHelper.Core.Utils.crypto_ops import Cryptographer
+from SuperHelper.Core.Config.config_class import pass_config
+
+
+def initialise_module(module_name: str) -&gt; (str, logging.Logger, PathLike):
+    &#34;&#34;&#34;Initialises a SuperHelper module on startup.
+
+    Args:
+        module_name (str): Name of the module.
+
+    Returns:
+        A tuple of (name, logger, module_dir), where name is the fully qualified name of the module (should be assigned
+        to __name__), logger is a module-level logger, and module_dir is a Path instance of the path to module&#39;s own
+        directory to store data.
+    &#34;&#34;&#34;
+    mod_name = f&#34;SuperHelper.Modules.{module_name}&#34;
+    mod_dir = AppDir / module_name
+    mod_dir.mkdir(parents=True, exist_ok=True)
+    return mod_name, get_logger(module_name), AppDir / module_name
+
+
+__all__ = [
+    &#34;AppDir&#34;,
+    &#34;DEBUG&#34;,
+    &#34;TypeCheck&#34;,
+    &#34;PathLike&#34;,
+    &#34;BitOps&#34;,
+    &#34;FileOps&#34;,
+    &#34;FP&#34;,
+    &#34;Cryptographer&#34;,
+    &#34;pass_config&#34;,
+    &#34;initialise_module&#34;,
+]</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="SuperHelper.Core.Essentials.initialise_module"><code class="name flex">
+<span>def <span class="ident">initialise_module</span></span>(<span>module_name: str) ‑> (<class 'str'>, <class 'logging.Logger'>, ~PathLike)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Initialises a SuperHelper module on startup.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>module_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the module.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A tuple of (name, logger, module_dir), where name is the fully qualified name of the module (should be assigned
+to <strong>name</strong>), logger is a module-level logger, and module_dir is a Path instance of the path to module's own
+directory to store data.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def initialise_module(module_name: str) -&gt; (str, logging.Logger, PathLike):
+    &#34;&#34;&#34;Initialises a SuperHelper module on startup.
+
+    Args:
+        module_name (str): Name of the module.
+
+    Returns:
+        A tuple of (name, logger, module_dir), where name is the fully qualified name of the module (should be assigned
+        to __name__), logger is a module-level logger, and module_dir is a Path instance of the path to module&#39;s own
+        directory to store data.
+    &#34;&#34;&#34;
+    mod_name = f&#34;SuperHelper.Modules.{module_name}&#34;
+    mod_dir = AppDir / module_name
+    mod_dir.mkdir(parents=True, exist_ok=True)
+    return mod_name, get_logger(module_name), AppDir / module_name</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.pass_config"><code class="name flex">
+<span>def <span class="ident">pass_config</span></span>(<span>core: bool = None, module_name: str = None, lock: bool = False, param_name: str = 'config') ‑> Callable</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Passes the requested config to decorated functions.</p>
+<p>The wrapped function will receive the config (as requested). When the function returns (or raises SystemExit), this
+decorator will capture that signal, save the config (if locked) before returning (or re-raising SystemExit).</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>core</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to request core config.</dd>
+<dt><strong><code>module_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the module.</dd>
+<dt><strong><code>lock</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to lock the config, i.e allow writing to the config.</dd>
+<dt><strong><code>param_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the parameter that the config will be passed as.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A Callable instance (the decorated function).</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>SystemExit</code></dt>
+<dd>Re-raises the <code>SystemExit()</code> raised by the wrapped function.</dd>
+<dt><code>ValueError</code></dt>
+<dd>Both <code>core</code> and <code>module_name</code> are specified.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pass_config(core: bool = None, module_name: str = None, lock: bool = False, param_name: str = &#34;config&#34;) -&gt; Callable:
+    &#34;&#34;&#34;Passes the requested config to decorated functions.
+
+    The wrapped function will receive the config (as requested). When the function returns (or raises SystemExit), this
+    decorator will capture that signal, save the config (if locked) before returning (or re-raising SystemExit).
+
+    Args:
+        core (bool): Whether to request core config.
+        module_name (str): The name of the module.
+        lock (bool): Whether to lock the config, i.e allow writing to the config.
+        param_name (str): The name of the parameter that the config will be passed as.
+
+    Returns:
+        A Callable instance (the decorated function).
+
+    Raises:
+        SystemExit: Re-raises the `SystemExit()` raised by the wrapped function.
+        ValueError: Both `core` and `module_name` are specified.
+    &#34;&#34;&#34;
+
+    def decorator(f: Callable) -&gt; Callable:
+        @wraps(f)
+        def wrapper(*args, **kwargs) -&gt; ...:
+            if core is None and module_name is None:
+                return f(global_config, *args, **kwargs)
+            elif core is not None and module_name is None:
+                if lock:
+                    config = global_config.get_core_config(lock=True)
+                    kwargs[param_name] = config
+                    try:
+                        ret_val = f(*args, **kwargs)
+                        global_config.set_core_config(config)
+                        return ret_val
+                    except SystemExit:
+                        global_config.set_core_config(config)
+                        raise
+                else:
+                    kwargs[param_name] = global_config.get_core_config(lock=False)
+                    return f(*args, **kwargs)
+            elif core is None and module_name is not None:
+                if lock:
+                    config = global_config.get_module_config(module_name, lock=True)
+                    kwargs[param_name] = config
+                    try:
+                        ret_val = f(*args, **kwargs)
+                        global_config.set_module_config(module_name, config)
+                        return ret_val
+                    except SystemExit:
+                        global_config.set_module_config(module_name, config)
+                        raise
+                else:
+                    kwargs[param_name] = global_config.get_module_config(module_name, lock=lock)
+                    return f(*args, **kwargs)
+            else:
+                raise ValueError(&#34;Core and module name cannot be enabled at the same time!&#34;)
+
+        return wrapper
+
+    return decorator</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="SuperHelper.Core.Essentials.BitOps"><code class="flex name class">
+<span>class <span class="ident">BitOps</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>A utility class for bitwise operations.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BitOps:
+    &#34;&#34;&#34;A utility class for bitwise operations.&#34;&#34;&#34;
+
+    @staticmethod
+    def is_bit_set(i: int, pos: int) -&gt; bool:
+        &#34;&#34;&#34;Checks if the `pos`-th bit of the integer `i` is set.
+
+        Args:
+            i (int): The integer to check.
+            pos (int): The zero-indexed position of the bit (from LSB) to check.
+
+        Returns:
+            True if the specified bit is set, otherwise False
+        &#34;&#34;&#34;
+        return bool(i &amp; (1 &lt;&lt; pos))
+
+    @staticmethod
+    def set_bit(i: int, pos: int) -&gt; int:
+        &#34;&#34;&#34;Sets the the `pos`-th bit of the integer `i`.
+
+        Args:
+            i (int): The integer to modify.
+            pos (int): The zero-indexed position of the bit (from LSB) to set.
+
+        Returns:
+            The integer with the specified bit set.
+        &#34;&#34;&#34;
+        if BitOps.is_bit_set(i, pos):
+            return i
+        else:
+            return i + (1 &lt;&lt; pos)
+
+    @staticmethod
+    def unset_bit(i: int, pos: int) -&gt; int:
+        &#34;&#34;&#34;Unsets the the `pos`-th bit of the integer `i`.
+
+        Args:
+            i (int): The integer to modify.
+            pos (int): The zero-indexed position of the bit (from LSB) to unset.
+
+        Returns:
+            The integer with the specified bit unset.
+        &#34;&#34;&#34;
+        if not BitOps.is_bit_set(i, pos):
+            return i
+        else:
+            return i - (1 &lt;&lt; pos)</code></pre>
+</details>
+<h3>Static methods</h3>
+<dl>
+<dt id="SuperHelper.Core.Essentials.BitOps.is_bit_set"><code class="name flex">
+<span>def <span class="ident">is_bit_set</span></span>(<span>i: int, pos: int) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the <code>pos</code>-th bit of the integer <code>i</code> is set.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>i</code></strong> :&ensp;<code>int</code></dt>
+<dd>The integer to check.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code>int</code></dt>
+<dd>The zero-indexed position of the bit (from LSB) to check.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>True if the specified bit is set, otherwise False</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_bit_set(i: int, pos: int) -&gt; bool:
+    &#34;&#34;&#34;Checks if the `pos`-th bit of the integer `i` is set.
+
+    Args:
+        i (int): The integer to check.
+        pos (int): The zero-indexed position of the bit (from LSB) to check.
+
+    Returns:
+        True if the specified bit is set, otherwise False
+    &#34;&#34;&#34;
+    return bool(i &amp; (1 &lt;&lt; pos))</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.BitOps.set_bit"><code class="name flex">
+<span>def <span class="ident">set_bit</span></span>(<span>i: int, pos: int) ‑> int</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the the <code>pos</code>-th bit of the integer <code>i</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>i</code></strong> :&ensp;<code>int</code></dt>
+<dd>The integer to modify.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code>int</code></dt>
+<dd>The zero-indexed position of the bit (from LSB) to set.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The integer with the specified bit set.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def set_bit(i: int, pos: int) -&gt; int:
+    &#34;&#34;&#34;Sets the the `pos`-th bit of the integer `i`.
+
+    Args:
+        i (int): The integer to modify.
+        pos (int): The zero-indexed position of the bit (from LSB) to set.
+
+    Returns:
+        The integer with the specified bit set.
+    &#34;&#34;&#34;
+    if BitOps.is_bit_set(i, pos):
+        return i
+    else:
+        return i + (1 &lt;&lt; pos)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.BitOps.unset_bit"><code class="name flex">
+<span>def <span class="ident">unset_bit</span></span>(<span>i: int, pos: int) ‑> int</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Unsets the the <code>pos</code>-th bit of the integer <code>i</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>i</code></strong> :&ensp;<code>int</code></dt>
+<dd>The integer to modify.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code>int</code></dt>
+<dd>The zero-indexed position of the bit (from LSB) to unset.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The integer with the specified bit unset.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def unset_bit(i: int, pos: int) -&gt; int:
+    &#34;&#34;&#34;Unsets the the `pos`-th bit of the integer `i`.
+
+    Args:
+        i (int): The integer to modify.
+        pos (int): The zero-indexed position of the bit (from LSB) to unset.
+
+    Returns:
+        The integer with the specified bit unset.
+    &#34;&#34;&#34;
+    if not BitOps.is_bit_set(i, pos):
+        return i
+    else:
+        return i - (1 &lt;&lt; pos)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="SuperHelper.Core.Essentials.Cryptographer"><code class="flex name class">
+<span>class <span class="ident">Cryptographer</span></span>
+<span>(</span><span>salt: bytes, auth_key: bytes, encrypt: bool = True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A utility class for cryptographic functions.</p>
+<p>Initialises a <code><a title="SuperHelper.Core.Essentials.Cryptographer" href="#SuperHelper.Core.Essentials.Cryptographer">Cryptographer</a></code> instance.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>salt</code></strong> :&ensp;<code>bytes</code></dt>
+<dd>The raw salt, in bytes.</dd>
+<dt><strong><code>auth_key</code></strong> :&ensp;<code>bytes</code></dt>
+<dd>The authentication key, in bytes.</dd>
+<dt><strong><code>encrypt</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to make an encrypter, otherwise False.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Cryptographer:
+    &#34;&#34;&#34;A utility class for cryptographic functions.&#34;&#34;&#34;
+
+    def __init__(self, salt: bytes, auth_key: bytes, encrypt: bool = True) -&gt; None:
+        &#34;&#34;&#34;Initialises a `Cryptographer` instance.
+        Args:
+            salt (bytes): The raw salt, in bytes.
+            auth_key (bytes): The authentication key, in bytes.
+            encrypt (bool): True to make an encrypter, otherwise False.
+        &#34;&#34;&#34;
+        self.salt = salt
+        self.kdf = self.make_kdf(self.salt)
+        self.auth_hash = hashlib.sha256(auth_key).digest()
+        self.key = self.kdf.derive(self.auth_hash)
+        self.is_encrypt = encrypt
+
+    def encrypt(self, raw_data: bytes) -&gt; bytes:
+        &#34;&#34;&#34;Encrypts raw data.
+
+        Args:
+            raw_data (bytes): The raw data to be encrypted.
+
+        Returns:
+            The encrypted data, in bytes, which is encrypted using the `Fernet` (created by `Cryptography.make_fernet`)
+
+        Raises:
+            ValueError: A decrypter is used to encrypt.
+        &#34;&#34;&#34;
+        TypeCheck.ensure_bytes(raw_data, &#34;raw_data&#34;)
+        if not self.is_encrypt:
+            raise ValueError(&#34;Not an encrypter!&#34;)
+        fernet = Cryptographer.make_fernet(self.key)
+        return fernet.encrypt(raw_data)
+
+    def decrypt(self, encrypted_data: bytes) -&gt; bytes:
+        &#34;&#34;&#34;Decrypts the encrypted data.
+
+        Args:
+            encrypted_data (bytes): The encrypted data to be decrypted.
+
+        Returns:
+            The decrypted data, in bytes, which is decrypted using the `Fernet` (created by `Cryptography.make_fernet`)
+        &#34;&#34;&#34;
+        TypeCheck.ensure_bytes(encrypted_data, &#34;encrypted_data&#34;)
+        if self.is_encrypt:
+            raise ValueError(&#34;Not a decrypter!&#34;)
+        fernet = Cryptographer.make_fernet(self.key)
+        try:
+            return fernet.decrypt(encrypted_data)
+        except InvalidToken:
+            raise
+
+    def get_salt_string(self) -&gt; str:
+        &#34;&#34;&#34;String-ify the raw salt.
+
+        Returns:
+            The Base64-encoded string of the raw salt.
+        &#34;&#34;&#34;
+        return Cryptographer.encode_salt(self.salt)
+
+    @staticmethod
+    def make_encrypter(salt: str, key: str) -&gt; Cryptographer:
+        &#34;&#34;&#34;Makes a Fernet encrypter for salt and key.
+
+        Args:
+            salt (str): The Base64-encoded string of the raw salt.
+            key (str): The authentication key.
+
+        Returns:
+            A `Cryptographer` instance, which can be used to encrypt data.
+        &#34;&#34;&#34;
+        TypeCheck.ensure_str(salt, &#34;salt&#34;)
+        TypeCheck.ensure_str(key, &#34;key&#34;)
+        return Cryptographer(Cryptographer.decode_salt(salt), key.encode(), True)
+
+    @staticmethod
+    def make_decrypter(salt: str, key: str) -&gt; Cryptographer:
+        &#34;&#34;&#34;Makes a Fernet decrypter for salt and key.
+
+        Args:
+            salt (str): The Base64-encoded string of the raw salt.
+            key (str): The authentication key.
+
+        Returns:
+            A `Cryptographer` instance, which can be used to decrypt data.
+        &#34;&#34;&#34;
+        TypeCheck.ensure_str(salt, &#34;salt&#34;)
+        TypeCheck.ensure_str(key, &#34;key&#34;)
+        return Cryptographer(Cryptographer.decode_salt(salt), key.encode(), False)
+
+    @staticmethod
+    def make_salt() -&gt; bytes:
+        &#34;&#34;&#34;Generates a cryptographically secure salt for cryptography.
+
+        Returns:
+            A 16-byte raw salt
+        &#34;&#34;&#34;
+        return os.urandom(16)
+
+    @staticmethod
+    def encode_salt(salt: bytes) -&gt; str:
+        &#34;&#34;&#34;Encodes the raw salt as string.
+
+        Args:
+            salt (bytes): The raw salt, in bytes.
+
+        Returns:
+            The Base64-encoded string of the raw salt
+        &#34;&#34;&#34;
+        TypeCheck.ensure_bytes(salt, &#34;salt&#34;)
+        return str(base64.b64encode(salt), &#34;utf-8&#34;)
+
+    @staticmethod
+    def decode_salt(salt: str) -&gt; bytes:
+        &#34;&#34;&#34;Decodes the salt string to raw salt.
+
+        Args:
+            salt (str): The Base64-encoded string of the raw salt.
+
+        Returns:
+            The raw salt
+        &#34;&#34;&#34;
+        TypeCheck.ensure_str(salt, &#34;salt&#34;)
+        return base64.b64decode(bytes(salt, &#34;utf-8&#34;))
+
+    @staticmethod
+    def make_kdf(salt: bytes) -&gt; PBKDF2HMAC:
+        &#34;&#34;&#34;Makes a key derivation function from raw salt.
+
+        Args:
+            salt (bytes): The raw salt, in bytes.
+
+        Returns:
+            A PBKDF2HMAC instance, which can be used to derive key from the authentication key.
+        &#34;&#34;&#34;
+        TypeCheck.ensure_bytes(salt, &#34;salt&#34;)
+        return PBKDF2HMAC(
+            algorithm=hashes.SHA512(),
+            length=32,
+            salt=salt,
+            iterations=10000,
+            backend=default_backend(),
+        )
+
+    @staticmethod
+    def make_fernet(key: bytes) -&gt; Fernet:
+        &#34;&#34;&#34;Makes a Fernet encrypter/decrypter from the derived key.
+
+        Args:
+            key (bytes): The derived key, in bytes.
+
+        Returns:
+            A Fernet instance, which can be used to either encrypt or decrypt data.
+        &#34;&#34;&#34;
+        TypeCheck.ensure_bytes(key, &#34;key&#34;)
+        return Fernet(base64.urlsafe_b64encode(key))</code></pre>
+</details>
+<h3>Static methods</h3>
+<dl>
+<dt id="SuperHelper.Core.Essentials.Cryptographer.decode_salt"><code class="name flex">
+<span>def <span class="ident">decode_salt</span></span>(<span>salt: str) ‑> bytes</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decodes the salt string to raw salt.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>salt</code></strong> :&ensp;<code>str</code></dt>
+<dd>The Base64-encoded string of the raw salt.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The raw salt</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def decode_salt(salt: str) -&gt; bytes:
+    &#34;&#34;&#34;Decodes the salt string to raw salt.
+
+    Args:
+        salt (str): The Base64-encoded string of the raw salt.
+
+    Returns:
+        The raw salt
+    &#34;&#34;&#34;
+    TypeCheck.ensure_str(salt, &#34;salt&#34;)
+    return base64.b64decode(bytes(salt, &#34;utf-8&#34;))</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.Cryptographer.encode_salt"><code class="name flex">
+<span>def <span class="ident">encode_salt</span></span>(<span>salt: bytes) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Encodes the raw salt as string.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>salt</code></strong> :&ensp;<code>bytes</code></dt>
+<dd>The raw salt, in bytes.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The Base64-encoded string of the raw salt</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def encode_salt(salt: bytes) -&gt; str:
+    &#34;&#34;&#34;Encodes the raw salt as string.
+
+    Args:
+        salt (bytes): The raw salt, in bytes.
+
+    Returns:
+        The Base64-encoded string of the raw salt
+    &#34;&#34;&#34;
+    TypeCheck.ensure_bytes(salt, &#34;salt&#34;)
+    return str(base64.b64encode(salt), &#34;utf-8&#34;)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.Cryptographer.make_decrypter"><code class="name flex">
+<span>def <span class="ident">make_decrypter</span></span>(<span>salt: str, key: str) ‑> <a title="SuperHelper.Core.Utils.crypto_ops.Cryptographer" href="../Utils/crypto_ops.html#SuperHelper.Core.Utils.crypto_ops.Cryptographer">Cryptographer</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Makes a Fernet decrypter for salt and key.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>salt</code></strong> :&ensp;<code>str</code></dt>
+<dd>The Base64-encoded string of the raw salt.</dd>
+<dt><strong><code>key</code></strong> :&ensp;<code>str</code></dt>
+<dd>The authentication key.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A <code><a title="SuperHelper.Core.Essentials.Cryptographer" href="#SuperHelper.Core.Essentials.Cryptographer">Cryptographer</a></code> instance, which can be used to decrypt data.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def make_decrypter(salt: str, key: str) -&gt; Cryptographer:
+    &#34;&#34;&#34;Makes a Fernet decrypter for salt and key.
+
+    Args:
+        salt (str): The Base64-encoded string of the raw salt.
+        key (str): The authentication key.
+
+    Returns:
+        A `Cryptographer` instance, which can be used to decrypt data.
+    &#34;&#34;&#34;
+    TypeCheck.ensure_str(salt, &#34;salt&#34;)
+    TypeCheck.ensure_str(key, &#34;key&#34;)
+    return Cryptographer(Cryptographer.decode_salt(salt), key.encode(), False)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.Cryptographer.make_encrypter"><code class="name flex">
+<span>def <span class="ident">make_encrypter</span></span>(<span>salt: str, key: str) ‑> <a title="SuperHelper.Core.Utils.crypto_ops.Cryptographer" href="../Utils/crypto_ops.html#SuperHelper.Core.Utils.crypto_ops.Cryptographer">Cryptographer</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Makes a Fernet encrypter for salt and key.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>salt</code></strong> :&ensp;<code>str</code></dt>
+<dd>The Base64-encoded string of the raw salt.</dd>
+<dt><strong><code>key</code></strong> :&ensp;<code>str</code></dt>
+<dd>The authentication key.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A <code><a title="SuperHelper.Core.Essentials.Cryptographer" href="#SuperHelper.Core.Essentials.Cryptographer">Cryptographer</a></code> instance, which can be used to encrypt data.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def make_encrypter(salt: str, key: str) -&gt; Cryptographer:
+    &#34;&#34;&#34;Makes a Fernet encrypter for salt and key.
+
+    Args:
+        salt (str): The Base64-encoded string of the raw salt.
+        key (str): The authentication key.
+
+    Returns:
+        A `Cryptographer` instance, which can be used to encrypt data.
+    &#34;&#34;&#34;
+    TypeCheck.ensure_str(salt, &#34;salt&#34;)
+    TypeCheck.ensure_str(key, &#34;key&#34;)
+    return Cryptographer(Cryptographer.decode_salt(salt), key.encode(), True)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.Cryptographer.make_fernet"><code class="name flex">
+<span>def <span class="ident">make_fernet</span></span>(<span>key: bytes) ‑> cryptography.fernet.Fernet</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Makes a Fernet encrypter/decrypter from the derived key.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>key</code></strong> :&ensp;<code>bytes</code></dt>
+<dd>The derived key, in bytes.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A Fernet instance, which can be used to either encrypt or decrypt data.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def make_fernet(key: bytes) -&gt; Fernet:
+    &#34;&#34;&#34;Makes a Fernet encrypter/decrypter from the derived key.
+
+    Args:
+        key (bytes): The derived key, in bytes.
+
+    Returns:
+        A Fernet instance, which can be used to either encrypt or decrypt data.
+    &#34;&#34;&#34;
+    TypeCheck.ensure_bytes(key, &#34;key&#34;)
+    return Fernet(base64.urlsafe_b64encode(key))</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.Cryptographer.make_kdf"><code class="name flex">
+<span>def <span class="ident">make_kdf</span></span>(<span>salt: bytes) ‑> cryptography.hazmat.primitives.kdf.pbkdf2.PBKDF2HMAC</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Makes a key derivation function from raw salt.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>salt</code></strong> :&ensp;<code>bytes</code></dt>
+<dd>The raw salt, in bytes.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A PBKDF2HMAC instance, which can be used to derive key from the authentication key.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def make_kdf(salt: bytes) -&gt; PBKDF2HMAC:
+    &#34;&#34;&#34;Makes a key derivation function from raw salt.
+
+    Args:
+        salt (bytes): The raw salt, in bytes.
+
+    Returns:
+        A PBKDF2HMAC instance, which can be used to derive key from the authentication key.
+    &#34;&#34;&#34;
+    TypeCheck.ensure_bytes(salt, &#34;salt&#34;)
+    return PBKDF2HMAC(
+        algorithm=hashes.SHA512(),
+        length=32,
+        salt=salt,
+        iterations=10000,
+        backend=default_backend(),
+    )</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.Cryptographer.make_salt"><code class="name flex">
+<span>def <span class="ident">make_salt</span></span>(<span>) ‑> bytes</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates a cryptographically secure salt for cryptography.</p>
+<h2 id="returns">Returns</h2>
+<p>A 16-byte raw salt</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def make_salt() -&gt; bytes:
+    &#34;&#34;&#34;Generates a cryptographically secure salt for cryptography.
+
+    Returns:
+        A 16-byte raw salt
+    &#34;&#34;&#34;
+    return os.urandom(16)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="SuperHelper.Core.Essentials.Cryptographer.decrypt"><code class="name flex">
+<span>def <span class="ident">decrypt</span></span>(<span>self, encrypted_data: bytes) ‑> bytes</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decrypts the encrypted data.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>encrypted_data</code></strong> :&ensp;<code>bytes</code></dt>
+<dd>The encrypted data to be decrypted.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The decrypted data, in bytes, which is decrypted using the <code>Fernet</code> (created by <code>Cryptography.make_fernet</code>)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def decrypt(self, encrypted_data: bytes) -&gt; bytes:
+    &#34;&#34;&#34;Decrypts the encrypted data.
+
+    Args:
+        encrypted_data (bytes): The encrypted data to be decrypted.
+
+    Returns:
+        The decrypted data, in bytes, which is decrypted using the `Fernet` (created by `Cryptography.make_fernet`)
+    &#34;&#34;&#34;
+    TypeCheck.ensure_bytes(encrypted_data, &#34;encrypted_data&#34;)
+    if self.is_encrypt:
+        raise ValueError(&#34;Not a decrypter!&#34;)
+    fernet = Cryptographer.make_fernet(self.key)
+    try:
+        return fernet.decrypt(encrypted_data)
+    except InvalidToken:
+        raise</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.Cryptographer.encrypt"><code class="name flex">
+<span>def <span class="ident">encrypt</span></span>(<span>self, raw_data: bytes) ‑> bytes</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Encrypts raw data.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>raw_data</code></strong> :&ensp;<code>bytes</code></dt>
+<dd>The raw data to be encrypted.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>The encrypted data, in bytes, which is encrypted using the <code>Fernet</code> (created by <code>Cryptography.make_fernet</code>)</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>A decrypter is used to encrypt.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def encrypt(self, raw_data: bytes) -&gt; bytes:
+    &#34;&#34;&#34;Encrypts raw data.
+
+    Args:
+        raw_data (bytes): The raw data to be encrypted.
+
+    Returns:
+        The encrypted data, in bytes, which is encrypted using the `Fernet` (created by `Cryptography.make_fernet`)
+
+    Raises:
+        ValueError: A decrypter is used to encrypt.
+    &#34;&#34;&#34;
+    TypeCheck.ensure_bytes(raw_data, &#34;raw_data&#34;)
+    if not self.is_encrypt:
+        raise ValueError(&#34;Not an encrypter!&#34;)
+    fernet = Cryptographer.make_fernet(self.key)
+    return fernet.encrypt(raw_data)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.Cryptographer.get_salt_string"><code class="name flex">
+<span>def <span class="ident">get_salt_string</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>String-ify the raw salt.</p>
+<h2 id="returns">Returns</h2>
+<p>The Base64-encoded string of the raw salt.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_salt_string(self) -&gt; str:
+    &#34;&#34;&#34;String-ify the raw salt.
+
+    Returns:
+        The Base64-encoded string of the raw salt.
+    &#34;&#34;&#34;
+    return Cryptographer.encode_salt(self.salt)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FP"><code class="flex name class">
+<span>class <span class="ident">FP</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Contains file permission flags.</p>
+<p>R = Read</p>
+<p>W = Write</p>
+<p>X = Execute</p>
+<p>USR = User (file owner)</p>
+<p>GRP = Group owner</p>
+<p>OTH = Other users/groups</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FP(enum.Flag):
+    &#34;&#34;&#34;
+    Contains file permission flags.
+
+    R = Read
+
+    W = Write
+
+    X = Execute
+
+    USR = User (file owner)
+
+    GRP = Group owner
+
+    OTH = Other users/groups
+    &#34;&#34;&#34;
+    R_USR = enum.auto()
+    &#34;&#34;&#34;User readable.&#34;&#34;&#34;
+    W_USR = enum.auto()
+    &#34;&#34;&#34;User writable.&#34;&#34;&#34;
+    X_USR = enum.auto()
+    &#34;&#34;&#34;User executable.&#34;&#34;&#34;
+    R_GRP = enum.auto()
+    &#34;&#34;&#34;Group readable.&#34;&#34;&#34;
+    W_GRP = enum.auto()
+    &#34;&#34;&#34;Group writable.&#34;&#34;&#34;
+    X_GRP = enum.auto()
+    &#34;&#34;&#34;Group executable.&#34;&#34;&#34;
+    R_OTH = enum.auto()
+    &#34;&#34;&#34;Other readable.&#34;&#34;&#34;
+    W_OTH = enum.auto()
+    &#34;&#34;&#34;Other writable.&#34;&#34;&#34;
+    X_OTH = enum.auto()
+    &#34;&#34;&#34;Other executable.&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Flag</li>
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="SuperHelper.Core.Essentials.FP.R_GRP"><code class="name">var <span class="ident">R_GRP</span></code></dt>
+<dd>
+<div class="desc"><p>Group readable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FP.R_OTH"><code class="name">var <span class="ident">R_OTH</span></code></dt>
+<dd>
+<div class="desc"><p>Other readable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FP.R_USR"><code class="name">var <span class="ident">R_USR</span></code></dt>
+<dd>
+<div class="desc"><p>User readable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FP.W_GRP"><code class="name">var <span class="ident">W_GRP</span></code></dt>
+<dd>
+<div class="desc"><p>Group writable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FP.W_OTH"><code class="name">var <span class="ident">W_OTH</span></code></dt>
+<dd>
+<div class="desc"><p>Other writable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FP.W_USR"><code class="name">var <span class="ident">W_USR</span></code></dt>
+<dd>
+<div class="desc"><p>User writable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FP.X_GRP"><code class="name">var <span class="ident">X_GRP</span></code></dt>
+<dd>
+<div class="desc"><p>Group executable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FP.X_OTH"><code class="name">var <span class="ident">X_OTH</span></code></dt>
+<dd>
+<div class="desc"><p>Other executable.</p></div>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FP.X_USR"><code class="name">var <span class="ident">X_USR</span></code></dt>
+<dd>
+<div class="desc"><p>User executable.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FileOps"><code class="flex name class">
+<span>class <span class="ident">FileOps</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>A utility class for file ownership and permissions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FileOps:
+    &#34;&#34;&#34;
+    A utility class for file ownership and permissions.
+    &#34;&#34;&#34;
+
+    @staticmethod
+    @functools.cache
+    def get_stat(path: PathLike) -&gt; os.stat_result:
+        &#34;&#34;&#34;Gets the `stat` of file pointed by the path.
+
+        This function is decorated by @cache to reduce the amount of syscall, since `os.stat` is an expensive function.
+
+        Args:
+            path (PathLike): Path to the file to check
+
+        Returns:
+            An os.stat_result instance containing the stat of the file.
+        &#34;&#34;&#34;
+        return os.stat(path)
+
+    @staticmethod
+    def is_user_own(uid: int, path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the file is owned by the user with `uid`.
+
+        :param uid: The UID of the user
+        :type uid: int
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is owned by the uid, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_uid == uid
+
+    @staticmethod
+    def is_roots(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Check if the file is owned by `root`.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is owned by root, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.is_user_own(0, path)
+
+    @staticmethod
+    def is_mine(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the file is owned by the current user.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is owned by the current user, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.is_user_own(os.getuid(), path)
+
+    @staticmethod
+    def is_owner_readable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the owner of the file can read it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is readable by its owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IRUSR
+
+    @staticmethod
+    def is_owner_writable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the owner of the file can write to it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is writable by its owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IWUSR
+
+    @staticmethod
+    def is_owner_executable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the owner of the file can execute it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is executable by its owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IXUSR
+
+    @staticmethod
+    def is_group_readable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the group owner of the file can read it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is readable by its group owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IRGRP
+
+    @staticmethod
+    def is_group_writable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the group owner of the file can write to it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is writable by its group owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IWGRP
+
+    @staticmethod
+    def is_group_executable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the group owner of the file can execute it.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is executable by its group owner, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IXGRP
+
+    @staticmethod
+    def is_other_readable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the other users or groups can read the file.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is readable by them, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IROTH
+
+    @staticmethod
+    def is_other_writable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the other users or groups can write the file.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is writable by them, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IWOTH
+
+    @staticmethod
+    def is_other_executable(path: PathLike) -&gt; bool:
+        &#34;&#34;&#34;Checks if the other users or groups can execute the file.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :return: True if the file is executable by them, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        return FileOps.get_stat(path).st_mode &amp; stat.S_IXOTH
+
+    @staticmethod
+    def check_fp(path: PathLike, fp: FP) -&gt; bool:
+        &#34;&#34;&#34;Checks if the file contains the specified file permissions.
+
+        :param path: Path to the file to check
+        :type path: PathLike
+        :param fp: The flags of the file permissions to check.
+        :type fp: FP
+        :return: True if all the flags are valid, otherwise False
+        :rtype: bool
+        &#34;&#34;&#34;
+        flag_match: dict[FP, Callable[[PathLike], bool]] = {
+            FP.R_USR: FileOps.is_owner_readable,
+            FP.W_USR: FileOps.is_owner_writable,
+            FP.X_USR: FileOps.is_owner_executable,
+            FP.R_GRP: FileOps.is_group_readable,
+            FP.W_GRP: FileOps.is_group_writable,
+            FP.X_GRP: FileOps.is_group_executable,
+            FP.R_OTH: FileOps.is_other_readable,
+            FP.W_OTH: FileOps.is_other_writable,
+            FP.X_OTH: FileOps.is_other_executable,
+        }
+        final = True
+        for f in FP:
+            if f &amp; fp:
+                final &amp;= bool(flag_match[f](path))
+        return final</code></pre>
+</details>
+<h3>Static methods</h3>
+<dl>
+<dt id="SuperHelper.Core.Essentials.FileOps.check_fp"><code class="name flex">
+<span>def <span class="ident">check_fp</span></span>(<span>path: ~PathLike, fp: <a title="SuperHelper.Core.Utils.file_ops.FP" href="../Utils/file_ops.html#SuperHelper.Core.Utils.file_ops.FP">FP</a>) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the file contains the specified file permissions.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:param fp: The flags of the file permissions to check.
+:type fp: FP
+:return: True if all the flags are valid, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def check_fp(path: PathLike, fp: FP) -&gt; bool:
+    &#34;&#34;&#34;Checks if the file contains the specified file permissions.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :param fp: The flags of the file permissions to check.
+    :type fp: FP
+    :return: True if all the flags are valid, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    flag_match: dict[FP, Callable[[PathLike], bool]] = {
+        FP.R_USR: FileOps.is_owner_readable,
+        FP.W_USR: FileOps.is_owner_writable,
+        FP.X_USR: FileOps.is_owner_executable,
+        FP.R_GRP: FileOps.is_group_readable,
+        FP.W_GRP: FileOps.is_group_writable,
+        FP.X_GRP: FileOps.is_group_executable,
+        FP.R_OTH: FileOps.is_other_readable,
+        FP.W_OTH: FileOps.is_other_writable,
+        FP.X_OTH: FileOps.is_other_executable,
+    }
+    final = True
+    for f in FP:
+        if f &amp; fp:
+            final &amp;= bool(flag_match[f](path))
+    return final</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FileOps.get_stat"><code class="name flex">
+<span>def <span class="ident">get_stat</span></span>(<span>path: ~PathLike) ‑> os.stat_result</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets the <code>stat</code> of file pointed by the path.</p>
+<p>This function is decorated by @cache to reduce the amount of syscall, since <code>os.stat</code> is an expensive function.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>path</code></strong> :&ensp;<code>PathLike</code></dt>
+<dd>Path to the file to check</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>An os.stat_result instance containing the stat of the file.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+@functools.cache
+def get_stat(path: PathLike) -&gt; os.stat_result:
+    &#34;&#34;&#34;Gets the `stat` of file pointed by the path.
+
+    This function is decorated by @cache to reduce the amount of syscall, since `os.stat` is an expensive function.
+
+    Args:
+        path (PathLike): Path to the file to check
+
+    Returns:
+        An os.stat_result instance containing the stat of the file.
+    &#34;&#34;&#34;
+    return os.stat(path)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FileOps.is_group_executable"><code class="name flex">
+<span>def <span class="ident">is_group_executable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the group owner of the file can execute it.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is executable by its group owner, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_group_executable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the group owner of the file can execute it.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is executable by its group owner, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IXGRP</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FileOps.is_group_readable"><code class="name flex">
+<span>def <span class="ident">is_group_readable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the group owner of the file can read it.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is readable by its group owner, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_group_readable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the group owner of the file can read it.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is readable by its group owner, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IRGRP</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FileOps.is_group_writable"><code class="name flex">
+<span>def <span class="ident">is_group_writable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the group owner of the file can write to it.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is writable by its group owner, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_group_writable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the group owner of the file can write to it.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is writable by its group owner, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IWGRP</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FileOps.is_mine"><code class="name flex">
+<span>def <span class="ident">is_mine</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the file is owned by the current user.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is owned by the current user, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_mine(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the file is owned by the current user.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is owned by the current user, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.is_user_own(os.getuid(), path)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FileOps.is_other_executable"><code class="name flex">
+<span>def <span class="ident">is_other_executable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the other users or groups can execute the file.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is executable by them, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_other_executable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the other users or groups can execute the file.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is executable by them, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IXOTH</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FileOps.is_other_readable"><code class="name flex">
+<span>def <span class="ident">is_other_readable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the other users or groups can read the file.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is readable by them, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_other_readable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the other users or groups can read the file.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is readable by them, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IROTH</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FileOps.is_other_writable"><code class="name flex">
+<span>def <span class="ident">is_other_writable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the other users or groups can write the file.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is writable by them, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_other_writable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the other users or groups can write the file.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is writable by them, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IWOTH</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FileOps.is_owner_executable"><code class="name flex">
+<span>def <span class="ident">is_owner_executable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the owner of the file can execute it.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is executable by its owner, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_owner_executable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the owner of the file can execute it.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is executable by its owner, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IXUSR</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FileOps.is_owner_readable"><code class="name flex">
+<span>def <span class="ident">is_owner_readable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the owner of the file can read it.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is readable by its owner, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_owner_readable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the owner of the file can read it.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is readable by its owner, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IRUSR</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FileOps.is_owner_writable"><code class="name flex">
+<span>def <span class="ident">is_owner_writable</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the owner of the file can write to it.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is writable by its owner, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_owner_writable(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the owner of the file can write to it.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is writable by its owner, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_mode &amp; stat.S_IWUSR</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FileOps.is_roots"><code class="name flex">
+<span>def <span class="ident">is_roots</span></span>(<span>path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Check if the file is owned by <code>root</code>.</p>
+<p>:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is owned by root, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_roots(path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Check if the file is owned by `root`.
+
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is owned by root, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.is_user_own(0, path)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.FileOps.is_user_own"><code class="name flex">
+<span>def <span class="ident">is_user_own</span></span>(<span>uid: int, path: ~PathLike) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if the file is owned by the user with <code>uid</code>.</p>
+<p>:param uid: The UID of the user
+:type uid: int
+:param path: Path to the file to check
+:type path: PathLike
+:return: True if the file is owned by the uid, otherwise False
+:rtype: bool</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def is_user_own(uid: int, path: PathLike) -&gt; bool:
+    &#34;&#34;&#34;Checks if the file is owned by the user with `uid`.
+
+    :param uid: The UID of the user
+    :type uid: int
+    :param path: Path to the file to check
+    :type path: PathLike
+    :return: True if the file is owned by the uid, otherwise False
+    :rtype: bool
+    &#34;&#34;&#34;
+    return FileOps.get_stat(path).st_uid == uid</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck"><code class="flex name class">
+<span>class <span class="ident">TypeCheck</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>A utility class for type checking functions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TypeCheck:
+    &#34;&#34;&#34;
+    A utility class for type checking functions.
+    &#34;&#34;&#34;
+
+    @staticmethod
+    def ensure_custom(t: type, obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is of the expected type.
+
+        Args:
+            t (type): The expected type of the object.
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(t, obj, name)
+
+    @staticmethod
+    def ensure_bool(obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is of type `bool`.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(bool, obj, name)
+
+    @staticmethod
+    def ensure_int(obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is of type `int`.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(int, obj, name)
+
+    @staticmethod
+    def ensure_float(obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is of type `float`.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(float, obj, name)
+
+    @staticmethod
+    def ensure_complex(obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is of type `complex`.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(complex, obj, name)
+
+    @staticmethod
+    def ensure_str(obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is of type `str`.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(str, obj, name)
+
+    @staticmethod
+    def ensure_bytes(obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is of type `bytes`.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(bytes, obj, name)
+
+    @staticmethod
+    def ensure_bytearray(obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is of type `bytearray`.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(bytearray, obj, name)
+
+    @staticmethod
+    def ensure_list(obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is of type `list`.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(list, obj, name)
+
+    @staticmethod
+    def ensure_tuple(obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is of type `tuple`.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(tuple, obj, name)
+
+    @staticmethod
+    def ensure_dict(obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is of type `dict`.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(dict, obj, name)
+
+    @staticmethod
+    def ensure_set(obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is of type `set`.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(set, obj, name)
+
+    @staticmethod
+    def ensure_frozenset(obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is of type `frozenset`.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(frozenset, obj, name)
+
+    @staticmethod
+    def ensure_generator(obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is a generator.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(GeneratorType, obj, name)
+
+    @staticmethod
+    def ensure_memoryview(obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is of type `memoryview`.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(memoryview, obj, name)
+
+    @staticmethod
+    def ensure_function(obj: ..., name: str = None) -&gt; None:
+        &#34;&#34;&#34;Ensures the object is a function.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type(FunctionType, obj, name)
+
+    @staticmethod
+    def ensure_path_like(obj: ..., name: str = None):
+        &#34;&#34;&#34;Ensures the object can be used as a path.
+
+        Args:
+            obj (object): The object to check.
+            name (str): The name of the object.
+
+        Returns:
+            None
+
+        Raises:
+            TypeError: The type of the object is not the specified type.
+        &#34;&#34;&#34;
+        return _ensure_obj_of_type((PathLike, str, bytes, os.PathLike), obj, name)</code></pre>
+</details>
+<h3>Static methods</h3>
+<dl>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_bool"><code class="name flex">
+<span>def <span class="ident">ensure_bool</span></span>(<span>obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is of type <code>bool</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_bool(obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is of type `bool`.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(bool, obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_bytearray"><code class="name flex">
+<span>def <span class="ident">ensure_bytearray</span></span>(<span>obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is of type <code>bytearray</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_bytearray(obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is of type `bytearray`.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(bytearray, obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_bytes"><code class="name flex">
+<span>def <span class="ident">ensure_bytes</span></span>(<span>obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is of type <code>bytes</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_bytes(obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is of type `bytes`.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(bytes, obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_complex"><code class="name flex">
+<span>def <span class="ident">ensure_complex</span></span>(<span>obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is of type <code>complex</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_complex(obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is of type `complex`.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(complex, obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_custom"><code class="name flex">
+<span>def <span class="ident">ensure_custom</span></span>(<span>t: type, obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is of the expected type.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>t</code></strong> :&ensp;<code>type</code></dt>
+<dd>The expected type of the object.</dd>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_custom(t: type, obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is of the expected type.
+
+    Args:
+        t (type): The expected type of the object.
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(t, obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_dict"><code class="name flex">
+<span>def <span class="ident">ensure_dict</span></span>(<span>obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is of type <code>dict</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_dict(obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is of type `dict`.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(dict, obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_float"><code class="name flex">
+<span>def <span class="ident">ensure_float</span></span>(<span>obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is of type <code>float</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_float(obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is of type `float`.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(float, obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_frozenset"><code class="name flex">
+<span>def <span class="ident">ensure_frozenset</span></span>(<span>obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is of type <code>frozenset</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_frozenset(obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is of type `frozenset`.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(frozenset, obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_function"><code class="name flex">
+<span>def <span class="ident">ensure_function</span></span>(<span>obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is a function.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_function(obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is a function.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(FunctionType, obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_generator"><code class="name flex">
+<span>def <span class="ident">ensure_generator</span></span>(<span>obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is a generator.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_generator(obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is a generator.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(GeneratorType, obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_int"><code class="name flex">
+<span>def <span class="ident">ensure_int</span></span>(<span>obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is of type <code>int</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_int(obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is of type `int`.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(int, obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_list"><code class="name flex">
+<span>def <span class="ident">ensure_list</span></span>(<span>obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is of type <code>list</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_list(obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is of type `list`.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(list, obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_memoryview"><code class="name flex">
+<span>def <span class="ident">ensure_memoryview</span></span>(<span>obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is of type <code>memoryview</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_memoryview(obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is of type `memoryview`.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(memoryview, obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_path_like"><code class="name flex">
+<span>def <span class="ident">ensure_path_like</span></span>(<span>obj: Ellipsis, name: str = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object can be used as a path.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_path_like(obj: ..., name: str = None):
+    &#34;&#34;&#34;Ensures the object can be used as a path.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type((PathLike, str, bytes, os.PathLike), obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_set"><code class="name flex">
+<span>def <span class="ident">ensure_set</span></span>(<span>obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is of type <code>set</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_set(obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is of type `set`.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(set, obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_str"><code class="name flex">
+<span>def <span class="ident">ensure_str</span></span>(<span>obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is of type <code>str</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_str(obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is of type `str`.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(str, obj, name)</code></pre>
+</details>
+</dd>
+<dt id="SuperHelper.Core.Essentials.TypeCheck.ensure_tuple"><code class="name flex">
+<span>def <span class="ident">ensure_tuple</span></span>(<span>obj: Ellipsis, name: str = None) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ensures the object is of type <code>tuple</code>.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>object</code></dt>
+<dd>The object to check.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>The type of the object is not the specified type.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def ensure_tuple(obj: ..., name: str = None) -&gt; None:
+    &#34;&#34;&#34;Ensures the object is of type `tuple`.
+
+    Args:
+        obj (object): The object to check.
+        name (str): The name of the object.
+
+    Returns:
+        None
+
+    Raises:
+        TypeError: The type of the object is not the specified type.
+    &#34;&#34;&#34;
+    return _ensure_obj_of_type(tuple, obj, name)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="SuperHelper.Core" href="../index.html">SuperHelper.Core</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="SuperHelper.Core.Essentials.initialise_module" href="#SuperHelper.Core.Essentials.initialise_module">initialise_module</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.pass_config" href="#SuperHelper.Core.Essentials.pass_config">pass_config</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="SuperHelper.Core.Essentials.BitOps" href="#SuperHelper.Core.Essentials.BitOps">BitOps</a></code></h4>
+<ul class="">
+<li><code><a title="SuperHelper.Core.Essentials.BitOps.is_bit_set" href="#SuperHelper.Core.Essentials.BitOps.is_bit_set">is_bit_set</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.BitOps.set_bit" href="#SuperHelper.Core.Essentials.BitOps.set_bit">set_bit</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.BitOps.unset_bit" href="#SuperHelper.Core.Essentials.BitOps.unset_bit">unset_bit</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="SuperHelper.Core.Essentials.Cryptographer" href="#SuperHelper.Core.Essentials.Cryptographer">Cryptographer</a></code></h4>
+<ul class="two-column">
+<li><code><a title="SuperHelper.Core.Essentials.Cryptographer.decode_salt" href="#SuperHelper.Core.Essentials.Cryptographer.decode_salt">decode_salt</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.Cryptographer.decrypt" href="#SuperHelper.Core.Essentials.Cryptographer.decrypt">decrypt</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.Cryptographer.encode_salt" href="#SuperHelper.Core.Essentials.Cryptographer.encode_salt">encode_salt</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.Cryptographer.encrypt" href="#SuperHelper.Core.Essentials.Cryptographer.encrypt">encrypt</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.Cryptographer.get_salt_string" href="#SuperHelper.Core.Essentials.Cryptographer.get_salt_string">get_salt_string</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.Cryptographer.make_decrypter" href="#SuperHelper.Core.Essentials.Cryptographer.make_decrypter">make_decrypter</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.Cryptographer.make_encrypter" href="#SuperHelper.Core.Essentials.Cryptographer.make_encrypter">make_encrypter</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.Cryptographer.make_fernet" href="#SuperHelper.Core.Essentials.Cryptographer.make_fernet">make_fernet</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.Cryptographer.make_kdf" href="#SuperHelper.Core.Essentials.Cryptographer.make_kdf">make_kdf</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.Cryptographer.make_salt" href="#SuperHelper.Core.Essentials.Cryptographer.make_salt">make_salt</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="SuperHelper.Core.Essentials.FP" href="#SuperHelper.Core.Essentials.FP">FP</a></code></h4>
+<ul class="two-column">
+<li><code><a title="SuperHelper.Core.Essentials.FP.R_GRP" href="#SuperHelper.Core.Essentials.FP.R_GRP">R_GRP</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FP.R_OTH" href="#SuperHelper.Core.Essentials.FP.R_OTH">R_OTH</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FP.R_USR" href="#SuperHelper.Core.Essentials.FP.R_USR">R_USR</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FP.W_GRP" href="#SuperHelper.Core.Essentials.FP.W_GRP">W_GRP</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FP.W_OTH" href="#SuperHelper.Core.Essentials.FP.W_OTH">W_OTH</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FP.W_USR" href="#SuperHelper.Core.Essentials.FP.W_USR">W_USR</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FP.X_GRP" href="#SuperHelper.Core.Essentials.FP.X_GRP">X_GRP</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FP.X_OTH" href="#SuperHelper.Core.Essentials.FP.X_OTH">X_OTH</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FP.X_USR" href="#SuperHelper.Core.Essentials.FP.X_USR">X_USR</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="SuperHelper.Core.Essentials.FileOps" href="#SuperHelper.Core.Essentials.FileOps">FileOps</a></code></h4>
+<ul class="two-column">
+<li><code><a title="SuperHelper.Core.Essentials.FileOps.check_fp" href="#SuperHelper.Core.Essentials.FileOps.check_fp">check_fp</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FileOps.get_stat" href="#SuperHelper.Core.Essentials.FileOps.get_stat">get_stat</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FileOps.is_group_executable" href="#SuperHelper.Core.Essentials.FileOps.is_group_executable">is_group_executable</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FileOps.is_group_readable" href="#SuperHelper.Core.Essentials.FileOps.is_group_readable">is_group_readable</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FileOps.is_group_writable" href="#SuperHelper.Core.Essentials.FileOps.is_group_writable">is_group_writable</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FileOps.is_mine" href="#SuperHelper.Core.Essentials.FileOps.is_mine">is_mine</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FileOps.is_other_executable" href="#SuperHelper.Core.Essentials.FileOps.is_other_executable">is_other_executable</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FileOps.is_other_readable" href="#SuperHelper.Core.Essentials.FileOps.is_other_readable">is_other_readable</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FileOps.is_other_writable" href="#SuperHelper.Core.Essentials.FileOps.is_other_writable">is_other_writable</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FileOps.is_owner_executable" href="#SuperHelper.Core.Essentials.FileOps.is_owner_executable">is_owner_executable</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FileOps.is_owner_readable" href="#SuperHelper.Core.Essentials.FileOps.is_owner_readable">is_owner_readable</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FileOps.is_owner_writable" href="#SuperHelper.Core.Essentials.FileOps.is_owner_writable">is_owner_writable</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FileOps.is_roots" href="#SuperHelper.Core.Essentials.FileOps.is_roots">is_roots</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.FileOps.is_user_own" href="#SuperHelper.Core.Essentials.FileOps.is_user_own">is_user_own</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="SuperHelper.Core.Essentials.TypeCheck" href="#SuperHelper.Core.Essentials.TypeCheck">TypeCheck</a></code></h4>
+<ul class="two-column">
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_bool" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_bool">ensure_bool</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_bytearray" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_bytearray">ensure_bytearray</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_bytes" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_bytes">ensure_bytes</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_complex" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_complex">ensure_complex</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_custom" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_custom">ensure_custom</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_dict" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_dict">ensure_dict</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_float" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_float">ensure_float</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_frozenset" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_frozenset">ensure_frozenset</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_function" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_function">ensure_function</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_generator" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_generator">ensure_generator</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_int" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_int">ensure_int</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_list" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_list">ensure_list</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_memoryview" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_memoryview">ensure_memoryview</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_path_like" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_path_like">ensure_path_like</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_set" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_set">ensure_set</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_str" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_str">ensure_str</a></code></li>
+<li><code><a title="SuperHelper.Core.Essentials.TypeCheck.ensure_tuple" href="#SuperHelper.Core.Essentials.TypeCheck.ensure_tuple">ensure_tuple</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
