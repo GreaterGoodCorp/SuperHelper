@@ -5,7 +5,23 @@ from SuperHelper.Core.Utils import PathLike
 
 __all__ = [
     "setup_core_logger",
+    "get_logger",
 ]
+
+
+def get_logger(module_name: str, level: int = logging.DEBUG) -> logging.Logger:
+    """Returns a module logger.
+
+    Args:
+        module_name (str): Name of the module.
+        level (int): Logging level of the logger, default DEBUG.
+
+    Returns:
+        A pre-configured Logger instance for the module.
+    """
+    logger = logging.getLogger(f"SuperHelper.Modules.{module_name}")
+    logger.setLevel(level)
+    return logger
 
 
 class TracebackInfoFilter(logging.Filter):

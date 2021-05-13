@@ -9,14 +9,13 @@ import click
 import cryptography.fernet
 from PIL import Image
 
-from SuperHelper.Core.Config import Config, pass_config
-from SuperHelper.Core.Utils import BitOps, Cryptographer
+from SuperHelper.Core.Config import Config
+from SuperHelper.Core.Essentials import *
 
-MODULE_NAME: str = "Stenographer"
-pass_config_no_lock = functools.partial(pass_config, module_name=MODULE_NAME, lock=False)
-pass_config_with_lock = functools.partial(pass_config, module_name=MODULE_NAME, lock=True)
-__name__ = f"SuperHelper.Builtins.{MODULE_NAME}"
-logger = logging.getLogger(__name__)
+ModuleName: str = "Stenographer"
+__name__, logger, _ = initialise_module(ModuleName)
+pass_config_no_lock = functools.partial(pass_config, module_name=ModuleName, lock=False)
+pass_config_with_lock = functools.partial(pass_config, module_name=ModuleName, lock=True)
 
 
 class Header:
@@ -140,7 +139,7 @@ def patch_config(config: Config) -> None:
         "flag_show_image_on_completion": False,
         "flag_file_open_mode": "rb",
     }
-    config.apply_module_patch(MODULE_NAME, cfg)
+    config.apply_module_patch(ModuleName, cfg)
 
 
 @pass_config_no_lock()

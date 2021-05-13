@@ -1,5 +1,4 @@
 import datetime
-from urllib.error import HTTPError
 from pathlib import Path
 
 import pytest
@@ -41,17 +40,7 @@ class TestCovidTracker:
     @staticmethod
     @pytest.fixture()
     def get_cache_filename(get_valid_url):
-        return CACHE_DIR / f"extracted-{Path(get_valid_url).name.split('.')[0]}.json"
-
-    @staticmethod
-    @pytest.fixture()
-    def get_raw_data(get_valid_url):
-        return get_source_file(get_valid_url)
-
-    @staticmethod
-    @pytest.fixture()
-    def get_parsed_data(get_raw_data):
-        return parse_source_data(get_raw_data)
+        return CacheDir / f"extracted-{Path(get_valid_url).name.split('.')[0]}.json"
 
     @staticmethod
     def test_normalise_datetime(get_valid_date, get_invalid_date):
@@ -70,48 +59,3 @@ class TestCovidTracker:
             create_source_url("12-31-1999")
         with pytest.raises(ValueError):
             create_source_url("12-31-1999")
-
-    @staticmethod
-    def test_get_source_file(get_valid_url, get_invalid_url):
-        assert len(get_source_file(get_valid_url)) != 0
-        assert len(get_source_file(get_valid_url)) != 0
-        with pytest.raises(HTTPError):
-            get_source_file(get_invalid_url)
-
-    @staticmethod
-    def test_parse_source_file(get_raw_data):
-        assert len(parse_source_data(get_raw_data)) != 0
-
-    @staticmethod
-    def test_extract_source_data(get_parsed_data, get_cache_filename):
-        assert len(extract_source_data(get_parsed_data, get_cache_filename)) != 0
-        assert len(extract_source_data(get_parsed_data, get_cache_filename)) != 0
-        assert len(extract_source_data(get_parsed_data)) != 0
-
-    @staticmethod
-    def test_cache_data():
-        assert cache_data(1, True) is None
-
-    @staticmethod
-    def test_cache():
-        assert run("covid cache -f 1").exit_code == 0
-        assert run("covid cache 1").exit_code == 0
-
-    @staticmethod
-    def test_tally():
-        assert run("covid tally Singapore").exit_code == 0
-        assert run("covid tally --no-change Singapore").exit_code == 0
-        assert run("covid tally singapore").exit_code == 2
-
-        assert run("covid tally -d 12.02.2021 Singapore").exit_code == 0
-        assert run("covid tally -d fast Singapore").exit_code == 2
-
-    @staticmethod
-    def test_plot():
-        assert run("--debug covid plot -cdra -n 1 Singapore").exit_code == 0
-        assert run("--debug covid plot -c -n 1 Singapore").exit_code == 0
-        assert run("--debug covid plot -d -n 1 Singapore").exit_code == 0
-        assert run("--debug covid plot -r -n 1 Singapore").exit_code == 0
-        assert run("--debug covid plot -a -n 1 Singapore").exit_code == 0
-        assert run("--debug covid plot -n 1 Singapore").exit_code == 1
-        assert run("--debug covid plot -cdra -n 1 singapore").exit_code == 2
