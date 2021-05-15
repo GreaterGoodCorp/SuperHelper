@@ -11,7 +11,7 @@ def validate_equation():
     pass
 
 
-@click.command("math")
+@click.group("math")
 def main():
     """Solves maths on commandline."""
     pass
