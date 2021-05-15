@@ -101,17 +101,17 @@ class UserInputParser:
     def make_ast(self, data):
         self.ast = self.parser.parse(data, self.lexer)
 
-    def generate_function(self):
-        if self.ast is None:
-            raise ValueError("Missing AST!")
-        return self.ast.pythonize()
-
 
 class ExpressionParser(UserInputParser):
     def __init__(self, **kwargs):
         if "EQUAL" in ExpressionParser.tokens:
             ExpressionParser.tokens = ExpressionParser.tokens[:-1]
         super().__init__(**kwargs)
+
+    def generate_function(self):
+        if self.ast is None:
+            raise ValueError("Missing AST!")
+        return self.ast.pythonize()
 
 
 class EquationParser(UserInputParser):
