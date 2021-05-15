@@ -63,7 +63,7 @@ class UserInputParser:
     @staticmethod
     def p_term_explicit_times(p):
         """term : term TIMES term
-                | tern DIVIDE term"""
+                | term DIVIDE term"""
         p[0] = BinaryOps(p[1], "*", p[3])
 
     @staticmethod
