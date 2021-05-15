@@ -29,7 +29,7 @@ class BinaryOps:
         self.right = x if self.right == "x" else self.right
         # Turn caret to double stars
         self.op = "**" if self.op == "^" else self.op
-        return sympify(f"({self.left}{self.op}{self.right})")
+        return sympify(f"{self.left}{self.op}{self.right}")
 
 
 class UserInputParser:
