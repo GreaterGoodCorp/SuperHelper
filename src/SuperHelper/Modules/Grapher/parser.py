@@ -1,4 +1,4 @@
-from SuperHelper.Modules.Grapher import yacc, UserInputLexer
+from SuperHelper.Modules.Grapher import UserInputLexer, yacc
 
 
 class Equation:
@@ -91,7 +91,3 @@ class EquationParser(UserInputParser):
 
     def __init__(self, **kwargs):
         super().__init__(start="equation", **kwargs)
-
-
-exp_parser = ExpressionParser()
-eqn_parser = EquationParser()
