@@ -79,7 +79,8 @@ class UserInputParser:
 
 class ExpressionParser(UserInputParser):
     def __init__(self, **kwargs):
-        ExpressionParser.tokens = ExpressionParser.tokens[:-1]
+        if "EQUAL" in ExpressionParser.tokens:
+            ExpressionParser.tokens = ExpressionParser.tokens[:-1]
         super().__init__(**kwargs)
 
 
