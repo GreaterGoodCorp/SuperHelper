@@ -28,43 +28,51 @@ class UserInputParser:
     @staticmethod
     def p_expression_ops(p):
         """expression : expression PLUS term
-                      | expression MINUS term
-                      | expression TIMES term
-                      | expression DIVIDE term"""
+                      | expression MINUS term"""
         p[0] = BinaryOps(p[1], p[2], p[3])
 
     @staticmethod
     def p_simple_term(p):
-        """term : NUMBER
-                | VARIABLE
-                | power"""
+        """term : factor"""
         p[0] = p[1]
 
     @staticmethod
-    def p_term_is_paren_exp(p):
-        """term : LPAREN expression RPAREN"""
+    def p_implicit_term(p):
+        """term : term factor"""
+        p[0] = BinaryOps(p[1], UserInputLexer.t_TIMES[-1], p[2])
+
+    @staticmethod
+    def p_complex_term(p):
+        """term : term TIMES factor
+                | term DIVIDE factor"""
+        p[0] = BinaryOps(p[1], p[2], p[3])
+
+    @staticmethod
+    def p_simple_factor(p):
+        """factor : constant
+                  | VARIABLE"""
+        p[0] = p[1]
+
+    @staticmethod
+    def p_complex_factor(p):
+        """factor : LPAREN expression RPAREN"""
         p[0] = p[2]
 
     @staticmethod
-    def p_unary_term(p):
-        """term : MINUS term"""
-        p[0] = -p[2]
+    def p_factor_power(p):
+        """factor : factor CARAT factor"""
+        p[0] = BinaryOps(p[1], p[2], p[3])
 
     @staticmethod
-    def p_term_recursive(p):
-        """term : term term"""
-        p[0] = BinaryOps(p[1], "*", p[2])
+    def p_constant(p):
+        """constant : NUMBER
+                    | uminus"""
+        p[0] = p[1]
 
     @staticmethod
-    def p_term_explicit_times(p):
-        """term : term TIMES term
-                | term DIVIDE term"""
-        p[0] = BinaryOps(p[1], "*", p[3])
-
-    @staticmethod
-    def p_power(p):
-        """power : term CARAT term"""
-        p[0] = BinaryOps(p[1], "^", p[3])
+    def p_uminus(p):
+        """uminus : MINUS NUMBER"""
+        p[0] = p[2]
 
     @staticmethod
     def p_error(p):
@@ -72,7 +80,7 @@ class UserInputParser:
 
     def __init__(self, **kwargs):
         self.lexer = UserInputLexer().lexer
-        self.parser = yacc.yacc(module=self, optimize=True, **kwargs)
+        self.parser = yacc.yacc(module=self, **kwargs)
 
     def parse(self, data):
         return self.parser.parse(data, self.lexer)
