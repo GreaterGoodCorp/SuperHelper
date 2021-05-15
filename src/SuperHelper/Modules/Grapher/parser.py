@@ -17,11 +17,6 @@ class BinaryOps:
         self.right = right
 
 
-class UnaryMinus:
-    def __init__(self, value):
-        self.value = value
-
-
 class UserInputParser:
     tokens = UserInputLexer.tokens
 
@@ -53,7 +48,7 @@ class UserInputParser:
     @staticmethod
     def p_unary_term(p):
         """term : MINUS term"""
-        p[0] = UnaryMinus(p[2])
+        p[0] = -p[2]
 
     @staticmethod
     def p_term_recursive(p):
