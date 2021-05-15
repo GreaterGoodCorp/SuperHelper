@@ -73,6 +73,9 @@ class UserInputParser:
         self.lexer = UserInputLexer().lexer
         self.parser = yacc.yacc(module=self, **kwargs)
 
+    def parse(self, data):
+        return self.parser.parse(data, self.lexer)
+
 
 class ExpressionParser(UserInputParser):
     def __init__(self, **kwargs):
