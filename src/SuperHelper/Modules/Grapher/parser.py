@@ -1,3 +1,5 @@
+from sympy import Symbol, sympify
+
 from SuperHelper.Modules.Grapher import UserInputLexer, yacc
 
 
@@ -15,6 +17,19 @@ class BinaryOps:
         self.left = left
         self.op = op
         self.right = right
+
+    def pythonize(self):
+        x = Symbol("x")
+        while type(self.left) == BinaryOps:
+            self.left = self.left.pythonize()
+        while type(self.right) == BinaryOps:
+            self.right = self.right.pythonize()
+        # Cast variable
+        self.left = x if self.left == "x" else self.left
+        self.right = x if self.right == "x" else self.right
+        # Turn caret to double stars
+        self.op = "**" if self.op == "^" else self.op
+        return sympify(f"({self.left}{self.op}{self.right})")
 
 
 class UserInputParser:
