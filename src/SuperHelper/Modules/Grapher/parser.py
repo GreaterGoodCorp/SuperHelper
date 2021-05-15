@@ -61,6 +61,12 @@ class UserInputParser:
         p[0] = BinaryOps(p[1], "*", p[2])
 
     @staticmethod
+    def p_term_explicit_times(p):
+        """term : term TIMES term
+                | tern DIVIDE term"""
+        p[0] = BinaryOps(p[1], "*", p[3])
+
+    @staticmethod
     def p_power(p):
         """power : term CARAT term"""
         p[0] = BinaryOps(p[1], "^", p[3])
