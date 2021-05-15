@@ -96,9 +96,15 @@ class UserInputParser:
     def __init__(self, **kwargs):
         self.lexer = UserInputLexer().lexer
         self.parser = yacc.yacc(module=self, **kwargs)
+        self.ast = None
 
-    def parse(self, data):
-        return self.parser.parse(data, self.lexer)
+    def make_ast(self, data):
+        self.ast = self.parser.parse(data, self.lexer)
+
+    def generate_function(self):
+        if self.ast is None:
+            raise ValueError("Missing AST!")
+        return self.ast.pythonize()
 
 
 class ExpressionParser(UserInputParser):
