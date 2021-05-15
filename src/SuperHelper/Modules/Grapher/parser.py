@@ -77,7 +77,7 @@ class UserInputParser:
 
     def __init__(self, **kwargs):
         self.lexer = UserInputLexer().lexer
-        self.parser = yacc.yacc(module=self, **kwargs)
+        self.parser = yacc.yacc(module=self, optimize=True, **kwargs)
 
     def parse(self, data):
         return self.parser.parse(data, self.lexer)
