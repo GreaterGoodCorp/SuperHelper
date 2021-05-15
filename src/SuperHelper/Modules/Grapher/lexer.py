@@ -57,7 +57,7 @@ class UserInputLexer:
 
     # Builder and tester implementation
     def __init__(self, **kwargs):
-        self.lexer = lex(module=self, **kwargs)
+        self.lexer = lex.lex(module=self, **kwargs)
 
     def test(self, data: str):
         self.lexer.input(data)
