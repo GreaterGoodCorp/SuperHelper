@@ -40,6 +40,12 @@ class BinaryOps:
 class UserInputParser:
     tokens = UserInputLexer.tokens
 
+    precedence = (
+        ("left", "PLUS", "MINUS"),
+        ("left", "TIMES", "DIVIDE"),
+        ("right", "UMINUS"),
+    )
+
     @staticmethod
     def p_simple_expression(p):
         """expression : term"""
@@ -74,7 +80,7 @@ class UserInputParser:
 
     @staticmethod
     def p_simple_factor(p):
-        """factor : constant
+        """factor : NUMBER
                   | VARIABLE"""
         p[0] = p[1]
 
