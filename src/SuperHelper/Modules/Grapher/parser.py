@@ -1,4 +1,4 @@
-from sympy import Symbol, sympify
+from sympy import Symbol, sympify, Eq, Expr
 
 from SuperHelper.Modules.Grapher import UserInputLexer, yacc
 
@@ -8,13 +8,12 @@ class Equation:
         self.left = left
         self.right = right
 
-    def solve(self):
-        raise NotImplementedError()
-
-    def normalise(self):
-        self.left = BinaryOps(self.left, "-", self.right)
-        self.right = 0
-        return self
+    def pythonize(self) -> Eq:
+        if type(self.left) == BinaryOps:
+            self.left = self.left.pythonize()
+        if type(self.right) == BinaryOps:
+            self.right = self.right.pythonize()
+        return Eq(self.left, self.right)
 
 
 class BinaryOps:
@@ -23,7 +22,7 @@ class BinaryOps:
         self.op = op
         self.right = right
 
-    def pythonize(self):
+    def pythonize(self) -> Expr:
         x = Symbol("x")
         while type(self.left) == BinaryOps:
             self.left = self.left.pythonize()
@@ -34,7 +33,8 @@ class BinaryOps:
         self.right = x if self.right == "x" else self.right
         # Turn caret to double stars
         self.op = "**" if self.op == "^" else self.op
-        return sympify(f"({self.left}){self.op}({self.right})")
+        temp = f"({self.left}){self.op}({self.right})"
+        return sympify(temp)
 
 
 class UserInputParser:
@@ -83,7 +83,7 @@ class UserInputParser:
 
     def make_ast(self, data):
         self.ast = self.parser.parse(data, self.lexer)
-        pass
+        return self.ast
 
 
 class ExpressionParser(UserInputParser):
@@ -106,3 +106,6 @@ class EquationParser(UserInputParser):
 
     def __init__(self, **kwargs):
         super().__init__(start="equation", **kwargs)
+
+    def generate_equation(self) -> Eq:
+        return self.ast.pythonize()
