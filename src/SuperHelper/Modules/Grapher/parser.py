@@ -11,6 +11,11 @@ class Equation:
     def solve(self):
         raise NotImplementedError()
 
+    def normalise(self):
+        self.left = BinaryOps(self.left, "-", self.right)
+        self.right = 0
+        return self
+
 
 class BinaryOps:
     def __init__(self, left, op, right):
