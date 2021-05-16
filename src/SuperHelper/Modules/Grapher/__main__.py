@@ -13,7 +13,7 @@ def validate_equation(value, *_, **__):
     eqn_cache_dir.mkdir(parents=True, exist_ok=True)
     parser = EquationParser(outputdir=eqn_cache_dir)
     parser.make_ast(value)
-    return parser.ast
+    return parser.ast.normalise()
 
 
 def validate_expression(value, *_, **__):
