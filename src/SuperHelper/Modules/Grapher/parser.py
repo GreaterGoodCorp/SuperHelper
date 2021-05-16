@@ -52,6 +52,11 @@ class UserInputParser:
         p[0] = BinaryOps(p[1], p[2], p[3])
 
     @staticmethod
+    def p_uminus_expression(p):
+        """expression : MINUS expression %prec UMINUS"""
+        p[0] = BinaryOps(0, p[1], p[2])
+
+    @staticmethod
     def p_simple_term(p):
         """term : factor"""
         p[0] = p[1]
@@ -82,17 +87,6 @@ class UserInputParser:
     def p_factor_power(p):
         """factor : factor CARAT factor"""
         p[0] = BinaryOps(p[1], p[2], p[3])
-
-    @staticmethod
-    def p_constant(p):
-        """constant : NUMBER
-                    | uminus"""
-        p[0] = p[1]
-
-    @staticmethod
-    def p_uminus(p):
-        """uminus : MINUS NUMBER"""
-        p[0] = p[2]
 
     @staticmethod
     def p_error(p):
