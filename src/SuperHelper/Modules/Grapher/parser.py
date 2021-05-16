@@ -1,4 +1,4 @@
-from sympy import Symbol, sympify, Eq, Expr
+from sympy import Eq, Expr, Symbol, sympify
 
 from SuperHelper.Modules.Grapher import UserInputLexer, yacc
 

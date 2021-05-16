@@ -179,7 +179,7 @@ class Lexer:
         filename = os.path.join(outputdir, basetabmodule) + '.py'
         with open(filename, 'w') as tf:
             tf.write('# %s.py. This file automatically created by PLY (version %s). Don\'t edit!\n' % (
-            basetabmodule, __version__))
+                basetabmodule, __version__))
             tf.write('_tabversion   = %s\n' % repr(__tabversion__))
             tf.write('_lextokens    = set(%s)\n' % repr(tuple(sorted(self.lextokens))))
             tf.write('_lexreflags   = %s\n' % repr(int(self.lexreflags)))

@@ -1,11 +1,8 @@
-import sys
-
 import click
-from sympy import *
 
 from SuperHelper.Core.Essentials import *
 from SuperHelper.Modules.Grapher import EquationParser, ExpressionParser
-from SuperHelper.Modules.Grapher.parser import Equation, BinaryOps
+from SuperHelper.Modules.Grapher.parser import BinaryOps, Equation
 
 ModuleName = "Grapher"
 __name__, logger, ModuleDir = initialise_module(ModuleName)
