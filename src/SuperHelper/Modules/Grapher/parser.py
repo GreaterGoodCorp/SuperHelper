@@ -125,9 +125,3 @@ class EquationParser(UserInputParser):
 
     def __init__(self, **kwargs):
         super().__init__(start="equation", **kwargs)
-
-
-parser = ExpressionParser(debug=True)
-parser.make_ast("(5x+1)x")
-ast = parser.ast
-exp = parser.generate_function()
