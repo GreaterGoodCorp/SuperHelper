@@ -34,7 +34,7 @@ class BinaryOps:
         self.right = x if self.right == "x" else self.right
         # Turn caret to double stars
         self.op = "**" if self.op == "^" else self.op
-        return sympify(f"{self.left}{self.op}{self.right}")
+        return sympify(f"({self.left}{self.op}{self.right})")
 
 
 class UserInputParser:
@@ -44,6 +44,7 @@ class UserInputParser:
         ("left", "PLUS", "MINUS"),
         ("left", "TIMES", "DIVIDE"),
         ("right", "UMINUS"),
+        ("left", "CARAT"),
     )
 
     @staticmethod
@@ -54,13 +55,9 @@ class UserInputParser:
     @staticmethod
     def p_expression_ops(p):
         """expression : expression PLUS term
-                      | expression MINUS term"""
+                      | expression MINUS term
+                      | expression CARAT expression"""
         p[0] = BinaryOps(p[1], p[2], p[3])
-
-    @staticmethod
-    def p_uminus_expression(p):
-        """expression : MINUS expression %prec UMINUS"""
-        p[0] = BinaryOps(0, p[1], p[2])
 
     @staticmethod
     def p_simple_term(p):
@@ -90,9 +87,9 @@ class UserInputParser:
         p[0] = p[2]
 
     @staticmethod
-    def p_factor_power(p):
-        """factor : factor CARAT factor"""
-        p[0] = BinaryOps(p[1], p[2], p[3])
+    def p_uminus_factor(p):
+        """expression : MINUS expression %prec UMINUS"""
+        p[0] = BinaryOps(0, p[1], p[2])
 
     @staticmethod
     def p_error(p):
@@ -105,6 +102,7 @@ class UserInputParser:
 
     def make_ast(self, data):
         self.ast = self.parser.parse(data, self.lexer)
+        pass
 
 
 class ExpressionParser(UserInputParser):
@@ -127,3 +125,9 @@ class EquationParser(UserInputParser):
 
     def __init__(self, **kwargs):
         super().__init__(start="equation", **kwargs)
+
+
+parser = ExpressionParser(debug=True)
+parser.make_ast("(5x+1)x")
+ast = parser.ast
+exp = parser.generate_function()
