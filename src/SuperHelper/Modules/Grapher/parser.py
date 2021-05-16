@@ -48,48 +48,29 @@ class UserInputParser:
     )
 
     @staticmethod
-    def p_simple_expression(p):
-        """expression : term"""
+    def p_expression_single(p):
+        """expression : NUMBER
+                      | VARIABLE"""
         p[0] = p[1]
 
     @staticmethod
     def p_expression_ops(p):
-        """expression : expression PLUS term
-                      | expression MINUS term
+        """expression : expression PLUS expression
+                      | expression MINUS expression
+                      | expression TIMES expression
+                      | expression DIVIDE expression
                       | expression CARAT expression"""
         p[0] = BinaryOps(p[1], p[2], p[3])
 
     @staticmethod
-    def p_simple_term(p):
-        """term : factor"""
-        p[0] = p[1]
-
-    @staticmethod
-    def p_implicit_term(p):
-        """term : term factor"""
-        p[0] = BinaryOps(p[1], UserInputLexer.t_TIMES[-1], p[2])
-
-    @staticmethod
-    def p_complex_term(p):
-        """term : term TIMES factor
-                | term DIVIDE factor"""
-        p[0] = BinaryOps(p[1], p[2], p[3])
-
-    @staticmethod
-    def p_simple_factor(p):
-        """factor : NUMBER
-                  | VARIABLE"""
-        p[0] = p[1]
-
-    @staticmethod
-    def p_complex_factor(p):
-        """factor : LPAREN expression RPAREN"""
-        p[0] = p[2]
-
-    @staticmethod
-    def p_uminus_factor(p):
+    def p_uminus_expression(p):
         """expression : MINUS expression %prec UMINUS"""
         p[0] = BinaryOps(0, p[1], p[2])
+
+    @staticmethod
+    def p_parens_expression(p):
+        """expression : LPAREN expression RPAREN"""
+        p[0] = p[2]
 
     @staticmethod
     def p_error(p):
