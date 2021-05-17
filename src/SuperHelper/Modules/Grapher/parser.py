@@ -40,41 +40,57 @@ class BinaryOps:
 class UserInputParser:
     tokens = UserInputLexer.tokens
 
-    precedence = (
-        ("left", "PLUS", "MINUS"),
-        ("left", "TIMES", "DIVIDE"),
-        ("right", "UMINUS"),
-        ("left", "CARAT"),
-    )
-
     @staticmethod
-    def p_expression_single(p):
-        """expression : NUMBER
-                      | VARIABLE"""
+    def p_expression_direct_reduce(p):
+        """expression : term"""
         p[0] = p[1]
 
     @staticmethod
-    def p_expression_ops(p):
-        """expression : expression PLUS expression
-                      | expression MINUS expression
-                      | expression TIMES expression
-                      | expression DIVIDE expression
-                      | expression CARAT expression"""
+    def p_expression_plus_minus(p):
+        """expression : expression PLUS term
+                      | expression MINUS term"""
         p[0] = BinaryOps(p[1], p[2], p[3])
 
     @staticmethod
-    def p_uminus_expression(p):
-        """expression : MINUS expression %prec UMINUS"""
+    def p_term_direct_reduce(p):
+        """term : factor"""
+        p[0] = p[1]
+
+    @staticmethod
+    def p_term_uminus(p):
+        """term : MINUS factor"""
         p[0] = BinaryOps(0, p[1], p[2])
 
     @staticmethod
-    def p_parens_expression(p):
-        """expression : LPAREN expression RPAREN"""
+    def p_term_implicit_multiplication(p):
+        """term : term factor"""
+        p[0] = BinaryOps(p[1], "*", p[2])
+
+    @staticmethod
+    def p_term_times_divide(p):
+        """term : term TIMES factor
+                | term DIVIDE factor"""
+        p[0] = BinaryOps(p[1], p[2], p[3])
+
+    @staticmethod
+    def p_factor_direct_reduce(p):
+        """factor : NUMBER
+                  | VARIABLE"""
+        p[0] = p[1]
+
+    @staticmethod
+    def p_factor_carat(p):
+        """factor : factor CARAT factor"""
+        p[0] = BinaryOps(p[1], p[2], p[3])
+
+    @staticmethod
+    def p_factor_parens(p):
+        """factor : LPAREN expression RPAREN"""
         p[0] = p[2]
 
     @staticmethod
     def p_error(p):
-        print(f"Syntax error: {p}")
+        print(f"Syntax error: {p.value} at position {p.lexpos}")
 
     def __init__(self, **kwargs):
         self.lexer = UserInputLexer().lexer
