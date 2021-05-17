@@ -33,7 +33,23 @@ from SuperHelper.Core.Utils import PathLike
 
 __all__ = [
     &#34;setup_core_logger&#34;,
+    &#34;get_logger&#34;,
 ]
+
+
+def get_logger(module_name: str, level: int = logging.DEBUG) -&gt; logging.Logger:
+    &#34;&#34;&#34;Returns a module logger.
+
+    Args:
+        module_name (str): Name of the module.
+        level (int): Logging level of the logger, default DEBUG.
+
+    Returns:
+        A pre-configured Logger instance for the module.
+    &#34;&#34;&#34;
+    logger = logging.getLogger(f&#34;SuperHelper.Modules.{module_name}&#34;)
+    logger.setLevel(level)
+    return logger
 
 
 class TracebackInfoFilter(logging.Filter):
@@ -92,6 +108,39 @@ def setup_core_logger(logging_path: PathLike, debug: bool = False) -&gt; logging
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="SuperHelper.Core.Utils.logger.get_logger"><code class="name flex">
+<span>def <span class="ident">get_logger</span></span>(<span>module_name: str, level: int = 10) ‑> logging.Logger</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a module logger.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>module_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the module.</dd>
+<dt><strong><code>level</code></strong> :&ensp;<code>int</code></dt>
+<dd>Logging level of the logger, default DEBUG.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>A pre-configured Logger instance for the module.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_logger(module_name: str, level: int = logging.DEBUG) -&gt; logging.Logger:
+    &#34;&#34;&#34;Returns a module logger.
+
+    Args:
+        module_name (str): Name of the module.
+        level (int): Logging level of the logger, default DEBUG.
+
+    Returns:
+        A pre-configured Logger instance for the module.
+    &#34;&#34;&#34;
+    logger = logging.getLogger(f&#34;SuperHelper.Modules.{module_name}&#34;)
+    logger.setLevel(level)
+    return logger</code></pre>
+</details>
+</dd>
 <dt id="SuperHelper.Core.Utils.logger.setup_core_logger"><code class="name flex">
 <span>def <span class="ident">setup_core_logger</span></span>(<span>logging_path: ~PathLike, debug: bool = False) ‑> logging.Logger</span>
 </code></dt>
@@ -159,6 +208,7 @@ def setup_core_logger(logging_path: PathLike, debug: bool = False) -&gt; logging
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="SuperHelper.Core.Utils.logger.get_logger" href="#SuperHelper.Core.Utils.logger.get_logger">get_logger</a></code></li>
 <li><code><a title="SuperHelper.Core.Utils.logger.setup_core_logger" href="#SuperHelper.Core.Utils.logger.setup_core_logger">setup_core_logger</a></code></li>
 </ul>
 </li>
